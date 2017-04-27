@@ -12,8 +12,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.dam2.clickneat.R;
+import com.dam2.clickneat.pojos.Usuario;
+import com.dam2.clickneat.utils.JsonHelper;
 
 public class MainView extends AppCompatActivity
         implements MainContract.View, NavigationView.OnNavigationItemSelectedListener {
@@ -46,6 +49,13 @@ public class MainView extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         presenter = new MainPresenter(this);
+
+        Usuario u = new Usuario();
+        u.setUsername("Fernando");
+        u.setEmail("fernando.trujillo93@gmail.com");
+
+        TextView tv = (TextView)findViewById(R.id.tvPrueba);
+        tv.setText(JsonHelper.toJson(u));
     }
 
     @Override
