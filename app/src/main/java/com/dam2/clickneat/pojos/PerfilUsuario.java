@@ -1,5 +1,7 @@
 package com.dam2.clickneat.pojos;
 
+import android.os.Parcel;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.reflect.TypeToken;
 
@@ -37,6 +39,19 @@ public class PerfilUsuario extends BaseClass {
         this.imagen                 = "";
         this.comentariosRecibidos   = new ArrayList();
         this.comentariosDados       = new ArrayList();
+    }
+
+    protected PerfilUsuario(Parcel in ) {
+
+        super(in);
+
+        this.id         = in.readInt();
+        this.nombre     = in.readString();
+        this.usuario    = in.readInt();
+        in.readTypedList( this.domicilios, Domicilio.CREATOR);
+        this.imagen     = in.readString();
+        in.readTypedList( this.comentariosRecibidos, Comentario.CREATOR);
+        in.readTypedList( this.comentariosDados, Comentario.CREATOR);
     }
 
     public int getId() {
@@ -105,5 +120,36 @@ public class PerfilUsuario extends BaseClass {
 
     public void addComentarioDado(Comentario comentario) {
         this.comentariosDados.add(comentario);
+    }
+
+
+    public static final Creator<PerfilUsuario> CREATOR = new Creator<PerfilUsuario>() {
+        @Override
+        public PerfilUsuario createFromParcel(Parcel in) {
+            return new PerfilUsuario(in);
+        }
+
+        @Override
+        public PerfilUsuario[] newArray(int size) {
+            return new PerfilUsuario[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+        dest.writeInt(this.id);
+        dest.writeString(this.nombre);
+        dest.writeInt(this.usuario);
+        dest.writeTypedList(this.domicilios);
+        dest.writeString(this.imagen);
+        dest.writeTypedList(this.comentariosRecibidos);
+        dest.writeTypedList(this.comentariosDados);
+
     }
 }

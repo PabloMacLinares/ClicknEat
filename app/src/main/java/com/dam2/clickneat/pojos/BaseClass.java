@@ -1,5 +1,8 @@
 package com.dam2.clickneat.pojos;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
@@ -8,7 +11,7 @@ import java.lang.reflect.Type;
  * Created by ferna on 29/04/2017.
  */
 
-public abstract class BaseClass<T>  {
+public abstract class BaseClass<T>  implements Parcelable {
 
     @Expose(serialize = false, deserialize = false)
     private Class<T> type;
@@ -22,6 +25,10 @@ public abstract class BaseClass<T>  {
         this.listType   = listType;
     }
 
+    protected BaseClass(Parcel in) {
+    }
+
+
     public Class<T> getType() {
 
         return this.type;
@@ -31,5 +38,6 @@ public abstract class BaseClass<T>  {
 
         return this.listType.getType();
     }
+
 
 }

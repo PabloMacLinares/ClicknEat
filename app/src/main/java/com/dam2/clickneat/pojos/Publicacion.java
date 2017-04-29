@@ -1,5 +1,7 @@
 package com.dam2.clickneat.pojos;
 
+import android.os.Parcel;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.reflect.TypeToken;
 
@@ -50,6 +52,7 @@ public class Publicacion extends BaseClass {
         this.horaInicio     = new Date(System.currentTimeMillis());
         this.horaFin        = new Date(System.currentTimeMillis());
         this.fecha          = new Date(System.currentTimeMillis());
+        this.plazasTotales  = 0;
         this.precio         = 0;
         this.domicilio      = 0;
         this.foto           = "";
@@ -60,6 +63,28 @@ public class Publicacion extends BaseClass {
         this.descripcion    = "";
         this.titulo         = "";
     }
+
+    protected Publicacion(Parcel in) {
+
+        super(in);
+
+        this.id             = in.readInt();
+        this.horaInicio     = (Date)in.readSerializable();
+        this.horaFin        = (Date)in.readSerializable();
+        this.fecha          = (Date)in.readSerializable();
+        this.plazasTotales  = in.readInt();
+        this.precio         = in.readFloat();
+        this.domicilio      = in.readInt();
+        this.foto           = in.readString();
+        in.readList(platos, String.class.getClassLoader());
+        this.usuario        = in.readInt();
+        in.readTypedList(this.reservas, Reserva.CREATOR);
+        this.completo       = in.readByte() != 0;
+        this.descripcion    = in.readString();
+        this.titulo         = in.readString();
+
+    }
+
 
     public int getId() {
         return id;
@@ -179,5 +204,43 @@ public class Publicacion extends BaseClass {
 
     public void setTitulo(String titulo) {
         this.titulo = titulo;
+    }
+
+
+    public static final Creator<Publicacion> CREATOR = new Creator<Publicacion>() {
+        @Override
+        public Publicacion createFromParcel(Parcel in) {
+            return new Publicacion(in);
+        }
+
+        @Override
+        public Publicacion[] newArray(int size) {
+            return new Publicacion[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+        dest.writeInt(this.id);
+        dest.writeSerializable(this.horaInicio);
+        dest.writeSerializable(this.horaFin);
+        dest.writeSerializable(this.fecha);
+        dest.writeInt(this.plazasTotales);
+        dest.writeFloat(this.precio);
+        dest.writeInt(this.domicilio);
+        dest.writeString(this.foto);
+        dest.writeList(platos);
+        dest.writeInt(this.usuario);
+        dest.writeTypedList(this.reservas);
+        dest.writeByte((byte) (this.completo ? 1 : 0));
+        dest.writeString(this.descripcion);
+        dest.writeString(this.titulo);
+
     }
 }

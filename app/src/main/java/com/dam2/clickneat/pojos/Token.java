@@ -1,5 +1,8 @@
 package com.dam2.clickneat.pojos;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.reflect.TypeToken;
 
@@ -24,6 +27,13 @@ public class Token extends BaseClass {
         this.valor      = "";
     }
 
+    protected Token(Parcel in) {
+        super(in);
+
+        this.id     = in.readInt();
+        this.valor  = in.readString();
+    }
+
     public int getId() {
         return id;
     }
@@ -38,6 +48,32 @@ public class Token extends BaseClass {
 
     public void setValor(String valor) {
         this.valor = valor;
+    }
+
+
+    public static final Creator<Token> CREATOR = new Creator<Token>() {
+        @Override
+        public Token createFromParcel(Parcel in) {
+            return new Token(in);
+        }
+
+        @Override
+        public Token[] newArray(int size) {
+            return new Token[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+        dest.writeInt(this.id);
+        dest.writeString(this.valor);
+
     }
 
 }

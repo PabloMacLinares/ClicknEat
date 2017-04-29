@@ -1,5 +1,7 @@
 package com.dam2.clickneat.pojos;
 
+import android.os.Parcel;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.reflect.TypeToken;
 
@@ -34,6 +36,17 @@ public class Comentario extends BaseClass {
         this.valoracion         = "";
         this.puntuacion         = 0;
         this.fechaComentario    = new Date(System.currentTimeMillis());
+    }
+
+    protected Comentario(Parcel in) {
+        super(in);
+
+        this.id                 = in.readInt();
+        this.usuarioDa          = in.readInt();
+        this.usuarioRecibe      = in.readInt();
+        this.valoracion         = in.readString();
+        this.puntuacion         = in.readInt();
+        this.fechaComentario    = (Date) in.readSerializable();
     }
 
     public int getId() {
@@ -82,5 +95,35 @@ public class Comentario extends BaseClass {
 
     public void setFechaComentario(Date fechaComentario) {
         this.fechaComentario = fechaComentario;
+    }
+
+
+    public static final Creator<Comentario> CREATOR = new Creator<Comentario>() {
+        @Override
+        public Comentario createFromParcel(Parcel in) {
+            return new Comentario(in);
+        }
+
+        @Override
+        public Comentario[] newArray(int size) {
+            return new Comentario[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+        dest.writeInt(this.id);
+        dest.writeInt(this.usuarioDa);
+        dest.writeInt(this.usuarioRecibe);
+        dest.writeString(this.valoracion);
+        dest.writeInt(this.puntuacion);
+        dest.writeSerializable(this.fechaComentario);
+
     }
 }

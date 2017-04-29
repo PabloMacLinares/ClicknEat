@@ -1,5 +1,7 @@
 package com.dam2.clickneat.pojos;
 
+import android.os.Parcel;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.reflect.TypeToken;
 
@@ -31,6 +33,16 @@ public class Mensaje extends BaseClass {
         this.conversacion   = 0;
         this.textoMensaje   = "";
         this.fechaEnvio     = new Date(System.currentTimeMillis());
+    }
+
+    protected Mensaje(Parcel in) {
+        super(in);
+
+        this.id             = in.readInt();
+        this.usuarioEnvia   = in.readInt();
+        this.conversacion   = in.readInt();
+        this.textoMensaje   = in.readString();
+        this.fechaEnvio     = (Date) in.readSerializable();
     }
 
     public int getId() {
@@ -71,5 +83,35 @@ public class Mensaje extends BaseClass {
 
     public void setFechaEnvio(Date fechaEnvio) {
         this.fechaEnvio = fechaEnvio;
+    }
+
+
+
+    public static final Creator<Mensaje> CREATOR = new Creator<Mensaje>() {
+        @Override
+        public Mensaje createFromParcel(Parcel in) {
+            return new Mensaje(in);
+        }
+
+        @Override
+        public Mensaje[] newArray(int size) {
+            return new Mensaje[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+        dest.writeInt(this.id);
+        dest.writeInt(this.usuarioEnvia);
+        dest.writeInt(this.conversacion);
+        dest.writeString(this.textoMensaje);
+        dest.writeSerializable(this.fechaEnvio);
+
     }
 }

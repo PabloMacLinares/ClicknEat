@@ -15,7 +15,6 @@ import android.view.MenuItem;
 
 import com.dam2.clickneat.R;
 import com.dam2.clickneat.client.handlers.UsuarioHandler;
-import com.dam2.clickneat.pojos.Usuario;
 
 public class MainView extends AppCompatActivity
         implements MainContract.View, NavigationView.OnNavigationItemSelectedListener {
@@ -57,7 +56,8 @@ public class MainView extends AppCompatActivity
         //handler.getElement(48);
         //handler.getAllElements();
         //handler.updateElement(u);
-        handler.deleteElement(50);
+        //handler.deleteElement(50);
+
     }
 
     @Override

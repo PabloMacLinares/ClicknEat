@@ -1,5 +1,7 @@
 package com.dam2.clickneat.pojos;
 
+import android.os.Parcel;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.reflect.TypeToken;
 
@@ -47,6 +49,21 @@ public class Domicilio extends BaseClass {
         this.imagenes       = new ArrayList();
         this.perfil         = 0;
         this.publicaciones  = new ArrayList();
+    }
+
+    protected Domicilio( Parcel in ){
+
+        super(in);
+        this.id             = in.readInt();
+        this.direccion      = in.readString();
+        this.ubicacion      = in.readParcelable(Ubicacion.class.getClassLoader());
+        this.cp             = in.readInt();
+        this.pais           = in.readString();
+        this.localidad      = in.readString();
+        this.barrio         = in.readString();
+        in.readList(imagenes, String.class.getClassLoader());
+        this.perfil         = in.readInt();
+        in.readList(this.publicaciones, Integer.class.getClassLoader());
     }
 
     public int getId() {
@@ -135,5 +152,38 @@ public class Domicilio extends BaseClass {
 
     public void addPublicacion(int publicacion) {
         this.publicaciones.add(publicacion);
+    }
+
+    public static final Creator<Domicilio> CREATOR = new Creator<Domicilio>() {
+        @Override
+        public Domicilio createFromParcel(Parcel in) {
+            return new Domicilio(in);
+        }
+
+        @Override
+        public Domicilio[] newArray(int size) {
+            return new Domicilio[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+        dest.writeInt(this.id);
+        dest.writeString(this.direccion);
+        dest.writeParcelable(ubicacion, flags);
+        dest.writeInt(this.cp);
+        dest.writeString(this.pais);
+        dest.writeString(this.localidad);
+        dest.writeString(this.barrio);
+        dest.writeList(this.imagenes);
+        dest.writeInt(this.perfil);
+        dest.writeList(publicaciones);
+
     }
 }

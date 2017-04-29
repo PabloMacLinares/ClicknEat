@@ -1,5 +1,7 @@
 package com.dam2.clickneat.pojos;
 
+import android.os.Parcel;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.reflect.TypeToken;
 import java.util.ArrayList;
@@ -66,6 +68,28 @@ public class Usuario extends BaseClass {
         this.conversacionesRecibidas    = new ArrayList();
         this.mensajes                   = new ArrayList();
 
+    }
+
+    protected Usuario(Parcel in) {
+
+        super(in);
+
+        this.id                     = in.readInt();
+        this.username               = in.readString();
+        this.password               = in.readString();
+        this.email                  = in.readString();
+        this.enabled                = in.readByte() != 0;
+        this.facebook_id            = in.readInt();
+        this.facebook_access_token  = in.readString();
+        this.google_id              = in.readInt();
+        this.google_access_token    = in.readString();
+        this.perfil                 = in.readParcelable(PerfilUsuario.class.getClassLoader());
+        in.readTypedList(this.tokens, Token.CREATOR);
+        in.readTypedList(this.publicaciones, Publicacion.CREATOR);
+        in.readTypedList(this.reservas, Reserva.CREATOR);
+        in.readTypedList(this.conversacionesIniciadas, Conversacion.CREATOR);
+        in.readTypedList(this.conversacionesRecibidas, Conversacion.CREATOR);
+        in.readTypedList(this.mensajes, Mensaje.CREATOR);
     }
 
     public int getId() {
@@ -220,4 +244,43 @@ public class Usuario extends BaseClass {
         this.mensajes.add(mensaje);
     }
 
+    public static final Creator<Usuario> CREATOR = new Creator<Usuario>() {
+        @Override
+        public Usuario createFromParcel(Parcel in) {
+            return new Usuario(in);
+        }
+
+        @Override
+        public Usuario[] newArray(int size) {
+            return new Usuario[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+
+        dest.writeInt(this.id);
+        dest.writeString(this.username);
+        dest.writeString(this.password);
+        dest.writeString(this.email);
+        dest.writeByte((byte) (this.enabled ? 1 : 0));
+        dest.writeInt(this.facebook_id);
+        dest.writeString(this.facebook_access_token);
+        dest.writeInt(this.google_id);
+        dest.writeString(this.google_access_token);
+        dest.writeParcelable(this.perfil, flags);
+        dest.writeTypedList(this.tokens);
+        dest.writeTypedList(this.publicaciones);
+        dest.writeTypedList(this.reservas);
+        dest.writeTypedList(this.conversacionesIniciadas);
+        dest.writeTypedList(this.conversacionesRecibidas);
+        dest.writeTypedList(this.mensajes);
+
+    }
 }
