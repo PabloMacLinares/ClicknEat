@@ -1,30 +1,45 @@
 package com.dam2.clickneat.pojos;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.reflect.TypeToken;
+
 import java.util.ArrayList;
 
 /**
  * Created by ferna on 27/04/2017.
  */
 
-public class Domicilio {
+public class Domicilio extends BaseClass {
 
+    @Expose
     private int id;
+    @Expose
     private String direccion;
-    private ArrayList<String> ubicacion;
+    @Expose
+    private Ubicacion ubicacion;
+    @Expose
     private int cp;
+    @Expose
     private String pais;
+    @Expose
     private String localidad;
+    @Expose
     private String barrio;
+    @Expose
     private ArrayList<String> imagenes;
+    @Expose
     private int perfil;
-    private ArrayList<Publicacion> publicaciones;
+    @Expose
+    private ArrayList<Integer> publicaciones;
 
 
     public Domicilio() {
 
+
+        super( Domicilio.class, new TypeToken<ArrayList<Domicilio>>(){});
         this.id             = 0;
         this.direccion      = "";
-        this.ubicacion      = new ArrayList();
+        this.ubicacion      = new Ubicacion();
         this.cp             = 0;
         this.pais           = "";
         this.localidad      = "";
@@ -50,11 +65,11 @@ public class Domicilio {
         this.direccion = direccion;
     }
 
-    public ArrayList<String> getUbicacion() {
+    public Ubicacion getUbicacion() {
         return ubicacion;
     }
 
-    public void setUbicacion(ArrayList<String> ubicacion) {
+    public void setUbicacion(Ubicacion ubicacion) {
         this.ubicacion = ubicacion;
     }
 
@@ -110,15 +125,15 @@ public class Domicilio {
         this.perfil = perfil;
     }
 
-    public ArrayList<Publicacion> getPublicaciones() {
+    public ArrayList<Integer> getPublicaciones() {
         return publicaciones;
     }
 
-    public void setPublicaciones(ArrayList<Publicacion> publicaciones) {
+    public void setPublicaciones(ArrayList<Integer> publicaciones) {
         this.publicaciones = publicaciones;
     }
 
-    public void addPublicacion(Publicacion publicacion) {
+    public void addPublicacion(int publicacion) {
         this.publicaciones.add(publicacion);
     }
 }

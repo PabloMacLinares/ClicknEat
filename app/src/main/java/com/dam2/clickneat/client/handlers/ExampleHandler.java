@@ -27,7 +27,7 @@ public class ExampleHandler extends ClientHandler<Object>{
 
     @Override
     public void updateElement(Object element) {
-        Client.makeRequest("example/{element.id}", element, Client.RequestMethod.PUT, this);
+        //Client.makeRequest("example/{element.id}", element, Client.RequestMethod.PUT, this);
     }
 
     @Override
@@ -37,7 +37,7 @@ public class ExampleHandler extends ClientHandler<Object>{
 
     @Override
     public void deleteElements(List<Long> ids) {
-        Client.makeRequest("example/", ids, Client.RequestMethod.DELETE, this);
+        //Client.makeRequest("example/", ids, Client.RequestMethod.DELETE, this);
     }
 
     //TODO crear interfaz que recive los eventos cuando se hace una peticion al Handler

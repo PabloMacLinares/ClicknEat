@@ -1,19 +1,28 @@
 package com.dam2.clickneat.pojos;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.reflect.TypeToken;
+
 import java.util.ArrayList;
 
 /**
  * Created by ferna on 27/04/2017.
  */
 
-public class Conversacion {
+public class Conversacion extends BaseClass {
 
+    @Expose
     private int id;
+    @Expose
     private ArrayList<Mensaje> mensajes;
+    @Expose
     private int usuarioInicia;
+    @Expose
     private int usuarioRecibe;
 
     public Conversacion() {
+
+        super( Conversacion.class, new TypeToken<ArrayList<Conversacion>>(){});
 
         this.id             = 0;
         this.mensajes       = new ArrayList();

@@ -1,36 +1,59 @@
 package com.dam2.clickneat.pojos;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.reflect.TypeToken;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by ferna on 27/04/2017.
  */
 
-public class Usuario {
+public class Usuario extends BaseClass {
 
+    @Expose
     private int id;
+    @Expose
     private String username;
+    @Expose
     private String password;
+    @Expose
     private String email;
+    @Expose
+    private boolean enabled;
+    @Expose
     private int facebook_id;
+    @Expose
     private String facebook_access_token;
+    @Expose
     private int google_id;
+    @Expose
     private String google_access_token;
+    @Expose
     private PerfilUsuario perfil;
+    @Expose
     private ArrayList<Token> tokens;
+    @Expose
     private ArrayList<Publicacion> publicaciones;
+    @Expose
     private ArrayList<Reserva> reservas;
+    @Expose
     private ArrayList<Conversacion> conversacionesIniciadas;
+    @Expose
     private ArrayList<Conversacion> conversacionesRecibidas;
+    @Expose
     private ArrayList<Mensaje> mensajes;
 
     // Constructor generico
     public Usuario() {
 
+        super(Usuario.class, new TypeToken<List<Usuario>>(){});
+
         this.id                         = 0;
         this.username                   = "";
         this.password                   = "";
         this.email                      = "";
+        this.enabled                    = false;
         this.facebook_id                = 0;
         this.facebook_access_token      = "";
         this.google_id                  = 0;
@@ -42,7 +65,6 @@ public class Usuario {
         this.conversacionesIniciadas    = new ArrayList();
         this.conversacionesRecibidas    = new ArrayList();
         this.mensajes                   = new ArrayList();
-
 
     }
 
@@ -76,6 +98,14 @@ public class Usuario {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public boolean isEnabled(){
+        return this.enabled;
     }
 
     public int getFacebook_id() {
@@ -189,4 +219,5 @@ public class Usuario {
     public void addMensaje(Mensaje mensaje) {
         this.mensajes.add(mensaje);
     }
+
 }

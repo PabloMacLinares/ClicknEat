@@ -1,22 +1,33 @@
 package com.dam2.clickneat.pojos;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.reflect.TypeToken;
+
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
  * Created by ferna on 27/04/2017.
  */
 
-public class Comentario {
+public class Comentario extends BaseClass {
 
+    @Expose
     private int id;
+    @Expose
     private int usuarioDa;
+    @Expose
     private int usuarioRecibe;
+    @Expose
     private String valoracion;
+    @Expose
     private int puntuacion;
+    @Expose
     private Date fechaComentario;
 
     public Comentario() {
 
+        super( Comentario.class, new TypeToken<ArrayList<Comentario>>(){});
         this.id                 = 0;
         this.usuarioDa          = 0;
         this.usuarioRecibe      = 0;

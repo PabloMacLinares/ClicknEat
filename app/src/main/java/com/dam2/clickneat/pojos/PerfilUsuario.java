@@ -1,22 +1,34 @@
 package com.dam2.clickneat.pojos;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.reflect.TypeToken;
+
 import java.util.ArrayList;
 
 /**
  * Created by ferna on 27/04/2017.
  */
 
-public class PerfilUsuario {
+public class PerfilUsuario extends BaseClass {
 
+    @Expose
     private int id;
+    @Expose
     private String nombre;
+    @Expose
     private int usuario;
+    @Expose
     private ArrayList<Domicilio> domicilios;
+    @Expose
     private String imagen;
+    @Expose
     private ArrayList<Comentario> comentariosRecibidos;
+    @Expose
     private ArrayList<Comentario> comentariosDados;
 
     public PerfilUsuario() {
+
+        super( PerfilUsuario.class, new TypeToken<ArrayList<PerfilUsuario>>(){});
 
         this.id                     = 0;
         this.nombre                 = "";

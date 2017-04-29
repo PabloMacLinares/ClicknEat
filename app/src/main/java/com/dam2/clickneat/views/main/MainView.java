@@ -12,11 +12,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import com.dam2.clickneat.R;
+import com.dam2.clickneat.client.handlers.UsuarioHandler;
 import com.dam2.clickneat.pojos.Usuario;
-import com.dam2.clickneat.utils.JsonHelper;
 
 public class MainView extends AppCompatActivity
         implements MainContract.View, NavigationView.OnNavigationItemSelectedListener {
@@ -50,12 +49,15 @@ public class MainView extends AppCompatActivity
 
         presenter = new MainPresenter(this);
 
-        Usuario u = new Usuario();
-        u.setUsername("Fernando");
-        u.setEmail("fernando.trujillo93@gmail.com");
-
-        TextView tv = (TextView)findViewById(R.id.tvPrueba);
-        tv.setText(JsonHelper.toJson(u));
+        /*Usuario u = new Usuario();
+        u.setId(50);
+        u.setUsername("fernanProbandoPut");*/
+        UsuarioHandler handler = new UsuarioHandler();
+        //handler.insertElement(u);
+        //handler.getElement(48);
+        //handler.getAllElements();
+        //handler.updateElement(u);
+        handler.deleteElement(50);
     }
 
     @Override

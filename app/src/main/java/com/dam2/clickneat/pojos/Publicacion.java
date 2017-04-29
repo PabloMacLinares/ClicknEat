@@ -1,5 +1,8 @@
 package com.dam2.clickneat.pojos;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.reflect.TypeToken;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -7,25 +10,41 @@ import java.util.Date;
  * Created by ferna on 27/04/2017.
  */
 
-public class Publicacion {
+public class Publicacion extends BaseClass {
 
+    @Expose
     private int id;
+    @Expose
     private Date horaInicio;
+    @Expose
     private Date horaFin;
+    @Expose
     private Date fecha;
+    @Expose
     private int plazasTotales;
+    @Expose
     private float precio;
+    @Expose
     private int domicilio;
+    @Expose
     private String foto;
+    @Expose
     private ArrayList<String> platos;
+    @Expose
     private int usuario;
+    @Expose
     private ArrayList<Reserva> reservas;
+    @Expose
     private boolean completo;
+    @Expose
     private String descripcion;
+    @Expose
     private String titulo;
 
 
     public Publicacion() {
+
+        super( Publicacion.class, new TypeToken<ArrayList<Publicacion>>(){});
 
         this.id             = 0;
         this.horaInicio     = new Date(System.currentTimeMillis());

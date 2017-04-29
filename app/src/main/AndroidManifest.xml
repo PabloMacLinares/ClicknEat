@@ -7,6 +7,10 @@
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
+    <!-- Permiso conexion a internet -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -24,7 +28,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginView"
+            android:name=".views.login.LoginView"
             android:label="@string/title_activity_login_view" />
         <activity android:name=".views.chats.ChatsView" />
         <activity android:name=".views.chats.chat.ChatView"></activity>
