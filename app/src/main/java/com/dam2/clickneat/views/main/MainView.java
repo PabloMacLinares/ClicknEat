@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.dam2.clickneat.R;
+import com.dam2.clickneat.client.handlers.UsuarioHandler;
 
 public class MainView extends AppCompatActivity
         implements MainContract.View, NavigationView.OnNavigationItemSelectedListener {
@@ -46,6 +47,17 @@ public class MainView extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         presenter = new MainPresenter(this);
+
+        /*Usuario u = new Usuario();
+        u.setId(50);
+        u.setUsername("fernanProbandoPut");*/
+        UsuarioHandler handler = new UsuarioHandler();
+        //handler.insertElement(u);
+        //handler.getElement(48);
+        //handler.getAllElements();
+        //handler.updateElement(u);
+        //handler.deleteElement(50);
+
     }
 
     @Override
