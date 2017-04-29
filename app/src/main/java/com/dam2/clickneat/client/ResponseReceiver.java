@@ -6,8 +6,8 @@ package com.dam2.clickneat.client;
 
 public interface ResponseReceiver {
 
-    public void onResponseReceived(Object data);
+    public void onResponseReceived(Object data, String requestId);
 
-    public void onErrorReceived(String error);
+    public void onErrorReceived(Object data, String requestId);
 
 }

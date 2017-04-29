@@ -25,7 +25,7 @@ public class Client {
     public static final String API_URL = "http://clickandeat-fernan13.c9users.io/api/";
 
     //TODO data es el JSON, no se de que tipo es, por eso he puesto Object, ya lo cambiaré
-    public static void makeRequest(String path, String data, RequestMethod method, ResponseReceiver receiver){
+    public static void makeRequest(String path, String data, RequestMethod method, String requestId, ResponseReceiver receiver){
         /*switch (method){
             case GET:
                 sendGetRequest(path, receiver);
@@ -43,7 +43,7 @@ public class Client {
                 break;
         }*/
 
-        sendRequest(path, data, method, receiver);
+        sendRequest(path, data, method, requestId, receiver);
     }
 
     //TODO Hay que ver que parametros necesitan los metodos get, post, put, delete
@@ -72,16 +72,16 @@ public class Client {
         //else -> sendResponse()
     }
 
-    private static void sendResponse(ResponseReceiver receiver, Object data){
-        receiver.onResponseReceived(data);
+    private static void sendResponse(ResponseReceiver receiver, String requestId, Object data){
+        receiver.onResponseReceived(data, requestId);
     }
 
-    private static void sendError(ResponseReceiver receiver, String error){
-        receiver.onErrorReceived(error);
+    private static void sendError(ResponseReceiver receiver, String requestId, Object data){
+        receiver.onErrorReceived(data, requestId);
     }
 
 
-    private static void sendRequest(String path, String data, final RequestMethod method, final ResponseReceiver receiver) {
+    private static void sendRequest(String path, String data, final RequestMethod method, final String requestId, final ResponseReceiver receiver) {
 
 
         new AsyncTask<String, Void, Object>() {
@@ -164,7 +164,7 @@ public class Client {
 
                 }catch( Exception e ) {
 
-                    System.out.println(e.getMessage());
+                    System.err.println(e.getMessage());
                 }
                 finally {
 
@@ -194,10 +194,10 @@ public class Client {
 
                     if ( errorCode == 0 ) {
 
-                        sendResponse(receiver, data );
+                        sendResponse(receiver, requestId, data );
                     }
                     else {
-                        sendError(receiver, (String)data);
+                        sendError(receiver, requestId, data);
                     }
                 }
             }
