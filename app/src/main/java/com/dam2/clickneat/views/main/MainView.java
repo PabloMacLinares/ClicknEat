@@ -14,7 +14,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.dam2.clickneat.R;
+import com.dam2.clickneat.client.handlers.ComentarioHandler;
+import com.dam2.clickneat.client.handlers.ConversacionHandler;
+import com.dam2.clickneat.client.handlers.ReservaHandler;
 import com.dam2.clickneat.client.handlers.UsuarioHandler;
+import com.dam2.clickneat.pojos.Comentario;
+import com.dam2.clickneat.pojos.Conversacion;
+import com.dam2.clickneat.pojos.Mensaje;
+import com.dam2.clickneat.pojos.Reserva;
+import com.dam2.clickneat.pojos.Usuario;
 
 public class MainView extends AppCompatActivity
         implements MainContract.View, NavigationView.OnNavigationItemSelectedListener {
@@ -48,16 +56,12 @@ public class MainView extends AppCompatActivity
 
         presenter = new MainPresenter(this);
 
-        /*Usuario u = new Usuario();
-        u.setId(50);
-        u.setUsername("fernanProbandoPut");*/
-        UsuarioHandler handler = new UsuarioHandler();
-        //handler.insertElement(u);
-        //handler.getElement(48);
-        //handler.getAllElements();
-        //handler.updateElement(u);
-        //handler.deleteElement(50);
+        Usuario u = new Usuario();
+        u.setUsername("lanjaron");
+        u.setPassword("lanjaron");
 
+        UsuarioHandler usuarioHandler = new UsuarioHandler();
+        usuarioHandler.loginUser(u);
     }
 
     @Override

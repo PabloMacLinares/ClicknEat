@@ -26,50 +26,8 @@ public class Client {
 
     //TODO data es el JSON, no se de que tipo es, por eso he puesto Object, ya lo cambiaré
     public static void makeRequest(String path, String data, RequestMethod method, String requestId, ResponseReceiver receiver){
-        /*switch (method){
-            case GET:
-                sendGetRequest(path, receiver);
-                break;
-            case POST:
-                sendPostRequest(path, data, receiver);
-                break;
-            case PUT:
-                sendPutRequest(path, data, receiver);
-                break;
-            case DELETE:
-                sendDeleteRequest(path, data, receiver);
-                break;
-            default:
-                break;
-        }*/
 
         sendRequest(path, data, method, requestId, receiver);
-    }
-
-    //TODO Hay que ver que parametros necesitan los metodos get, post, put, delete
-    private static void sendGetRequest(String path, ResponseReceiver receiver ){
-        //Make request
-        //if error -> sendError()
-        //else -> sendResponse()
-
-    }
-
-    private static void sendPostRequest(String path, String data, ResponseReceiver receiver ){
-        //Make request
-        //if error -> sendError()
-        //else -> sendResponse()
-    }
-
-    private static void sendPutRequest(String path, String data, ResponseReceiver receiver){
-        //Make request
-        //if error -> sendError()
-        //else -> sendResponse()
-    }
-
-    private static void sendDeleteRequest(String path, String data, ResponseReceiver receiver){
-        //Make request
-        //if error -> sendError()
-        //else -> sendResponse()
     }
 
     private static void sendResponse(ResponseReceiver receiver, String requestId, Object data){
@@ -113,7 +71,23 @@ public class Client {
                     //Cargamos los datos a enviar en la peticion
                     if ( method != RequestMethod.GET && data != null) {
 
-                        conn.setDoOutput(true);
+                        /*
+                            Debido a que no podemos enviar informacion en el cuerpo de la peticion
+                            a traves del metodo DELETE, le indicamos que se realiza una peticion
+                            POST para que acepte los parámetros en el cuerpo de la peticion y le
+                            agregamos la cabecera que indica que realizaremos una peticion a traves
+                            del metodo DELETE
+                         */
+                        if ( method == RequestMethod.DELETE ) {
+
+                            conn.setRequestProperty("X-HTTP-Method-Override", RequestMethod.DELETE.name());
+                            conn.setRequestMethod(RequestMethod.POST.name());
+                        }
+                        else {
+
+                            //Nos permite especificar que se incluira informacion en el cuerpo de la peticion
+                            conn.setDoOutput(true);
+                        }
 
                         // Tamaño previamente conocido
                         conn.setFixedLengthStreamingMode(data.getBytes().length);
@@ -123,6 +97,7 @@ public class Client {
 
                         //Llenamos el buffer de salida con el JSON que queremos enviar al servidor
                         BufferHelper.writeOutputStream(conn.getOutputStream(), data);
+
                     }
 
                     //Establecemos la conexion

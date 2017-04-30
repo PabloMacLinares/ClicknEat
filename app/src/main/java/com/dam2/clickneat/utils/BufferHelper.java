@@ -63,6 +63,8 @@ public class BufferHelper {
             out.flush();
             out.close();
 
-        } catch ( IOException io){}
+        } catch ( IOException io){
+            System.out.println(io.getMessage());
+        }
     }
 }

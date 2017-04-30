@@ -20,7 +20,15 @@ public class JsonHelper {
      * @return String
      */
     public static String toJson(Object o) {
-        Gson gson = new GsonBuilder().serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+
+        GsonBuilder builder = new GsonBuilder();
+
+        builder.serializeNulls()
+                .excludeFieldsWithoutExposeAnnotation()
+                .registerTypeAdapter(Date.class, new DateJsonSerializer()).create();
+
+        Gson gson = builder.create();
+
         return gson.toJson(o);
     }
 

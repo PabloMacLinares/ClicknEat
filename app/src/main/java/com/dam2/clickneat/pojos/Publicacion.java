@@ -25,7 +25,7 @@ public class Publicacion extends BaseClass {
     @Expose
     private int plazasTotales;
     @Expose
-    private float precio;
+    private Double precio;
     @Expose
     private int domicilio;
     @Expose
@@ -53,7 +53,7 @@ public class Publicacion extends BaseClass {
         this.horaFin        = new Date(System.currentTimeMillis());
         this.fecha          = new Date(System.currentTimeMillis());
         this.plazasTotales  = 0;
-        this.precio         = 0;
+        this.precio         = 0.0;
         this.domicilio      = 0;
         this.foto           = "";
         this.platos         = new ArrayList();
@@ -73,7 +73,7 @@ public class Publicacion extends BaseClass {
         this.horaFin        = (Date)in.readSerializable();
         this.fecha          = (Date)in.readSerializable();
         this.plazasTotales  = in.readInt();
-        this.precio         = in.readFloat();
+        this.precio         = in.readDouble();
         this.domicilio      = in.readInt();
         this.foto           = in.readString();
         in.readList(platos, String.class.getClassLoader());
@@ -126,11 +126,11 @@ public class Publicacion extends BaseClass {
         this.plazasTotales = plazasTotales;
     }
 
-    public float getPrecio() {
+    public Double getPrecio() {
         return precio;
     }
 
-    public void setPrecio(float precio) {
+    public void setPrecio(Double precio) {
         this.precio = precio;
     }
 
@@ -232,7 +232,7 @@ public class Publicacion extends BaseClass {
         dest.writeSerializable(this.horaFin);
         dest.writeSerializable(this.fecha);
         dest.writeInt(this.plazasTotales);
-        dest.writeFloat(this.precio);
+        dest.writeDouble(this.precio);
         dest.writeInt(this.domicilio);
         dest.writeString(this.foto);
         dest.writeList(platos);

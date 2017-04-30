@@ -41,7 +41,7 @@ public class DateJsonSerializer extends AbstractJsonSerializer {
 
         if ( src != null && src instanceof Date ) {
 
-            SimpleDateFormat formatter  = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            SimpleDateFormat formatter  = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
             String date                 = formatter.format((Date)src);
 
             return new JsonPrimitive(date);
