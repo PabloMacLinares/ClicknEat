@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<net.mobindustry.emojilib.ObservableLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:emojicon="http://schemas.android.com/tools"
+    android:id="@+id/observable_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:orientation="horizontal"
+    android:layout_marginRight="5dp"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp">
+
+    <!--<LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/input"
+        android:layout_gravity="bottom"
+        android:layout_weight="1"
+        android:padding="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginBottom="15dp">
+
+        <!- android:layout_gravity="bottom"-->
+        <!--<ImageView
+            android:id="@+id/smiles"
+            android:layout_width="@dimen/smiles_button_size"
+            android:layout_height="@dimen/smiles_button_size"
+            android:layout_marginBottom="@dimen/button_margin_3dp"
+            android:padding="@dimen/button_padding_7dp"
+            />
+
+        <EditText
+            android:id="@+id/message_edit_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:paddingRight="20dp"
+            android:hint="@string/edit_text_hint"
+            android:imeOptions="flagNoExtractUi|actionNone"
+            android:background="@null"
+            android:maxLines="4"
+            android:minHeight="@dimen/edit_text_max_height"
+            android:textColor="@color/edit_text_text"
+            android:textColorHint="@color/edit_text_hint"
+            />
+
+    </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="7dp"
+        android:clickable="true"
+        android:layout_gravity="bottom|end"
+        app:fabSize="normal"
+        app:srcCompat="@drawable/input_send"
+        android:id="@+id/attach"/>
+
+    <!-<ImageView
+        android:id="@+id/attach"
+        android:layout_width="@dimen/send_button_size"
+        android:layout_height="@dimen/send_button_size"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="@dimen/button_margin_3dp"
+        android:padding="@dimen/button_padding_7dp"
+        />-->
+
+    <LinearLayout
+        android:id="@+id/bottomlayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginBottom="8dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:paddingBottom="15dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="20dp"
+            android:background="@drawable/input"
+            android:layout_gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/smiles"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="bottom"/>
+
+            <com.rockerhieu.emojicon.EmojiconEditText
+                android:id="@+id/message_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="12dp"
+                android:imeOptions="flagNoExtractUi|actionNone"
+                android:hint="@string/type_your_message"
+                android:inputType="textMultiLine|textImeMultiLine"
+                android:textAlignment="gravity"
+                android:ems="10"
+                android:textSize="18sp"
+                android:textColorHint="#c4c0bd"
+                android:background="@null"
+                emojicon:emojiconSize="26sp"/>
+
+        </LinearLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            emojicon:fabSize="auto"
+            emojicon:srcCompat="@drawable/input_send"
+            android:id="@+id/attach"
+            android:layout_gravity="center_vertical"/>
+
+    </LinearLayout>
+
+</net.mobindustry.emojilib.ObservableLinearLayout>
