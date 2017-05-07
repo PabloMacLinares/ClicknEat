@@ -4,9 +4,11 @@ import com.dam2.clickneat.client.DataReceiver;
 import com.dam2.clickneat.pojos.ListIds;
 import com.dam2.clickneat.pojos.Mensaje;
 import com.dam2.clickneat.pojos.Publicacion;
+import com.dam2.clickneat.pojos.Ubicacion;
 import com.dam2.clickneat.utils.JsonHelper;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by ferna on 30/04/2017.
@@ -54,6 +56,10 @@ public class PublicacionHandler extends ClientHandler<Publicacion> {
         Client.makeRequest("publicacion", JsonHelper.toJson(new ListIds(ids)), Client.RequestMethod.DELETE, DELETE_ELEMENTS_ID, this);
     }
 
+    public void getElementsByUbicacionAndDistante(Map<String, Object> data ) {
+
+        Client.makeRequest("publicacion/search", JsonHelper.toJson(data), Client.RequestMethod.POST, GET_ALL_ID, this);
+    }
     /*@Override
     public void onResponseReceived(Object data,String requestId) {
         System.out.println("RequestId: " + requestId);

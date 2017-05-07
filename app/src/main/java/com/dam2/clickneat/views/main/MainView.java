@@ -2,8 +2,6 @@ package com.dam2.clickneat.views.main;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -17,18 +15,8 @@ import android.view.MenuItem;
 import android.widget.Button;
 
 import com.dam2.clickneat.R;
-import com.dam2.clickneat.client.handlers.ConversacionHandler;
-import com.dam2.clickneat.firebase.receivers.FirebaseDataReceiver;
-import com.dam2.clickneat.listeners.AppStateListener;
-import com.dam2.clickneat.pojos.Conversacion;
-import com.dam2.clickneat.pojos.Mensaje;
-import com.dam2.clickneat.pojos.PerfilUsuario;
-import com.dam2.clickneat.preferences.Preferences;
-import com.dam2.clickneat.utils.JsonHelper;
 import com.dam2.clickneat.views.BaseActivity;
 import com.dam2.clickneat.views.chats.ChatsView;
-import com.dam2.clickneat.views.chats.chat.ChatView;
-import com.google.gson.reflect.TypeToken;
 
 public class MainView extends BaseActivity
         implements MainContract.View, NavigationView.OnNavigationItemSelectedListener {
