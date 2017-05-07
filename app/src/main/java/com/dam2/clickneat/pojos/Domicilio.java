@@ -61,9 +61,9 @@ public class Domicilio extends BaseClass {
         this.pais           = in.readString();
         this.localidad      = in.readString();
         this.barrio         = in.readString();
-        in.readList(imagenes, String.class.getClassLoader());
+        in.readList( this.imagenes == null ? new ArrayList<String>() : this.imagenes, String.class.getClassLoader());
         this.perfil         = in.readInt();
-        in.readList(this.publicaciones, Integer.class.getClassLoader());
+        in.readList( this.publicaciones == null ? new ArrayList<Integer>() : this.publicaciones, Integer.class.getClassLoader());
     }
 
     public int getId() {

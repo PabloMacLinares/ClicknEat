@@ -21,6 +21,8 @@ public class Conversacion extends BaseClass {
     private int usuarioInicia;
     @Expose
     private int usuarioRecibe;
+    //Este campo no se serializaria solo se recibiría por parte del servidor
+    private ArrayList<ConversacionMetadata> metadatas;
 
     public Conversacion() {
 
@@ -30,15 +32,17 @@ public class Conversacion extends BaseClass {
         this.mensajes       = new ArrayList();
         this.usuarioInicia  = 0;
         this.usuarioRecibe  = 0;
+        this.metadatas      = new ArrayList();
     }
 
     protected Conversacion(Parcel in) {
         super(in);
 
         this.id             = in.readInt();
-        in.readTypedList( mensajes, Mensaje.CREATOR);
+        in.readTypedList( this.mensajes == null ? new ArrayList<Mensaje>() : this.mensajes, Mensaje.CREATOR);
         this.usuarioInicia  = in.readInt();
         this.usuarioRecibe  = in.readInt();
+        in.readTypedList( this.metadatas == null ? new ArrayList<ConversacionMetadata>() : this.metadatas, ConversacionMetadata.CREATOR);
     }
 
     public int getId() {
@@ -77,6 +81,14 @@ public class Conversacion extends BaseClass {
         this.usuarioRecibe = usuarioRecibe;
     }
 
+    public void setMetadatas(ArrayList<ConversacionMetadata> metadatas){
+        this.metadatas = metadatas;
+    }
+
+    public ArrayList<ConversacionMetadata> getMetadatas(){
+        return this.metadatas;
+    }
+
     public static final Creator<Conversacion> CREATOR = new Creator<Conversacion>() {
         @Override
         public Conversacion createFromParcel(Parcel in) {
@@ -98,9 +110,9 @@ public class Conversacion extends BaseClass {
     public void writeToParcel(Parcel dest, int flags) {
 
         dest.writeInt(this.id);
-        dest.writeTypedList(mensajes);
+        dest.writeTypedList(this.mensajes);
         dest.writeInt(this.usuarioInicia);
         dest.writeInt(this.usuarioRecibe);
-
+        dest.writeTypedList(this.metadatas);
     }
 }

@@ -1,6 +1,9 @@
 package com.dam2.clickneat.views.main;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -8,23 +11,26 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 
 import com.dam2.clickneat.R;
-import com.dam2.clickneat.client.handlers.ComentarioHandler;
 import com.dam2.clickneat.client.handlers.ConversacionHandler;
-import com.dam2.clickneat.client.handlers.ReservaHandler;
-import com.dam2.clickneat.client.handlers.UsuarioHandler;
-import com.dam2.clickneat.pojos.Comentario;
+import com.dam2.clickneat.firebase.receivers.FirebaseDataReceiver;
+import com.dam2.clickneat.listeners.AppStateListener;
 import com.dam2.clickneat.pojos.Conversacion;
 import com.dam2.clickneat.pojos.Mensaje;
-import com.dam2.clickneat.pojos.Reserva;
-import com.dam2.clickneat.pojos.Usuario;
+import com.dam2.clickneat.pojos.PerfilUsuario;
+import com.dam2.clickneat.preferences.Preferences;
+import com.dam2.clickneat.utils.JsonHelper;
+import com.dam2.clickneat.views.BaseActivity;
+import com.dam2.clickneat.views.chats.ChatsView;
+import com.dam2.clickneat.views.chats.chat.ChatView;
+import com.google.gson.reflect.TypeToken;
 
-public class MainView extends AppCompatActivity
+public class MainView extends BaseActivity
         implements MainContract.View, NavigationView.OnNavigationItemSelectedListener {
 
     private MainContract.Presenter presenter;
@@ -56,12 +62,18 @@ public class MainView extends AppCompatActivity
 
         presenter = new MainPresenter(this);
 
-        Usuario u = new Usuario();
-        u.setUsername("lanjaron");
-        u.setPassword("lanjaron");
+        Button button = (Button) findViewById(R.id.btConversaciones);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-        UsuarioHandler usuarioHandler = new UsuarioHandler();
-        usuarioHandler.loginUser(u);
+                //Intent i = new Intent(MainView.this, ChatsView.class);
+                Intent i = new Intent(MainView.this, ChatsView.class);
+                startActivity(i);
+
+            }
+        });
+
     }
 
     @Override

@@ -76,9 +76,9 @@ public class Publicacion extends BaseClass {
         this.precio         = in.readDouble();
         this.domicilio      = in.readInt();
         this.foto           = in.readString();
-        in.readList(platos, String.class.getClassLoader());
+        in.readList( this.platos == null ? new ArrayList<String>() : platos, String.class.getClassLoader());
         this.usuario        = in.readInt();
-        in.readTypedList(this.reservas, Reserva.CREATOR);
+        in.readTypedList( this.reservas == null ? new ArrayList<Reserva>() : this.reservas, Reserva.CREATOR);
         this.completo       = in.readByte() != 0;
         this.descripcion    = in.readString();
         this.titulo         = in.readString();

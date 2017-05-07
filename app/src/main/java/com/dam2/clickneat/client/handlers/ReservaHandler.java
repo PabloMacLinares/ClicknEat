@@ -1,5 +1,6 @@
 package com.dam2.clickneat.client.handlers;
 import com.dam2.clickneat.client.Client;
+import com.dam2.clickneat.client.DataReceiver;
 import com.dam2.clickneat.pojos.ListIds;
 import com.dam2.clickneat.pojos.Publicacion;
 import com.dam2.clickneat.pojos.Reserva;
@@ -12,6 +13,10 @@ import java.util.List;
  */
 
 public class ReservaHandler extends ClientHandler<Reserva> {
+
+    public ReservaHandler(DataReceiver<Reserva> dataReceiver) {
+        super(dataReceiver);
+    }
 
     @Override
     public void getAllElements() {
@@ -49,7 +54,7 @@ public class ReservaHandler extends ClientHandler<Reserva> {
         Client.makeRequest("reserva", JsonHelper.toJson(new ListIds(ids)), Client.RequestMethod.DELETE, DELETE_ELEMENTS_ID, this);
     }
 
-    @Override
+    /*@Override
     public void onResponseReceived(Object data,String requestId) {
         System.out.println("RequestId: " + requestId);
         System.out.println(data);
@@ -59,5 +64,5 @@ public class ReservaHandler extends ClientHandler<Reserva> {
     public void onErrorReceived(Object data, String requestId) {
         System.err.println("RequestId: " + requestId);
         System.err.println(data);
-    }
+    }*/
 }

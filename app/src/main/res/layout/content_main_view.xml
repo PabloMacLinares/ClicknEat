@@ -13,9 +13,9 @@
     tools:context="com.dam2.clickneat.views.main.MainView"
     tools:showIn="@layout/app_bar_main_view">
 
-    <TextView
-        android:id="@+id/tvPrueba"
+    <Button
+        android:id="@+id/btConversaciones"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:text="Conversaciones"/>
 </RelativeLayout>

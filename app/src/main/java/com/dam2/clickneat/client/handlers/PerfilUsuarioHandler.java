@@ -1,6 +1,7 @@
 package com.dam2.clickneat.client.handlers;
 
 import com.dam2.clickneat.client.Client;
+import com.dam2.clickneat.client.DataReceiver;
 import com.dam2.clickneat.pojos.ListIds;
 import com.dam2.clickneat.pojos.PerfilUsuario;
 import com.dam2.clickneat.utils.JsonHelper;
@@ -12,6 +13,10 @@ import java.util.List;
  */
 
 public class PerfilUsuarioHandler extends ClientHandler<PerfilUsuario> {
+
+    public PerfilUsuarioHandler(DataReceiver<PerfilUsuario> dataReceiver) {
+        super(dataReceiver);
+    }
 
     @Override
     public void getAllElements() {
@@ -48,7 +53,7 @@ public class PerfilUsuarioHandler extends ClientHandler<PerfilUsuario> {
         Client.makeRequest("perfil-usuario", JsonHelper.toJson(new ListIds(ids)), Client.RequestMethod.DELETE, DELETE_ELEMENTS_ID, this);
     }
 
-    @Override
+    /*@Override
     public void onResponseReceived(Object data,String requestId) {
         System.out.println("RequestId: " + requestId);
         System.out.println(data);
@@ -58,6 +63,6 @@ public class PerfilUsuarioHandler extends ClientHandler<PerfilUsuario> {
     public void onErrorReceived(Object data, String requestId) {
         System.err.println("RequestId: " + requestId);
         System.err.println(data);
-    }
+    }*/
 
 }

@@ -15,6 +15,10 @@ import java.util.Date;
  * Created by ferna on 29/04/2017.
  */
 
+/**
+ * Serializador especifico para las fechas. Se utiliza para generar un string valido
+ * para nuestro servidor
+ */
 public class DateJsonSerializer extends AbstractJsonSerializer {
 
     @Override

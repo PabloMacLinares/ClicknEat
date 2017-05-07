@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:emojicon="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:background="@drawable/rvlines">
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profile_image"
+        android:layout_width="60dp"
+        android:layout_height="60dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="5dp"
+        android:layout_marginLeft="2dp">
+
+        <!--<TextView
+            android:id="@+id/tvUsername"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:textStyle="bold"
+            android:textSize="16sp"/>-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5">
+
+            <TextView
+                android:id="@+id/tvUsername"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.8"
+                android:textStyle="bold"
+                android:textSize="16sp"/>
+
+            <!--Por defecto no visible ya que solo se utilizaria para los chats-->
+            <!--  android:textColor="@{chat.unseenMessages != 0 ? @color/colorAccent : @color/primary_dark_material_light}" -->
+            <TextView
+                android:id="@+id/tvChatTime"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.2"
+                android:textSize="10sp"
+                android:layout_marginTop="4sp"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="0.5">
+
+            <com.rockerhieu.emojicon.EmojiconTextView
+                android:id="@+id/emojiconTextView"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.8"
+                android:autoLink="web"
+                android:textSize="12sp"
+                emojicon:emojiconSize="12sp" />
+
+            <!--Por defecto no visible ya que solo se utilizaria para los chats-->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.2"
+                android:orientation="horizontal">
+
+                <!--
+                    android:visibility="@{chat.unseenMessages != 0 ? View.VISIBLE : View.GONE}" -->
+                <TextView
+                    android:id="@+id/tvUnseen"
+                    android:background="@drawable/shape_unreadmessages"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:textSize="9sp"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:textAlignment="gravity"
+                    android:textColor="@color/colorIcons"
+                    android:textStyle="bold"
+                    android:visibility="gone"/>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,5 +1,6 @@
 package com.dam2.clickneat.client.handlers;
 
+import com.dam2.clickneat.client.DataReceiver;
 import com.dam2.clickneat.client.ResponseReceiver;
 
 import java.util.List;
@@ -20,6 +21,12 @@ public abstract class ClientHandler<T> implements ResponseReceiver {
     protected static final String UPDATE_ID = "update";
     protected static final String DELETE_ID = "delete";
     protected static final String DELETE_ELEMENTS_ID = "delete_elements";
+    protected  DataReceiver<T> dataReceiver;
+
+    public ClientHandler (DataReceiver<T> dataReceiver) {
+
+        this.dataReceiver = dataReceiver;
+    }
 
     public abstract void getAllElements();
 
@@ -33,4 +40,47 @@ public abstract class ClientHandler<T> implements ResponseReceiver {
 
     public abstract void deleteElements(List<Long> ids);
 
+    //Debido a la interfaz generica podemos en esta clase pasar la informacion a la
+    // interfaz independientemente del objeto que sea
+    @Override
+    public void onResponseReceived(Object data,String requestId) {
+
+        switch ( requestId ) {
+
+            case GET_ALL_ID : {
+
+                dataReceiver.onListReceived((List<T>)data);
+                break;
+            }
+
+            case GET_ID: {
+
+                dataReceiver.onElementReceived((T)data);
+                break;
+            }
+
+            case INSERT_ID: {
+
+                dataReceiver.onDataItemInsertedReceived(Integer.valueOf((String)data));
+                break;
+            }
+
+            default: {
+
+                dataReceiver.onDataNoErrorReceived((String)data);
+            }
+        }
+
+
+        System.out.println("RequestId: " + requestId);
+        System.out.println(data);
+    }
+
+    @Override
+    public void onErrorReceived(Object data, String requestId) {
+        System.err.println("RequestId: " + requestId);
+        System.err.println(data);
+
+        dataReceiver.onDataErrorReceived((String)data);
+    }
 }

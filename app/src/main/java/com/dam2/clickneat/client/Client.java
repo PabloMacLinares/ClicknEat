@@ -13,7 +13,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * Created by Pablo on 25/04/2017.
+ * Created by ferna on 25/04/2017.
  */
 
 public class Client {
@@ -26,7 +26,6 @@ public class Client {
 
     //TODO data es el JSON, no se de que tipo es, por eso he puesto Object, ya lo cambiaré
     public static void makeRequest(String path, String data, RequestMethod method, String requestId, ResponseReceiver receiver){
-
         sendRequest(path, data, method, requestId, receiver);
     }
 
@@ -40,7 +39,6 @@ public class Client {
 
 
     private static void sendRequest(String path, String data, final RequestMethod method, final String requestId, final ResponseReceiver receiver) {
-
 
         new AsyncTask<String, Void, Object>() {
 

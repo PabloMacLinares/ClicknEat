@@ -21,12 +21,15 @@ public class Preferences {
     public static final long DEFAULT_LONG = Long.MIN_VALUE;
     public static final boolean DEFAULT_BOOLEAN = Boolean.FALSE;
     public static final String DEFAULT_STRING = "";
+    private static final String SHARED_PREFERENCES = "clickneat";
 
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
 
-    public Preferences(Activity activity){
-        sharedPreferences = activity.getPreferences(Context.MODE_PRIVATE);
+    //Cambiado debido a que el servicio no posee Activity
+    public Preferences(Context activity){
+
+        sharedPreferences = activity.getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
     }
 
