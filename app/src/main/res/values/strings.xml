@@ -10,6 +10,11 @@
     <!-- Strings related to login -->
     <string name="usuario">Usuario</string>
     <string name="contrasena">Contraseña</string>
+    <string name="correoRegistro">Correo electrónico</string>
+    <string name="usuarioRegistro">Nombre de usuario</string>
+    <string name="contrasenaRegistro">Contraseña</string>
+
+    <string name="registrarse">Registrarse</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_invalid_email">This email address is invalid</string>
