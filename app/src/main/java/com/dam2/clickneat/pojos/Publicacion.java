@@ -27,7 +27,7 @@ public class Publicacion extends BaseClass {
     @Expose
     private Double precio;
     @Expose
-    private int domicilio;
+    private Domicilio domicilio;
     @Expose
     private String foto;
     @Expose
@@ -54,7 +54,7 @@ public class Publicacion extends BaseClass {
         this.fecha          = new Date(System.currentTimeMillis());
         this.plazasTotales  = 0;
         this.precio         = 0.0;
-        this.domicilio      = 0;
+        this.domicilio      = new Domicilio();
         this.foto           = "";
         this.platos         = new ArrayList();
         this.usuario        = 0;
@@ -74,7 +74,7 @@ public class Publicacion extends BaseClass {
         this.fecha          = (Date)in.readSerializable();
         this.plazasTotales  = in.readInt();
         this.precio         = in.readDouble();
-        this.domicilio      = in.readInt();
+        this.domicilio      = in.readParcelable(Domicilio.class.getClassLoader());
         this.foto           = in.readString();
         in.readList( this.platos == null ? new ArrayList<String>() : platos, String.class.getClassLoader());
         this.usuario        = in.readInt();
@@ -134,11 +134,11 @@ public class Publicacion extends BaseClass {
         this.precio = precio;
     }
 
-    public int getDomicilio() {
+    public Domicilio getDomicilio() {
         return domicilio;
     }
 
-    public void setDomicilio(int domicilio) {
+    public void setDomicilio(Domicilio domicilio) {
         this.domicilio = domicilio;
     }
 
@@ -233,7 +233,7 @@ public class Publicacion extends BaseClass {
         dest.writeSerializable(this.fecha);
         dest.writeInt(this.plazasTotales);
         dest.writeDouble(this.precio);
-        dest.writeInt(this.domicilio);
+        dest.writeParcelable(this.domicilio, flags);
         dest.writeString(this.foto);
         dest.writeList(platos);
         dest.writeInt(this.usuario);
