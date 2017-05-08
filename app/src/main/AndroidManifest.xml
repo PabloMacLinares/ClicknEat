@@ -33,9 +33,9 @@
         <activity android:name=".views.chats.ChatsView" />
         <activity android:name=".views.chats.chat.ChatView" />
         <activity
-            android:name=".navigation_activity"
-            android:label="@string/title_activity_navigation_activity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:name=".LoginActivity"
+            android:label="@string/title_activity_login" />
+        <activity android:name=".views.registro.RegistroActivity"></activity>
     </application>
 
 </manifest>
