@@ -1,5 +1,6 @@
 package com.dam2.clickneat.views.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -8,15 +9,16 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 
 import com.dam2.clickneat.R;
-import com.dam2.clickneat.client.handlers.UsuarioHandler;
+import com.dam2.clickneat.views.BaseActivity;
+import com.dam2.clickneat.views.chats.ChatsView;
 
-public class MainView extends AppCompatActivity
+public class MainView extends BaseActivity
         implements MainContract.View, NavigationView.OnNavigationItemSelectedListener {
 
     private MainContract.Presenter presenter;
@@ -48,15 +50,17 @@ public class MainView extends AppCompatActivity
 
         presenter = new MainPresenter(this);
 
-        /*Usuario u = new Usuario();
-        u.setId(50);
-        u.setUsername("fernanProbandoPut");*/
-        UsuarioHandler handler = new UsuarioHandler();
-        //handler.insertElement(u);
-        //handler.getElement(48);
-        //handler.getAllElements();
-        //handler.updateElement(u);
-        //handler.deleteElement(50);
+        Button button = (Button) findViewById(R.id.btConversaciones);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //Intent i = new Intent(MainView.this, ChatsView.class);
+                Intent i = new Intent(MainView.this, ChatsView.class);
+                startActivity(i);
+
+            }
+        });
 
     }
 

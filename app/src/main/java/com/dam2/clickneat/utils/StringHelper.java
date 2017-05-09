@@ -1,5 +1,9 @@
 package com.dam2.clickneat.utils;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  * Created by ferna on 29/04/2017.
  */
@@ -31,5 +35,49 @@ public class StringHelper {
         }
 
         return str.toString();
+    }
+
+    /**
+     * @param date Fecha para formatear a dia-mes-anio
+     * @return String
+     */
+    public static String dateToString(Date date) {
+
+        SimpleDateFormat formatter;
+
+        Calendar calendar = Calendar.getInstance();
+        Calendar now      = Calendar.getInstance();
+
+        calendar.setTime(date);
+
+        if ( Integer.compare(calendar.get(Calendar.DAY_OF_YEAR), now.get(Calendar.DAY_OF_YEAR) ) != 0 ) {
+
+            formatter  = new SimpleDateFormat("dd-MM-yyyy");
+        }
+        else {
+
+            formatter  = new SimpleDateFormat("HH:mm");
+        }
+        return formatter.format(date);
+    }
+
+    /**
+     * @param date Fecha para formatear a h-m-s
+     * @return String
+     */
+    public static String hourToString(Date date) {
+
+        SimpleDateFormat formatter  = new SimpleDateFormat("HH:mm:ss");
+        return formatter.format(date);
+    }
+
+    /**
+     * @param date Fecha para formatear a dia-mes-anio h-m-s
+     * @return String
+     */
+    public static String dateFullToString(Date date) {
+
+        SimpleDateFormat formatter  = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        return formatter.format(date);
     }
 }

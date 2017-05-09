@@ -6,4 +6,12 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+
+    <!-- Conversacion -->
+    <dimen name="appbar_padding_top">16dp</dimen>
+    <dimen name="tabIndicatorHeight">2dp</dimen>
+
+    <dimen name="message_incoming">8dp</dimen>
+    <dimen name="message_outcoming">60dp</dimen>
+
 </resources>

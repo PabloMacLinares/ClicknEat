@@ -21,4 +21,13 @@
     </string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Conversaciones -->
+    <string name="type_your_message">Escribir mensaje</string>
+
+    <!-- String related SharedPreferences -->
+    <string name="preferences_id_user">idUsuario</string>
+    <string name="preferences_id_token">idToken</string>
+    <string name="preferences_token">token</string>
+
 </resources>

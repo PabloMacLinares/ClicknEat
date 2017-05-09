@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "900398575620",
+    "firebase_url": "https://clicknd-eat.firebaseio.com",
+    "project_id": "clicknd-eat",
+    "storage_bucket": "clicknd-eat.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:900398575620:android:689f9625d0571694",
+        "android_client_info": {
+          "package_name": "com.dam2.clickneat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "900398575620-1b81egfjiik6j6gg4e3ov6g5rff7s52d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dam2.clickneat",
+            "certificate_hash": "2ac3fe5342e9156015b0c851e9c68fc7ac90f2b7"
+          }
+        },
+        {
+          "client_id": "900398575620-efr91t89lesg28b4grkmsjq5va1eh8vr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCuNkX9Sk1RG3YCRdaDgy1J-AKrS3hzYY4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "900398575620-efr91t89lesg28b4grkmsjq5va1eh8vr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
