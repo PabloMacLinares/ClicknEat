@@ -50,18 +50,6 @@ public class MainView extends BaseActivity
 
         presenter = new MainPresenter(this);
 
-        Button button = (Button) findViewById(R.id.btConversaciones);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                //Intent i = new Intent(MainView.this, ChatsView.class);
-                Intent i = new Intent(MainView.this, ChatsView.class);
-                startActivity(i);
-
-            }
-        });
-
     }
 
     @Override
