@@ -1,6 +1,8 @@
 package com.dam2.clickneat.client.handlers;
 
 import com.dam2.clickneat.client.Client;
+import com.dam2.clickneat.client.DataReceiver;
+import com.dam2.clickneat.pojos.ListIds;
 import com.dam2.clickneat.pojos.Usuario;
 import com.dam2.clickneat.utils.JsonHelper;
 
@@ -12,19 +14,16 @@ import java.util.List;
 
 public class UsuarioHandler extends ClientHandler<Usuario> {
 
-    /*Estas variables sirven para identificar que metodo invocó la peticion,
-    * es util para saber en los métodos onResponseReceived y onErrorReceived quien lanzó la petición
-    * y asi actuar consecuentemente
-    */
-    private static final String GET_ALL_ID = "get_all";
-    private static final String GET_ID = "get";
-    private static final String INSERT_ID = "insert";
-    private static final String UPDATE_ID = "update";
-    private static final String DELETE_ID = "delete";
-    private static final String DELETE_ELEMENTS_ID = "delete_elements";
+    protected static final String LOGIN_ELEMENT = "login_element";
+    protected static final String RESEND_MAIL   = "resend_mail";
+
+    public UsuarioHandler(DataReceiver<Usuario> dataReceiver) {
+        super(dataReceiver);
+    }
 
     @Override
     public void getAllElements() {
+
         Client.makeRequest("usuario", null, Client.RequestMethod.GET, GET_ALL_ID, this);
     }
 
@@ -34,6 +33,15 @@ public class UsuarioHandler extends ClientHandler<Usuario> {
         Client.makeRequest("usuario/" + id, null, Client.RequestMethod.GET, GET_ID, this);
     }
 
+    public void loginUser(Usuario element) {
+
+        Client.makeRequest("usuario/login", JsonHelper.toJson(element), Client.RequestMethod.POST, LOGIN_ELEMENT, this);
+    }
+
+    public void resendValidationEmail( Usuario element ) {
+
+        Client.makeRequest("usuario/resend", JsonHelper.toJson(element), Client.RequestMethod.POST, RESEND_MAIL, this);
+    }
     @Override
     public void insertElement(Usuario element) {
 
@@ -55,11 +63,11 @@ public class UsuarioHandler extends ClientHandler<Usuario> {
     @Override
     public void deleteElements(List<Long> ids) {
 
-        Client.makeRequest("usuario", JsonHelper.toJson(ids), Client.RequestMethod.DELETE, DELETE_ELEMENTS_ID, this);
+        Client.makeRequest("usuario", JsonHelper.toJson(new ListIds(ids)), Client.RequestMethod.DELETE, DELETE_ELEMENTS_ID, this);
     }
 
-    @Override
-    public void onResponseReceived(Object data,String requestId) {
+    /*@Override
+    public void onResponseReceived(Object data, String requestId) {
         System.out.println("RequestId: " + requestId);
         System.out.println(data);
     }
@@ -68,6 +76,6 @@ public class UsuarioHandler extends ClientHandler<Usuario> {
     public void onErrorReceived(Object data, String requestId) {
         System.err.println("RequestId: " + requestId);
         System.err.println(data);
-    }
+    }*/
 
 }

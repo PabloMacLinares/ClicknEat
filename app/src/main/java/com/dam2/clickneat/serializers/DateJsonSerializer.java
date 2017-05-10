@@ -15,6 +15,10 @@ import java.util.Date;
  * Created by ferna on 29/04/2017.
  */
 
+/**
+ * Serializador especifico para las fechas. Se utiliza para generar un string valido
+ * para nuestro servidor
+ */
 public class DateJsonSerializer extends AbstractJsonSerializer {
 
     @Override
@@ -41,7 +45,7 @@ public class DateJsonSerializer extends AbstractJsonSerializer {
 
         if ( src != null && src instanceof Date ) {
 
-            SimpleDateFormat formatter  = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            SimpleDateFormat formatter  = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
             String date                 = formatter.format((Date)src);
 
             return new JsonPrimitive(date);

@@ -9,24 +9,30 @@ import android.os.Parcelable;
 
 public class Ubicacion implements Parcelable {
 
+    private int id;
     private Double lat;
     private Double lng;
+    private int domicilio;
 
     public Ubicacion() {
 
-        this(0.0, 0.0);
+        this(0, 0.0, 0.0, 0);
     }
 
-    public Ubicacion( Double lat, Double lng ) {
+    public Ubicacion( int id, Double lat, Double lng, int domicilio ) {
 
-        this.lat = lat;
-        this.lng = lng;
+        this.id         = id;
+        this.lat        = lat;
+        this.lng        = lng;
+        this.domicilio  = domicilio;
     }
 
     protected Ubicacion(Parcel in) {
 
-        this.lat = in.readDouble();
-        this.lng = in.readDouble();
+        this.id         = in.readInt();
+        this.lat        = in.readDouble();
+        this.lng        = in.readDouble();
+        this.domicilio  = in.readInt();
     }
 
     public static final Creator<Ubicacion> CREATOR = new Creator<Ubicacion>() {
@@ -40,6 +46,14 @@ public class Ubicacion implements Parcelable {
             return new Ubicacion[size];
         }
     };
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public Double getLat() {
         return lat;
@@ -57,6 +71,14 @@ public class Ubicacion implements Parcelable {
         this.lng = lng;
     }
 
+    public int getDomicilio() {
+        return domicilio;
+    }
+
+    public void setDomicilio(int domicilio) {
+        this.domicilio = domicilio;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -65,7 +87,9 @@ public class Ubicacion implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
 
+        dest.writeInt(this.id);
         dest.writeDouble(this.lat);
         dest.writeDouble(this.lng);
+        dest.writeInt(this.domicilio);
     }
 }

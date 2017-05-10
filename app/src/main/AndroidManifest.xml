@@ -31,7 +31,39 @@
             android:name=".views.login.LoginView"
             android:label="@string/title_activity_login_view" />
         <activity android:name=".views.chats.ChatsView" />
-        <activity android:name=".views.chats.chat.ChatView"></activity>
+        <activity
+            android:name=".views.chats.chat.ChatView"
+            android:parentActivityName=".views.chats.ChatsView">
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".views.chats.ChatsView" />
+        </activity>
+
+        <service
+            android:name=".firebase.TokenService"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".firebase.MessageService"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <!-- Registramos el broadcast que avisa a nuestra app cuando llega un mensaje por Firebase -->
+        <receiver
+            android:name=".firebase.receivers.FirebaseDataReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.dam2.clickneat.firebase.receivers.DATA_RECEIVED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

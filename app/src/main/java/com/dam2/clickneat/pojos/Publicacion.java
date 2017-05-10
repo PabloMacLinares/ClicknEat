@@ -25,9 +25,9 @@ public class Publicacion extends BaseClass {
     @Expose
     private int plazasTotales;
     @Expose
-    private float precio;
+    private Double precio;
     @Expose
-    private int domicilio;
+    private Domicilio domicilio;
     @Expose
     private String foto;
     @Expose
@@ -53,8 +53,8 @@ public class Publicacion extends BaseClass {
         this.horaFin        = new Date(System.currentTimeMillis());
         this.fecha          = new Date(System.currentTimeMillis());
         this.plazasTotales  = 0;
-        this.precio         = 0;
-        this.domicilio      = 0;
+        this.precio         = 0.0;
+        this.domicilio      = new Domicilio();
         this.foto           = "";
         this.platos         = new ArrayList();
         this.usuario        = 0;
@@ -73,12 +73,12 @@ public class Publicacion extends BaseClass {
         this.horaFin        = (Date)in.readSerializable();
         this.fecha          = (Date)in.readSerializable();
         this.plazasTotales  = in.readInt();
-        this.precio         = in.readFloat();
-        this.domicilio      = in.readInt();
+        this.precio         = in.readDouble();
+        this.domicilio      = in.readParcelable(Domicilio.class.getClassLoader());
         this.foto           = in.readString();
-        in.readList(platos, String.class.getClassLoader());
+        in.readList( this.platos == null ? new ArrayList<String>() : platos, String.class.getClassLoader());
         this.usuario        = in.readInt();
-        in.readTypedList(this.reservas, Reserva.CREATOR);
+        in.readTypedList( this.reservas == null ? new ArrayList<Reserva>() : this.reservas, Reserva.CREATOR);
         this.completo       = in.readByte() != 0;
         this.descripcion    = in.readString();
         this.titulo         = in.readString();
@@ -126,19 +126,19 @@ public class Publicacion extends BaseClass {
         this.plazasTotales = plazasTotales;
     }
 
-    public float getPrecio() {
+    public Double getPrecio() {
         return precio;
     }
 
-    public void setPrecio(float precio) {
+    public void setPrecio(Double precio) {
         this.precio = precio;
     }
 
-    public int getDomicilio() {
+    public Domicilio getDomicilio() {
         return domicilio;
     }
 
-    public void setDomicilio(int domicilio) {
+    public void setDomicilio(Domicilio domicilio) {
         this.domicilio = domicilio;
     }
 
@@ -232,8 +232,8 @@ public class Publicacion extends BaseClass {
         dest.writeSerializable(this.horaFin);
         dest.writeSerializable(this.fecha);
         dest.writeInt(this.plazasTotales);
-        dest.writeFloat(this.precio);
-        dest.writeInt(this.domicilio);
+        dest.writeDouble(this.precio);
+        dest.writeParcelable(this.domicilio, flags);
         dest.writeString(this.foto);
         dest.writeList(platos);
         dest.writeInt(this.usuario);

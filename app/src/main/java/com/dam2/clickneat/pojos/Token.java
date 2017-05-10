@@ -18,6 +18,8 @@ public class Token extends BaseClass {
     private int id;
     @Expose
     private String valor;
+    @Expose
+    private int usuario;
 
     public Token() {
 
@@ -25,13 +27,15 @@ public class Token extends BaseClass {
 
         this.id         = 0;
         this.valor      = "";
+        this.usuario    = 0;
     }
 
     protected Token(Parcel in) {
         super(in);
 
-        this.id     = in.readInt();
-        this.valor  = in.readString();
+        this.id         = in.readInt();
+        this.valor      = in.readString();
+        this.usuario    = in.readInt();
     }
 
     public int getId() {
@@ -50,6 +54,13 @@ public class Token extends BaseClass {
         this.valor = valor;
     }
 
+    public void setUsuario(int usuario){
+        this.usuario = usuario;
+    }
+
+    public int getUsuario() {
+        return this.usuario;
+    }
 
     public static final Creator<Token> CREATOR = new Creator<Token>() {
         @Override
@@ -73,6 +84,7 @@ public class Token extends BaseClass {
 
         dest.writeInt(this.id);
         dest.writeString(this.valor);
+        dest.writeInt(this.usuario);
 
     }
 

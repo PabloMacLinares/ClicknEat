@@ -48,10 +48,10 @@ public class PerfilUsuario extends BaseClass {
         this.id         = in.readInt();
         this.nombre     = in.readString();
         this.usuario    = in.readInt();
-        in.readTypedList( this.domicilios, Domicilio.CREATOR);
+        in.readTypedList( this.domicilios == null ? new ArrayList<Domicilio>() : this.domicilios, Domicilio.CREATOR);
         this.imagen     = in.readString();
-        in.readTypedList( this.comentariosRecibidos, Comentario.CREATOR);
-        in.readTypedList( this.comentariosDados, Comentario.CREATOR);
+        in.readTypedList( this.comentariosRecibidos == null ? new ArrayList<Comentario>() : this.comentariosRecibidos, Comentario.CREATOR);
+        in.readTypedList( this.comentariosDados == null ? new ArrayList<Comentario>() : this.comentariosDados, Comentario.CREATOR);
     }
 
     public int getId() {

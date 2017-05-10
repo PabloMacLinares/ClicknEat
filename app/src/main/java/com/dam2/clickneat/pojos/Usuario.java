@@ -45,6 +45,8 @@ public class Usuario extends BaseClass {
     private ArrayList<Conversacion> conversacionesRecibidas;
     @Expose
     private ArrayList<Mensaje> mensajes;
+    @Expose
+    private ArrayList<ConversacionMetadata> metadatas;
 
     // Constructor generico
     public Usuario() {
@@ -67,6 +69,7 @@ public class Usuario extends BaseClass {
         this.conversacionesIniciadas    = new ArrayList();
         this.conversacionesRecibidas    = new ArrayList();
         this.mensajes                   = new ArrayList();
+        this.metadatas                  = new ArrayList();
 
     }
 
@@ -84,12 +87,13 @@ public class Usuario extends BaseClass {
         this.google_id              = in.readInt();
         this.google_access_token    = in.readString();
         this.perfil                 = in.readParcelable(PerfilUsuario.class.getClassLoader());
-        in.readTypedList(this.tokens, Token.CREATOR);
-        in.readTypedList(this.publicaciones, Publicacion.CREATOR);
-        in.readTypedList(this.reservas, Reserva.CREATOR);
-        in.readTypedList(this.conversacionesIniciadas, Conversacion.CREATOR);
-        in.readTypedList(this.conversacionesRecibidas, Conversacion.CREATOR);
-        in.readTypedList(this.mensajes, Mensaje.CREATOR);
+        in.readTypedList(this.tokens == null ? new ArrayList<Token>() : this.tokens, Token.CREATOR);
+        in.readTypedList(this.publicaciones == null ? new ArrayList<Publicacion>() : this.publicaciones, Publicacion.CREATOR);
+        in.readTypedList(this.reservas == null ? new ArrayList<Reserva>() : this.reservas, Reserva.CREATOR);
+        in.readTypedList(this.conversacionesIniciadas == null ? new ArrayList<Conversacion>() : this.conversacionesIniciadas, Conversacion.CREATOR);
+        in.readTypedList(this.conversacionesRecibidas == null ? new ArrayList<Conversacion>() : this.conversacionesRecibidas, Conversacion.CREATOR);
+        in.readTypedList(this.mensajes == null ? new ArrayList<Mensaje>() : this.mensajes, Mensaje.CREATOR);
+        in.readTypedList(this.metadatas == null ? new ArrayList<ConversacionMetadata>() : this.metadatas, ConversacionMetadata.CREATOR);
     }
 
     public int getId() {
@@ -244,6 +248,14 @@ public class Usuario extends BaseClass {
         this.mensajes.add(mensaje);
     }
 
+    public ArrayList<ConversacionMetadata> getMetadatas() {
+        return this.metadatas;
+    }
+
+    public void setMetadatas(ArrayList<ConversacionMetadata> metadatas) {
+        this.metadatas = metadatas;
+    }
+
     public static final Creator<Usuario> CREATOR = new Creator<Usuario>() {
         @Override
         public Usuario createFromParcel(Parcel in) {
@@ -281,6 +293,7 @@ public class Usuario extends BaseClass {
         dest.writeTypedList(this.conversacionesIniciadas);
         dest.writeTypedList(this.conversacionesRecibidas);
         dest.writeTypedList(this.mensajes);
+        dest.writeTypedList(this.metadatas);
 
     }
 }
