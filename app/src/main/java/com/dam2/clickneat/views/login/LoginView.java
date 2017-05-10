@@ -59,7 +59,7 @@ public class LoginView extends AppCompatActivity implements LoginContract.View, 
     private UserLoginTask mAuthTask = null;
 
     // UI references.
-    private AutoCompleteTextView mEmailView;
+    private AutoCompleteTextView usuarioView;
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
@@ -69,10 +69,10 @@ public class LoginView extends AppCompatActivity implements LoginContract.View, 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         // Set up the login form.
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+        usuarioView = (AutoCompleteTextView) findViewById(R.id.usuario);
         populateAutoComplete();
 
-        mPasswordView = (EditText) findViewById(R.id.password);
+        mPasswordView = (EditText) findViewById(R.id.contraseña);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -114,7 +114,7 @@ public class LoginView extends AppCompatActivity implements LoginContract.View, 
             return true;
         }
         if (shouldShowRequestPermissionRationale(READ_CONTACTS)) {
-            Snackbar.make(mEmailView, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
+            Snackbar.make(usuarioView, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
                     .setAction(android.R.string.ok, new View.OnClickListener() {
                         @Override
                         @TargetApi(Build.VERSION_CODES.M)
@@ -153,11 +153,11 @@ public class LoginView extends AppCompatActivity implements LoginContract.View, 
         }
 
         // Reset errors.
-        mEmailView.setError(null);
+        usuarioView.setError(null);
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
+        String email = usuarioView.getText().toString();
         String password = mPasswordView.getText().toString();
 
         boolean cancel = false;
@@ -172,12 +172,12 @@ public class LoginView extends AppCompatActivity implements LoginContract.View, 
 
         // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
-            mEmailView.setError(getString(R.string.error_field_required));
-            focusView = mEmailView;
+            usuarioView.setError(getString(R.string.error_field_required));
+            focusView = usuarioView;
             cancel = true;
         } else if (!isEmailValid(email)) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
-            focusView = mEmailView;
+            usuarioView.setError(getString(R.string.error_invalid_email));
+            focusView = usuarioView;
             cancel = true;
         }
 
@@ -280,7 +280,7 @@ public class LoginView extends AppCompatActivity implements LoginContract.View, 
                 new ArrayAdapter<>(LoginView.this,
                         android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
 
-        mEmailView.setAdapter(adapter);
+        usuarioView.setAdapter(adapter);
     }
 
 
