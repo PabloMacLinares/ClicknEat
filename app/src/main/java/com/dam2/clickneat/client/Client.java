@@ -1,8 +1,12 @@
 package com.dam2.clickneat.client;
 
+import android.content.Context;
 import android.os.AsyncTask;
 
+import com.dam2.clickneat.R;
+import com.dam2.clickneat.listeners.AppStateListener;
 import com.dam2.clickneat.pojos.BaseClass;
+import com.dam2.clickneat.preferences.Preferences;
 import com.dam2.clickneat.utils.BufferHelper;
 import com.dam2.clickneat.utils.JsonHelper;
 import com.dam2.clickneat.utils.StringHelper;
@@ -26,8 +30,7 @@ public class Client {
 
     //TODO data es el JSON, no se de que tipo es, por eso he puesto Object, ya lo cambiaré
     public static void makeRequest(String path, String data, RequestMethod method, String requestId, ResponseReceiver receiver){
-        System.out.println(data);
-        System.out.println(API_URL + path);
+
         sendRequest(path, data, method, requestId, receiver);
     }
 
@@ -67,6 +70,17 @@ public class Client {
 
                     //Asignamos el tiempo maximo de espera para establecer conexion con el servidor
                     conn.setConnectTimeout(15000);
+
+                    //Debemos de asignarle a nuestra conexion la cabecera de seguridad
+                    Context cxt = AppStateListener.get().getContext();
+
+                    if ( cxt != null ) {
+
+                        Preferences preferences = new Preferences(cxt);
+                        String token            = preferences.getString(cxt.getString(R.string.preferences_api_token_user));
+
+                        conn.setRequestProperty("Authorization",  "Bearer " + token);
+                    }
 
                     //Cargamos los datos a enviar en la peticion
                     if ( method != RequestMethod.GET && data != null) {

@@ -9,5 +9,6 @@
     <color name="outgoing_chat_bubble">#DCF8C6</color>
     <color name="dialog_title">#03b8e6</color>
     <color name="colorDivider">#BDBDBD</color>
+    <color name="colorOverlay">#D9000000</color>
 
 </resources>

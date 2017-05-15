@@ -19,6 +19,7 @@ import com.dam2.clickneat.pojos.PerfilUsuario;
 import com.dam2.clickneat.preferences.Preferences;
 import com.dam2.clickneat.recyclerview.adapters.conversacion.MensajesAdapter;
 import com.dam2.clickneat.utils.JsonHelper;
+import com.dam2.clickneat.utils.JwtHelper;
 import com.dam2.clickneat.utils.StringHelper;
 import com.dam2.clickneat.views.BaseActivity;
 import com.squareup.picasso.Picasso;
@@ -59,16 +60,17 @@ public class ChatView extends BaseActivity implements ChatContract.View {
 
         this.presenter     = new ChatPresenter(this);
         this.preferences   = new Preferences(this);
+
+        String token            = preferences.getString(getString(R.string.preferences_api_token_user));
+
         this.metadata      = savedInstanceState == null  ? (ConversacionMetadata) getIntent().getParcelableExtra("metadata")
                                                          : (ConversacionMetadata) savedInstanceState.getParcelable("metadata");
         this.perfilUsuario = savedInstanceState == null  ? (PerfilUsuario) getIntent().getParcelableExtra("perfilUsuario")
                                                          : (PerfilUsuario) savedInstanceState.getParcelable("perfilUsuario");
         this.idUsuario      = savedInstanceState == null ? (getIntent().getIntExtra(getString(R.string.preferences_id_user), Preferences.DEFAULT_INTEGER) != Preferences.DEFAULT_INTEGER
                                                          ?  getIntent().getIntExtra(getString(R.string.preferences_id_user), Preferences.DEFAULT_INTEGER)
-                                                         : preferences.getInteger(getString(R.string.preferences_id_user)))
+                                                         :  token.equals(Preferences.DEFAULT_STRING) ? -1 : (Integer) JwtHelper.getElementFromToken(token, getString(R.string.preferences_id_user), Integer.class ))
                                                          :  savedInstanceState.getInt(getString(R.string.preferences_id_user));
-
-        System.out.println(idUsuario);
         init();
     }
 
@@ -204,6 +206,9 @@ public class ChatView extends BaseActivity implements ChatContract.View {
 
         adapterMensajes.addMensaje(mensaje);
         rvMensajes.scrollToPosition(adapterMensajes.getItemCount() - 1);
+
+        //Debemos de actualizar los metadatos
+        this.presenter.onReadMensajes(this.metadata);
     }
 
     @Override

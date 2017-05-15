@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item>
+        <shape android:shape="rectangle" >
+            <solid android:color="@color/colorOverlay" />
+        </shape>
+    </item>
+    <item>
+        <bitmap
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:shape="rectangle"
+            android:src="@drawable/chimichangas"
+            android:alpha="0.3"></bitmap>
+    </item>
+</layer-list>

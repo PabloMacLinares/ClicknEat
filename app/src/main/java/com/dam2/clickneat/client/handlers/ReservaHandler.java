@@ -54,6 +54,12 @@ public class ReservaHandler extends ClientHandler<Reserva> {
         Client.makeRequest("reserva", JsonHelper.toJson(new ListIds(ids)), Client.RequestMethod.DELETE, DELETE_ELEMENTS_ID, this);
     }
 
+    @Override
+    public void updateVariableElement(Reserva element, String variable) {
+
+        Client.makeRequest("reserva/" + element.getId() + "/" + variable, JsonHelper.toJson(element), Client.RequestMethod.PUT, UPDATE_ID, this);
+    }
+
     /*@Override
     public void onResponseReceived(Object data,String requestId) {
         System.out.println("RequestId: " + requestId);

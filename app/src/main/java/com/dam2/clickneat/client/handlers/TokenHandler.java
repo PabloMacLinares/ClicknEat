@@ -54,6 +54,11 @@ public class TokenHandler extends ClientHandler<Token> {
         Client.makeRequest("token", JsonHelper.toJson(new ListIds(ids)), Client.RequestMethod.DELETE, DELETE_ELEMENTS_ID, this);
     }
 
+    @Override
+    public void updateVariableElement(Token element, String variable) {
+
+        Client.makeRequest("token/" + element.getId() + "/" + variable, JsonHelper.toJson(element), Client.RequestMethod.PUT, UPDATE_ID, this);
+    }
     /*@Override
     public void onResponseReceived(Object data,String requestId) {
         System.out.println("RequestId: " + requestId);

@@ -60,6 +60,11 @@ public class ConversacionMetadataHandler extends ClientHandler<ConversacionMetad
         Client.makeRequest("conversacion-metadata/usuario/" + id + "/", null, Client.RequestMethod.GET, GET_ALL_ID, this);
     }
 
+    @Override
+    public void updateVariableElement(ConversacionMetadata element, String variable) {
+
+        Client.makeRequest("conversacion-metadata/" + element.getId() + "/" + variable, JsonHelper.toJson(element), Client.RequestMethod.PUT, UPDATE_ID, this);
+    }
     /*@Override
     public void onResponseReceived(Object data,String requestId) {
 

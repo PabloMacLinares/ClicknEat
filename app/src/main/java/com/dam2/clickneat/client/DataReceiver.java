@@ -18,5 +18,5 @@ public interface DataReceiver<T> {
     void onDataItemInsertedReceived(int id);
     void onDataNoErrorReceived(String noerror);
     void onDataErrorReceived(String error);
-
+    void onLoginReceived(String token);
 }

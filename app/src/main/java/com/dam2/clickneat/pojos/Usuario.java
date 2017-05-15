@@ -24,11 +24,11 @@ public class Usuario extends BaseClass {
     @Expose
     private boolean enabled;
     @Expose
-    private int facebook_id;
+    private String facebook_id;
     @Expose
     private String facebook_access_token;
     @Expose
-    private int google_id;
+    private String google_id;
     @Expose
     private String google_access_token;
     @Expose
@@ -58,9 +58,9 @@ public class Usuario extends BaseClass {
         this.password                   = "";
         this.email                      = "";
         this.enabled                    = false;
-        this.facebook_id                = 0;
+        this.facebook_id                = "";
         this.facebook_access_token      = "";
-        this.google_id                  = 0;
+        this.google_id                  = "";
         this.google_access_token        = "";
         this.perfil                     = new PerfilUsuario();
         this.tokens                     = new ArrayList();
@@ -82,9 +82,9 @@ public class Usuario extends BaseClass {
         this.password               = in.readString();
         this.email                  = in.readString();
         this.enabled                = in.readByte() != 0;
-        this.facebook_id            = in.readInt();
+        this.facebook_id            = in.readString();
         this.facebook_access_token  = in.readString();
-        this.google_id              = in.readInt();
+        this.google_id              = in.readString();
         this.google_access_token    = in.readString();
         this.perfil                 = in.readParcelable(PerfilUsuario.class.getClassLoader());
         in.readTypedList(this.tokens == null ? new ArrayList<Token>() : this.tokens, Token.CREATOR);
@@ -136,11 +136,11 @@ public class Usuario extends BaseClass {
         return this.enabled;
     }
 
-    public int getFacebook_id() {
+    public String getFacebook_id() {
         return facebook_id;
     }
 
-    public void setFacebook_id(int facebook_id) {
+    public void setFacebook_id(String facebook_id) {
         this.facebook_id = facebook_id;
     }
 
@@ -152,11 +152,11 @@ public class Usuario extends BaseClass {
         this.facebook_access_token = facebook_access_token;
     }
 
-    public int getGoogle_id() {
+    public String getGoogle_id() {
         return google_id;
     }
 
-    public void setGoogle_id(int google_id) {
+    public void setGoogle_id(String google_id) {
         this.google_id = google_id;
     }
 
@@ -282,9 +282,9 @@ public class Usuario extends BaseClass {
         dest.writeString(this.password);
         dest.writeString(this.email);
         dest.writeByte((byte) (this.enabled ? 1 : 0));
-        dest.writeInt(this.facebook_id);
+        dest.writeString(this.facebook_id);
         dest.writeString(this.facebook_access_token);
-        dest.writeInt(this.google_id);
+        dest.writeString(this.google_id);
         dest.writeString(this.google_access_token);
         dest.writeParcelable(this.perfil, flags);
         dest.writeTypedList(this.tokens);

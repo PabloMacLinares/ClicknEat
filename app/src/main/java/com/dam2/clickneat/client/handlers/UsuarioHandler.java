@@ -14,8 +14,9 @@ import java.util.List;
 
 public class UsuarioHandler extends ClientHandler<Usuario> {
 
-    protected static final String LOGIN_ELEMENT = "login_element";
-    protected static final String RESEND_MAIL   = "resend_mail";
+    protected static final String LOGIN_ELEMENT     = "login_element";
+    protected static final String RESEND_MAIL       = "resend_mail";
+    protected static final String REGISTER_ELEMENT  = "register_element";
 
     public UsuarioHandler(DataReceiver<Usuario> dataReceiver) {
         super(dataReceiver);
@@ -45,13 +46,19 @@ public class UsuarioHandler extends ClientHandler<Usuario> {
     @Override
     public void insertElement(Usuario element) {
 
-        Client.makeRequest("usuario" , JsonHelper.toJson(element), Client.RequestMethod.POST, INSERT_ID, this);
+        Client.makeRequest("usuario/register" , JsonHelper.toJson(element), Client.RequestMethod.POST, REGISTER_ELEMENT, this);
     }
 
     @Override
     public void updateElement(Usuario element) {
 
         Client.makeRequest("usuario/" + element.getId(), JsonHelper.toJson(element), Client.RequestMethod.PUT, UPDATE_ID, this);
+    }
+
+    @Override
+    public void updateVariableElement(Usuario element, String variable) {
+
+        Client.makeRequest("usuario/" + element.getId() + "/" + variable, JsonHelper.toJson(element), Client.RequestMethod.PUT, UPDATE_ID, this);
     }
 
     @Override
@@ -66,13 +73,26 @@ public class UsuarioHandler extends ClientHandler<Usuario> {
         Client.makeRequest("usuario", JsonHelper.toJson(new ListIds(ids)), Client.RequestMethod.DELETE, DELETE_ELEMENTS_ID, this);
     }
 
-    /*@Override
+    @Override
     public void onResponseReceived(Object data, String requestId) {
-        System.out.println("RequestId: " + requestId);
-        System.out.println(data);
+
+        switch ( requestId ) {
+
+            case LOGIN_ELEMENT: {
+
+                dataReceiver.onLoginReceived((String)data);
+                break;
+            }
+
+            default: {
+
+                super.onResponseReceived(data, requestId);
+                break;
+            }
+        }
     }
 
-    @Override
+    /*@Override
     public void onErrorReceived(Object data, String requestId) {
         System.err.println("RequestId: " + requestId);
         System.err.println(data);

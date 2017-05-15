@@ -60,6 +60,13 @@ public class PublicacionHandler extends ClientHandler<Publicacion> {
 
         Client.makeRequest("publicacion/search", JsonHelper.toJson(data), Client.RequestMethod.POST, GET_ALL_ID, this);
     }
+
+    @Override
+    public void updateVariableElement(Publicacion element, String variable) {
+
+        Client.makeRequest("publicacion/" + element.getId() + "/" + variable, JsonHelper.toJson(element), Client.RequestMethod.PUT, UPDATE_ID, this);
+    }
+
     /*@Override
     public void onResponseReceived(Object data,String requestId) {
         System.out.println("RequestId: " + requestId);

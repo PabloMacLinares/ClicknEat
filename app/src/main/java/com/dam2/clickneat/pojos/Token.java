@@ -19,7 +19,7 @@ public class Token extends BaseClass {
     @Expose
     private String valor;
     @Expose
-    private int usuario;
+    private ArrayList<Integer> usuarios;
 
     public Token() {
 
@@ -27,7 +27,7 @@ public class Token extends BaseClass {
 
         this.id         = 0;
         this.valor      = "";
-        this.usuario    = 0;
+        this.usuarios   = new ArrayList();
     }
 
     protected Token(Parcel in) {
@@ -35,7 +35,7 @@ public class Token extends BaseClass {
 
         this.id         = in.readInt();
         this.valor      = in.readString();
-        this.usuario    = in.readInt();
+        in.readList(this.usuarios, Integer.class.getClassLoader());
     }
 
     public int getId() {
@@ -54,12 +54,16 @@ public class Token extends BaseClass {
         this.valor = valor;
     }
 
-    public void setUsuario(int usuario){
-        this.usuario = usuario;
+    public void setUsuario(ArrayList<Integer> usuarios){
+        this.usuarios = usuarios;
     }
 
-    public int getUsuario() {
-        return this.usuario;
+    public void addUsuario(int usuario) {
+        this.usuarios.add(usuario);
+    }
+
+    public ArrayList<Integer> getUsuarios() {
+        return this.usuarios;
     }
 
     public static final Creator<Token> CREATOR = new Creator<Token>() {
@@ -84,7 +88,7 @@ public class Token extends BaseClass {
 
         dest.writeInt(this.id);
         dest.writeString(this.valor);
-        dest.writeInt(this.usuario);
+        dest.writeList(this.usuarios);
 
     }
 

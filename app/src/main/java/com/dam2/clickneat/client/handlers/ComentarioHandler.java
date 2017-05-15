@@ -44,6 +44,11 @@ public class ComentarioHandler extends ClientHandler<Comentario> {
     }
 
     @Override
+    public void updateVariableElement(Comentario element, String variable) {
+        Client.makeRequest("comentario/" + element.getId() + "/" + variable, JsonHelper.toJson(element), Client.RequestMethod.PUT, UPDATE_ID, this);
+    }
+
+    @Override
     public void deleteElement(long id) {
 
         Client.makeRequest("comentario/" + id, null, Client.RequestMethod.DELETE, DELETE_ID, this);
@@ -54,6 +59,7 @@ public class ComentarioHandler extends ClientHandler<Comentario> {
 
         Client.makeRequest("comentario", JsonHelper.toJson(new ListIds(ids)), Client.RequestMethod.DELETE, DELETE_ELEMENTS_ID, this);
     }
+
 
     /*@Override
     public void onResponseReceived(Object data,String requestId) {

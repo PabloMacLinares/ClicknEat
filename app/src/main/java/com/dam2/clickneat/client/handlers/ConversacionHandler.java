@@ -42,6 +42,12 @@ public class ConversacionHandler extends ClientHandler<Conversacion> {
     }
 
     @Override
+    public void updateVariableElement(Conversacion element, String variable) {
+
+        Client.makeRequest("conversacion/" + element.getId() + "/" + variable, JsonHelper.toJson(element), Client.RequestMethod.PUT, UPDATE_ID, this);
+    }
+
+    @Override
     public void deleteElement(long id) {
 
         Client.makeRequest("conversacion/" + id, null, Client.RequestMethod.DELETE, DELETE_ID, this);

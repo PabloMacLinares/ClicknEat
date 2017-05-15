@@ -1,4 +1,4 @@
-package com.dam2.clickneat.views.login;
+package com.dam2.clickneat.views.registro;
 
 import com.dam2.clickneat.client.DataReceiver;
 import com.dam2.clickneat.client.handlers.UsuarioHandler;
@@ -10,13 +10,13 @@ import java.util.List;
  * Created by Pablo on 25/04/2017.
  */
 
-public class LoginModel implements LoginContract.Model {
+public class RegisterModel implements RegisterContract.Model {
 
-    private LoginContract.Presenter presenter;
+    private RegisterContract.Presenter presenter;
     private UsuarioHandler usuarioHandler;
 
 
-    public LoginModel(LoginContract.Presenter presenter){
+    public RegisterModel(RegisterContract.Presenter presenter){
 
         this.presenter      = presenter;
         this.usuarioHandler = new UsuarioHandler(new DataReceiver<Usuario>() {
@@ -37,27 +37,25 @@ public class LoginModel implements LoginContract.Model {
 
             @Override
             public void onDataNoErrorReceived(String noerror) {
-
+                RegisterModel.this.presenter.onRegisterSuccess(noerror);
             }
 
             @Override
             public void onDataErrorReceived(String error) {
 
-                LoginModel.this.presenter.onErrorLogin(error);
+                RegisterModel.this.presenter.onErrorRegisterUser(error);
             }
 
             @Override
             public void onLoginReceived(String token) {
 
-                LoginModel.this.presenter.onLoginSuccess(token);
             }
-
         });
     }
 
     @Override
-    public void loginUser(Usuario usuario) {
+    public void registerUser(Usuario usuario) {
 
-        usuarioHandler.loginUser(usuario);
+        usuarioHandler.insertElement(usuario);
     }
 }
