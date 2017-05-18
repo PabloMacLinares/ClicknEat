@@ -67,6 +67,7 @@
                     android:layout_weight="1"
                     android:editable="false"
                     android:ems="10"
+                    android:enabled="false"
                     android:inputType="textMultiLine" />
 
             </LinearLayout>
