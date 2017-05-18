@@ -89,12 +89,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.44"
-                        android:text="Publicaciones:" />
+                        android:text="Publicaciones" />
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/recyclerPublicaciones"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_weight="0.44" />
                 </LinearLayout>
 
@@ -109,7 +109,7 @@
                         android:id="@+id/labelComentarios"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="TextView" />
+                        android:text="Comentarios" />
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/recyclerComentarios"
