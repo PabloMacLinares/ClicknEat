@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="10dp"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.44">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/fotoPerfil"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_weight="0.44"
+                app:srcCompat="@drawable/ic_menu_camera" />
+
+            <LinearLayout
+                android:id="@+id/nombreLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/labelNombreUsuario"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Nombre:" />
+
+                <TextView
+                    android:id="@+id/nombreUsuario"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="TextView" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/domiciliosLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.44"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/labelDomicilios"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Domicilios:" />
+
+                <EditText
+                    android:id="@+id/domicilios"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:editable="false"
+                    android:ems="10"
+                    android:enabled="false"
+                    android:inputType="textMultiLine" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.44"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/publicacionesLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.44"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/labelPublicaciones"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.44"
+                        android:text="Publicaciones" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recyclerPublicaciones"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.44" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/comentariosLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.44"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/labelComentarios"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Comentarios" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recyclerComentarios"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.44" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
