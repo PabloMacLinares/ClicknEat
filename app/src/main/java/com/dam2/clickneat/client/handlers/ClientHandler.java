@@ -36,6 +36,8 @@ public abstract class ClientHandler<T> implements ResponseReceiver {
 
     public abstract void updateElement(T element);
 
+    public abstract void updateVariableElement(T element, String variable);
+
     public abstract void deleteElement(long id);
 
     public abstract void deleteElements(List<Long> ids);

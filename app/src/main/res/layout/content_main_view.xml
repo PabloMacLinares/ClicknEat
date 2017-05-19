@@ -24,10 +24,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" >
 
-                    <com.google.android.gms.maps.MapView
+                    <!--<com.google.android.gms.maps.MapView
                         android:id="@+id/mapView"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent" />-->
                 </LinearLayout>
 
                 <LinearLayout android:id="@+id/tab2"
@@ -35,10 +35,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" >
 
-                    <TextView android:id="@+id/textView2"
+                    <!--<TextView android:id="@+id/textView2"
                         android:text="Contenido Tab 2"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content" />-->
+                    <include
+                        layout="@layout/activity_chats"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"></include>
                 </LinearLayout>
             </FrameLayout>
         </LinearLayout>

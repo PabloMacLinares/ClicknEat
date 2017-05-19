@@ -53,6 +53,11 @@ public class MensajeHandler extends ClientHandler<Mensaje> {
         Client.makeRequest("mensaje", JsonHelper.toJson(new ListIds(ids)), Client.RequestMethod.DELETE, DELETE_ELEMENTS_ID, this);
     }
 
+    @Override
+    public void updateVariableElement(Mensaje element, String variable) {
+
+        Client.makeRequest("mensaje/" + element.getId() + "/" + variable, JsonHelper.toJson(element), Client.RequestMethod.PUT, UPDATE_ID, this);
+    }
     /*@Override
     public void onResponseReceived(Object data,String requestId) {
         System.out.println("RequestId: " + requestId);

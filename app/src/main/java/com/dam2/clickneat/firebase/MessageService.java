@@ -15,7 +15,9 @@ import com.dam2.clickneat.firebase.receivers.FirebaseDataReceiver;
 import com.dam2.clickneat.listeners.AppStateListener;
 import com.dam2.clickneat.pojos.ConversacionMetadata;
 import com.dam2.clickneat.pojos.Mensaje;
+import com.dam2.clickneat.preferences.Preferences;
 import com.dam2.clickneat.utils.JsonHelper;
+import com.dam2.clickneat.utils.JwtHelper;
 import com.dam2.clickneat.views.chats.ChatsView;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -37,80 +39,92 @@ import java.util.Map;
  */
 public class MessageService extends FirebaseMessagingService {
 
+
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
         Map<String, String> messageReceived = remoteMessage.getData();
 
+        String id           = messageReceived.get("idUsuario");
         String title        = messageReceived.get("title");
         String littleText   = messageReceived.get("littleText");
         String bigText      = messageReceived.get("bigText");
         String type         = messageReceived.get("type");
         String data         = messageReceived.get("data");
 
-        Intent i            = null;
-        Bundle bundle       = new Bundle();
-        Integer icon        = 0;
+        //Debemos de comprobar el identificador del usuario ya que un dispositivo puede tener multiples cuentas
+        Preferences preferences = new Preferences(this.getApplicationContext());
+        String token            = preferences.getString(getString(R.string.preferences_api_token_user));
+        int idUsuario           = (Integer) JwtHelper.getElementFromToken(token, getString(R.string.preferences_id_user), Integer.class);
 
-        //El intent siempre tiene cargado el tipo
-        bundle.putString("tipo", type);
+        //Si estas logueado con el usuario que debe de recibir el mensaje, lo mandamos y visualizamos
+        if ( Integer.compare(Integer.valueOf(id), idUsuario) == 0 ) {
 
-        switch ( type ) {
+            Intent i            = null;
+            Bundle bundle       = new Bundle();
+            Integer icon        = 0;
 
-            case "Conversacion-Mensaje": {
+            //El intent siempre tiene cargado el tipo
+            bundle.putString("tipo", type);
 
-                i = new Intent(this, ChatsView.class);
+            switch ( type ) {
 
-                if ( !data.trim().isEmpty() ) {
+                case "Conversacion-Mensaje": {
 
-                    Type convType = new TypeToken<ConversacionMetadata>(){}.getType();
-                    Type mensType = new TypeToken<Mensaje>(){}.getType();
+                    i = new Intent(this, ChatsView.class);
 
-                    try {
+                    if ( !data.trim().isEmpty() ) {
 
-                        JSONObject jsonObject = new JSONObject(data);
+                        Type convType = new TypeToken<ConversacionMetadata>(){}.getType();
+                        Type mensType = new TypeToken<Mensaje>(){}.getType();
 
-                        ConversacionMetadata metadata = (ConversacionMetadata) JsonHelper.fromJson(jsonObject.getString("conversacion"), convType);
-                        Mensaje mensaje               = (Mensaje)JsonHelper.fromJson(jsonObject.getString("mensaje"), mensType);
+                        try {
 
-                        bundle.putParcelable("conversacion", metadata);
-                        bundle.putParcelable("mensaje", mensaje);
+                            JSONObject jsonObject = new JSONObject(data);
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                            ConversacionMetadata metadata = (ConversacionMetadata) JsonHelper.fromJson(jsonObject.getString("conversacion"), convType);
+                            Mensaje mensaje               = (Mensaje)JsonHelper.fromJson(jsonObject.getString("mensaje"), mensType);
+
+                            bundle.putParcelable("conversacion", metadata);
+                            bundle.putParcelable("mensaje", mensaje);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
                     }
 
+                    icon = R.drawable.ic_chat_white_24px;
+
+                    break;
                 }
 
-                icon = R.drawable.ic_chat_white_24px;
+                case "Reserva": {
 
-                break;
+                    icon = R.drawable.ic_restaurant_menu_white_24px;
+
+                    break;
+                }
+
+                case "Comentario": {
+
+                    icon = R.drawable.ic_comment_white_24px;
+
+                    break;
+                }
             }
 
-            case "Reserva": {
+            sendNotification(i, title, littleText, bigText, icon);
 
-                icon = R.drawable.ic_restaurant_menu_white_24px;
+            //Comprobamos si la app esta activa y si es así llamamos a nuestro broadcast
+            if ( AppStateListener.get().isForeground() ) {
 
-                break;
-            }
-
-            case "Comentario": {
-
-                icon = R.drawable.ic_comment_white_24px;
-
-                break;
+                Intent intentBroadcast = new Intent(FirebaseDataReceiver.DATA_RECEIVED);
+                intentBroadcast.putExtras(bundle);
+                getApplicationContext().sendBroadcast(intentBroadcast);
             }
         }
 
-        sendNotification(i, title, littleText, bigText, icon);
-
-        //Comprobamos si la app esta activa y si es así llamamos a nuestro broadcast
-        if ( AppStateListener.get().isForeground() ) {
-
-            Intent intentBroadcast = new Intent(FirebaseDataReceiver.DATA_RECEIVED);
-            intentBroadcast.putExtras(bundle);
-            getApplicationContext().sendBroadcast(intentBroadcast);
-        }
     }
 
 

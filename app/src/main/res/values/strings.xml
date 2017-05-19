@@ -1,11 +1,13 @@
 <resources>
     <string name="app_name">ClicknEat</string>
+    <string name="app_conversaciones">Conversaciones</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
     <string name="title_activity_login_view">Sign in</string>
+    <string name="title_activity_registro">Register</string>
 
     <string name="usuario">Usuario</string>
     <string name="contrasena">Contraseña</string>
@@ -19,6 +21,7 @@
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password (optional)</string>
     <string name="action_sign_in">Sign in or register</string>
+    <string name="action_register_in">Register</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
@@ -35,7 +38,28 @@
 
     <!-- String related SharedPreferences -->
     <string name="preferences_id_user">idUsuario</string>
+    <string name="preferences_id_perfil_user">idPerfil</string>
+    <string name="preferences_username">username</string>
+    <string name="preferences_password">password</string>
+    <string name="preferences_api_token_user">userApiToken</string>
     <string name="preferences_id_token">idToken</string>
     <string name="preferences_token">token</string>
+    <string name="preferences_profile">profile_picture</string>
+    <string name="preferences_email">email</string>
+    <string name="user_type_value">userType</string>
 
+    <!-- Google Login & Register -->
+    <!--<string name="google_client_id">860655152354-kbdh6pk7inaho4jumi7avadlhur6hajn.apps.googleusercontent.com</string>-->
+    <string name="google_client_id">900398575620-efr91t89lesg28b4grkmsjq5va1eh8vr.apps.googleusercontent.com</string>
+    <string name="facebook_client_id">870589819746939</string>
+
+    <!-- Account -->
+    <string name="account_message">No tienes una cuenta? <u><strong>Registrate</strong></u></string>
+    <string name="action_register_in_app">Registrando...</string>
+    <string name="action_login_in_app">Iniciando sesion...</string>
+    <string name="connect_account">Reintentar</string>
+    <string name="error_register_fcb">Error al registrar la cuenta</string>
+
+    <!-- Tabs -->
+    <string name="tab_conversaciones">Conversaciones</string>
 </resources>

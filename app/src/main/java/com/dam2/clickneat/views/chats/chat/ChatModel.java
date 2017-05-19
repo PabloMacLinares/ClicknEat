@@ -83,6 +83,12 @@ public class ChatModel implements ChatContract.Model  {
 
             presenter.loadError(error);
         }
+
+        @Override
+        public void onLoginReceived(String token) {
+
+        }
+
     }
     private class DataConversacionMetadataReceiber implements DataReceiver<ConversacionMetadata> {
 
@@ -111,6 +117,12 @@ public class ChatModel implements ChatContract.Model  {
 
             presenter.loadError(error);
         }
+
+        @Override
+        public void onLoginReceived(String token) {
+
+        }
+
     }
     private class DataMensajeReceiber implements DataReceiver<Mensaje> {
 
@@ -139,6 +151,12 @@ public class ChatModel implements ChatContract.Model  {
 
             presenter.loadError(error);
         }
+
+        @Override
+        public void onLoginReceived(String token) {
+
+        }
+
     }
 
 }

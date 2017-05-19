@@ -14,4 +14,6 @@
     <dimen name="message_incoming">8dp</dimen>
     <dimen name="message_outcoming">60dp</dimen>
 
+    <dimen name="profile_picture_size">64dp</dimen>
+    <dimen name="header_padding">16dp</dimen>
 </resources>

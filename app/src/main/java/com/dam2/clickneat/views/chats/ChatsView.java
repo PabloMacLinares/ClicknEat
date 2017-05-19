@@ -12,6 +12,7 @@ import com.dam2.clickneat.pojos.Conversacion;
 import com.dam2.clickneat.pojos.ConversacionMetadata;
 import com.dam2.clickneat.preferences.Preferences;
 import com.dam2.clickneat.recyclerview.adapters.conversacion.ConversacionAdapter;
+import com.dam2.clickneat.utils.JwtHelper;
 import com.dam2.clickneat.views.BaseActivity;
 import com.dam2.clickneat.views.chats.chat.ChatView;
 
@@ -46,8 +47,9 @@ public class ChatsView extends BaseActivity implements ChatsContract.View {
 
         //Obtenemos el identificador del Usuario
         Preferences preferences = new Preferences(this);
+        String token            = preferences.getString(getString(R.string.preferences_api_token_user));
 
-        idUsuario               = preferences.getInteger(getString(R.string.preferences_id_user));
+        idUsuario               =  token.equals(Preferences.DEFAULT_STRING) ? 0 : (Integer) JwtHelper.getElementFromToken(token, getString(R.string.preferences_id_user), Integer.class );
         rvConversaciones        = (RecyclerView) findViewById(R.id.activity_chats_rv);
         adapterConversaciones   = new ConversacionAdapter(this);
 

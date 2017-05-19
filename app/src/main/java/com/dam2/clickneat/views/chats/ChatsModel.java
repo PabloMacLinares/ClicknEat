@@ -55,4 +55,10 @@ public class ChatsModel implements ChatsContract.Model, DataReceiver<Conversacio
 
         this.presenter.loadError(error);
     }
+
+    @Override
+    public void onLoginReceived(String token) {
+
+    }
+
 }

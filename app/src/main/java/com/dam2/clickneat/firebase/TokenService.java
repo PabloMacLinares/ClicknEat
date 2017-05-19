@@ -3,7 +3,9 @@ package com.dam2.clickneat.firebase;
 import com.dam2.clickneat.R;
 import com.dam2.clickneat.client.DataReceiver;
 import com.dam2.clickneat.client.handlers.TokenHandler;
+import com.dam2.clickneat.client.handlers.UsuarioHandler;
 import com.dam2.clickneat.pojos.Token;
+import com.dam2.clickneat.pojos.Usuario;
 import com.dam2.clickneat.preferences.Preferences;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
@@ -19,7 +21,7 @@ import java.util.List;
 * PD: Para futuras actualizaciones del token, es necesario que el identificador del usuario se
 * encuentre en las SP ya que lo necesita para actualizarlo correctamente
 * */
-public class TokenService extends FirebaseInstanceIdService implements DataReceiver<Token> {
+public class TokenService extends FirebaseInstanceIdService {
 
     private static final String TAG = "ServicioTokenPopCloud";
     private Preferences p;
@@ -44,54 +46,54 @@ public class TokenService extends FirebaseInstanceIdService implements DataRecei
         //Si el usuario se ha logueado al menos una vez podremos actualizar su token
         if ( Integer.compare( idUsuario, Preferences.DEFAULT_INTEGER) != 0 ) {
 
-            TokenHandler handler = new TokenHandler(this);
-            Token token          = new Token();
+            UsuarioHandler usuarioHandler   = new UsuarioHandler(new FirebaseRegisterUserToken());
 
-            token.setUsuario(idUsuario);
+            //Generamos el token
+            Token token                     = new Token();
+            token.addUsuario(idUsuario);
             token.setValor(refreshedToken);
 
-            //Buscamos en las preferencias el identificador del token para saber
-            // si tenemos que actualizarlo o insertarlo
+            //Actualizamos el usuario
+            Usuario usuario = new Usuario();
+            usuario.setId(idUsuario);
+            usuario.addToken(token);
 
-            int idToken = p.getInteger(keyIdToken);
-
-            if ( Integer.compare( idToken, Preferences.DEFAULT_INTEGER) != 0 ) {
-
-                //Actualizamos
-                token.setId(idToken);
-                handler.updateElement(token);
-            }
-            else {
-
-                //Cuando insertemos el token en la respuesta del servidor se guardara el ID en sp
-                handler.insertElement(token);
-            }
+            usuarioHandler.updateElement(usuario);
         }
 
     }
 
-    @Override
-    public void onListReceived(List<Token> list) {
+    private class FirebaseRegisterUserToken implements DataReceiver<Usuario> {
 
+        @Override
+        public void onListReceived(List<Usuario> list) {
+
+        }
+
+        @Override
+        public void onElementReceived(Usuario list) {
+
+        }
+
+        @Override
+        public void onDataItemInsertedReceived(int id) {
+
+        }
+
+        @Override
+        public void onDataNoErrorReceived(String noerror) {
+
+        }
+
+        @Override
+        public void onDataErrorReceived(String error) {
+
+        }
+
+        @Override
+        public void onLoginReceived(String token) {
+
+        }
     }
 
-    @Override
-    public void onElementReceived(Token list) {
-
-    }
-
-    @Override
-    public void onDataItemInsertedReceived(int id) {
-        this.p.setInteger(this.getString(R.string.preferences_token), id);
-    }
-
-    @Override
-    public void onDataNoErrorReceived(String noerror) {
-
-    }
-
-    @Override
-    public void onDataErrorReceived(String error) {
-
-    }
 }

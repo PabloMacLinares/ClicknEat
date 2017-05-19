@@ -29,8 +29,17 @@
         </activity>
         <activity
             android:name=".views.login.LoginView"
+            android:windowSoftInputMode="adjustResize"
             android:label="@string/title_activity_login_view" />
-        <activity android:name=".views.chats.ChatsView" />
+        <activity
+                android:label="@string/app_conversaciones"
+                android:name=".views.chats.ChatsView"
+                android:parentActivityName=".views.main.MainView">
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".views.main.MainView" />
+        </activity>
         <activity
             android:name=".views.chats.chat.ChatView"
             android:parentActivityName=".views.chats.ChatsView">
@@ -40,6 +49,11 @@
                 android:value=".views.chats.ChatsView" />
         </activity>
 
+        <activity
+            android:name=".views.registro.RegisterView"
+            android:label="@string/title_activity_registro">
+
+        </activity>
         <service
             android:name=".firebase.TokenService"
             android:enabled="true">
@@ -64,6 +78,10 @@
                 <action android:name="com.dam2.clickneat.firebase.receivers.DATA_RECEIVED" />
             </intent-filter>
         </receiver>
+
+        <!-- Facebook -->
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_client_id"/>
+
     </application>
 
 </manifest>

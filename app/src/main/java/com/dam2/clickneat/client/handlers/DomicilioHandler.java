@@ -54,6 +54,11 @@ public class DomicilioHandler extends ClientHandler<Domicilio> {
         Client.makeRequest("domicilio", JsonHelper.toJson(new ListIds(ids)), Client.RequestMethod.DELETE, DELETE_ELEMENTS_ID, this);
     }
 
+    @Override
+    public void updateVariableElement(Domicilio element, String variable) {
+
+        Client.makeRequest("domicilio/" + element.getId() + "/" + variable, JsonHelper.toJson(element), Client.RequestMethod.PUT, UPDATE_ID, this);
+    }
     /*@Override
     public void onResponseReceived(Object data,String requestId) {
         System.out.println("RequestId: " + requestId);

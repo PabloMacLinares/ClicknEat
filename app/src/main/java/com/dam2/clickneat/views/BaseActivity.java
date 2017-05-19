@@ -11,9 +11,14 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 
+import com.dam2.clickneat.R;
 import com.dam2.clickneat.listeners.AppStateListener;
 import com.dam2.clickneat.preferences.Preferences;
 import com.dam2.clickneat.firebase.receivers.FirebaseDataReceiver;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.ArrayList;
 
@@ -36,6 +41,8 @@ public class BaseActivity extends AppCompatActivity {
     private FirebaseDataReceiver firebaseReceiver;
     private ArrayList<String> permissions;
     private static final int PERMISSION_ALL = 1;
+    protected GoogleSignInOptions gso;
+    protected GoogleApiClient mGoogleApiClient;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,6 +62,24 @@ public class BaseActivity extends AppCompatActivity {
         if ( !hasPermissions() ) {
             ActivityCompat.requestPermissions(this, permissions.toArray(new String[permissions.size()]), PERMISSION_ALL);
         }
+
+        //Inicializamos los servicios de google
+
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.google_client_id))
+                .requestEmail()
+                .build();
+
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, new GoogleApiClient.OnConnectionFailedListener() {
+                    @Override
+                    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+                        System.err.println(connectionResult.getErrorMessage());
+                    }
+                })
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
+
     }
 
     @Override

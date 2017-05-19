@@ -53,6 +53,11 @@ public class PerfilUsuarioHandler extends ClientHandler<PerfilUsuario> {
         Client.makeRequest("perfil-usuario", JsonHelper.toJson(new ListIds(ids)), Client.RequestMethod.DELETE, DELETE_ELEMENTS_ID, this);
     }
 
+    @Override
+    public void updateVariableElement(PerfilUsuario element, String variable) {
+
+        Client.makeRequest("perfil-usuario/" + element.getId() + "/" + variable, JsonHelper.toJson(element), Client.RequestMethod.PUT, UPDATE_ID, this);
+    }
     /*@Override
     public void onResponseReceived(Object data,String requestId) {
         System.out.println("RequestId: " + requestId);
