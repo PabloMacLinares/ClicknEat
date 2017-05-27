@@ -35,13 +35,13 @@ public class PublicacionHandler extends ClientHandler<Publicacion> {
     @Override
     public void insertElement(Publicacion element) {
 
-        Client.makeRequest("publicacion" , JsonHelper.toJson(element), Client.RequestMethod.POST, INSERT_ID, this);
+        Client.makeRequest("publicacion" , JsonHelper.publicacionToJson(element), Client.RequestMethod.POST, INSERT_ID, this);
     }
 
     @Override
     public void updateElement(Publicacion element) {
 
-        Client.makeRequest("publicacion/" + element.getId(), JsonHelper.toJson(element), Client.RequestMethod.PUT, UPDATE_ID, this);
+        Client.makeRequest("publicacion/" + element.getId(), JsonHelper.publicacionToJson(element), Client.RequestMethod.PUT, UPDATE_ID, this);
     }
 
     @Override
@@ -59,6 +59,11 @@ public class PublicacionHandler extends ClientHandler<Publicacion> {
     public void getElementsByUbicacionAndDistante(Map<String, Object> data ) {
 
         Client.makeRequest("publicacion/search", JsonHelper.toJson(data), Client.RequestMethod.POST, GET_ALL_ID, this);
+    }
+
+    public void getPublicacionesReservadasUsuario(long idUsuario) {
+
+        Client.makeRequest("publicacion/reserva/usuario/" + idUsuario, null, Client.RequestMethod.GET, GET_ALL_ID, this);
     }
 
     @Override

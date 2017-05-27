@@ -59,6 +59,11 @@ public class ConversacionHandler extends ClientHandler<Conversacion> {
         Client.makeRequest("conversacion", JsonHelper.toJson(ids), Client.RequestMethod.DELETE, DELETE_ELEMENTS_ID, this);
     }
 
+    public void getConversacionEntreDosUsuarios(int idUsuario1, int idUsuario2 ) {
+
+        Client.makeRequest("conversacion/entre/" + idUsuario1 + "/" + idUsuario2, null, Client.RequestMethod.GET, GET_ID, this);
+    }
+
     /*@Override
     public void onResponseReceived(Object data,String requestId) {
 

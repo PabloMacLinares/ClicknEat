@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/lyElementosLista"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:focusableInTouchMode="true">
+
+
+    <EditText
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="textAutoCorrect|textAutoComplete"
+        android:ems="10"
+        android:id="@+id/edPlato"
+        android:layout_weight="0.8"
+        android:imeOptions="actionNext" />
+
+    <ImageView
+        android:id="@+id/btPlato"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/ic_cancel_black_24px"
+        android:visibility="gone" />
+
+    <!--<CheckBox
+        android:id="@+id/btPlato"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:background="@drawable/shape_item_lista"
+        android:button="@drawable/ic_close_black_24px"
+        android:buttonTint="@color/colorSecundaryText"
+        android:visibility="gone" />-->
+
+</LinearLayout>

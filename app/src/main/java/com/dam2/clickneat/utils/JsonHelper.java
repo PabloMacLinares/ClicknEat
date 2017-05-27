@@ -1,6 +1,9 @@
 package com.dam2.clickneat.utils;
 
+import com.dam2.clickneat.pojos.Domicilio;
+import com.dam2.clickneat.pojos.Publicacion;
 import com.dam2.clickneat.serializers.DateJsonSerializer;
+import com.dam2.clickneat.serializers.DomicilioPublicacionSerializer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.json.JSONTokener;
@@ -24,8 +27,8 @@ public class JsonHelper {
         GsonBuilder builder = new GsonBuilder();
 
         builder.serializeNulls()
-                .excludeFieldsWithoutExposeAnnotation()
-                .registerTypeAdapter(Date.class, new DateJsonSerializer()).create();
+               .excludeFieldsWithoutExposeAnnotation()
+               .registerTypeAdapter(Date.class, new DateJsonSerializer()).create();
 
         Gson gson = builder.create();
 
@@ -61,6 +64,25 @@ public class JsonHelper {
 
         return null;
 
+    }
+
+    /**
+     *
+     * @param publicacion publicacion para serializar a JSON
+     * @return String
+     */
+    public static String publicacionToJson(Publicacion publicacion) {
+
+        GsonBuilder builder = new GsonBuilder();
+
+        builder.serializeNulls()
+                .excludeFieldsWithoutExposeAnnotation()
+                .registerTypeAdapter(Domicilio.class, new DomicilioPublicacionSerializer())
+                .registerTypeAdapter(Date.class, new DateJsonSerializer()).create();
+
+        Gson gson = builder.create();
+
+        return gson.toJson(publicacion);
     }
 
 

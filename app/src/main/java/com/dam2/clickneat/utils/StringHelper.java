@@ -1,5 +1,7 @@
 package com.dam2.clickneat.utils;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -20,6 +22,12 @@ public class StringHelper {
 
         //En Primer lugar nos aseguramos que todas las letras estan en minusculas
         value = value.toLowerCase();
+
+        //Peticiones a la API atraves del modo especial
+        if ( value.contains("?") ) {
+
+            value  = value.split("\\?")[0];
+        }
 
         //Eliminamos los caracteres raros y los sustituimos por espacios
         value = value.replaceAll("[^a-zA-Z0-9]", " ");
@@ -79,5 +87,25 @@ public class StringHelper {
 
         SimpleDateFormat formatter  = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         return formatter.format(date);
+    }
+
+    public static String dateToStringPublicacion(Date date) {
+
+        SimpleDateFormat formatter  = new SimpleDateFormat("dd-MM-yyyy");
+        return formatter.format(date);
+    }
+
+    public static boolean isStringUrl( String url ) {
+
+        try {
+
+            URL myUrl = new URL(url);
+
+            return true;
+
+        } catch (MalformedURLException e) {
+
+            return false;
+        }
     }
 }

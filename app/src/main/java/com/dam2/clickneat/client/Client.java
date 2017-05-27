@@ -2,8 +2,10 @@ package com.dam2.clickneat.client;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.dam2.clickneat.R;
+import com.dam2.clickneat.listeners.AppContextListener;
 import com.dam2.clickneat.listeners.AppStateListener;
 import com.dam2.clickneat.pojos.BaseClass;
 import com.dam2.clickneat.preferences.Preferences;
@@ -30,7 +32,6 @@ public class Client {
 
     //TODO data es el JSON, no se de que tipo es, por eso he puesto Object, ya lo cambiaré
     public static void makeRequest(String path, String data, RequestMethod method, String requestId, ResponseReceiver receiver){
-
         sendRequest(path, data, method, requestId, receiver);
     }
 
@@ -72,7 +73,7 @@ public class Client {
                     conn.setConnectTimeout(15000);
 
                     //Debemos de asignarle a nuestra conexion la cabecera de seguridad
-                    Context cxt = AppStateListener.get().getContext();
+                    Context cxt = AppContextListener.getAppContext();
 
                     if ( cxt != null ) {
 
@@ -121,6 +122,7 @@ public class Client {
                     String jsonResponse = BufferHelper.readInputStream(conn.getInputStream());
                     JSONObject response = new JSONObject(jsonResponse);
 
+                    System.out.println(response);
                     int errorResponse       = response.getInt("error");
                     String dataResponse     = response.getString("data");
                     String jsonClassName    = JsonHelper.getClassNameForJson(dataResponse);
@@ -131,6 +133,7 @@ public class Client {
 
                         //Obtenemos el nombre de la clase por la cual hemos realizado la peticion
                         String pojoClassName = StringHelper.stringToCamelCase(path.split("\\/")[0]);
+
                         String packageName   = "com.dam2.clickneat.pojos";
 
                         //Clase superior a partir de la cual podemos obtener el tipo del objeto
@@ -153,6 +156,7 @@ public class Client {
 
                 }catch( Exception e ) {
 
+                    System.out.println(BufferHelper.readInputStream(conn.getErrorStream()));
                     System.err.println(e.getMessage());
                 }
                 finally {

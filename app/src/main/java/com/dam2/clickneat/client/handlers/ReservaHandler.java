@@ -60,6 +60,11 @@ public class ReservaHandler extends ClientHandler<Reserva> {
         Client.makeRequest("reserva/" + element.getId() + "/" + variable, JsonHelper.toJson(element), Client.RequestMethod.PUT, UPDATE_ID, this);
     }
 
+    public void getReservasPublicacion(long idPublicacion) {
+
+        Client.makeRequest("reserva?publicacion=" + idPublicacion, null, Client.RequestMethod.GET, GET_ALL_ID, this);
+    }
+
     /*@Override
     public void onResponseReceived(Object data,String requestId) {
         System.out.println("RequestId: " + requestId);

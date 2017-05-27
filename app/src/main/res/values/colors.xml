@@ -10,5 +10,6 @@
     <color name="dialog_title">#03b8e6</color>
     <color name="colorDivider">#BDBDBD</color>
     <color name="colorOverlay">#D9000000</color>
+    <color name="colorSecundaryText">#757575</color>
 
 </resources>

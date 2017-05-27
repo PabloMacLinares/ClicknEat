@@ -1,6 +1,7 @@
 package com.dam2.clickneat.views.chats.chat;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -61,7 +62,7 @@ public class ChatView extends BaseActivity implements ChatContract.View {
         this.presenter     = new ChatPresenter(this);
         this.preferences   = new Preferences(this);
 
-        String token            = preferences.getString(getString(R.string.preferences_api_token_user));
+        String token       = preferences.getString(getString(R.string.preferences_api_token_user));
 
         this.metadata      = savedInstanceState == null  ? (ConversacionMetadata) getIntent().getParcelableExtra("metadata")
                                                          : (ConversacionMetadata) savedInstanceState.getParcelable("metadata");
@@ -235,7 +236,7 @@ public class ChatView extends BaseActivity implements ChatContract.View {
     @Override
     public void viewError(String error) {
 
-        System.err.println(error);
+        Snackbar.make(rvMensajes, error, Snackbar.LENGTH_LONG).show();
     }
 
     private void drawCustomActionBar() {

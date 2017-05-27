@@ -1,11 +1,8 @@
 package com.dam2.clickneat.views.main;
 
-import android.app.LocalActivityManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -13,27 +10,26 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.LinearLayout;
-import android.widget.TabHost;
 import android.widget.TextView;
+import android.view.View;
 
 import com.dam2.clickneat.R;
 import com.dam2.clickneat.pojos.Token;
 import com.dam2.clickneat.pojos.Usuario;
 import com.dam2.clickneat.preferences.Preferences;
-import com.dam2.clickneat.utils.JsonHelper;
+import com.dam2.clickneat.utils.BitmapHelper;
 import com.dam2.clickneat.utils.JwtHelper;
 import com.dam2.clickneat.views.BaseActivity;
 import com.dam2.clickneat.views.chats.ChatsView;
 import com.dam2.clickneat.views.login.LoginView;
-import com.dam2.clickneat.views.registro.RegisterView;
+import com.dam2.clickneat.views.perfilUsuario.PerfilUsuarioView;
+import com.dam2.clickneat.views.reservas.ReservasView;
 import com.facebook.AccessToken;
-import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.Auth;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
-
-import java.lang.reflect.Method;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -41,6 +37,7 @@ public class MainView extends BaseActivity
         implements MainContract.View, NavigationView.OnNavigationItemSelectedListener {
 
     private static final int LOGIN_ACTION       = 1;
+    private Picasso picasso;
 
     //UI Interface
     private NavigationView navigationView;
@@ -52,6 +49,8 @@ public class MainView extends BaseActivity
     private MainContract.Presenter presenter;
     private Preferences preferences;
     private Usuario usuario;
+
+    //Intent login
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,8 +65,6 @@ public class MainView extends BaseActivity
             public void onClick(View view) {
                 /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();*/
-                Intent i = new Intent(MainView.this, ChatsView.class);
-                startActivity(i);
             }
         });
 
@@ -82,12 +79,14 @@ public class MainView extends BaseActivity
 
         presenter   = new MainPresenter(this);
         preferences = new Preferences(this);
+        picasso     = Picasso.with(this);
 
         init();
     }
 
     @Override
     protected void onResume() {
+
         super.onResume();
 
         //Debemos de generar el usuario
@@ -134,27 +133,33 @@ public class MainView extends BaseActivity
 
         switch ( id ) {
 
-            case R.id.nav_camera: {
+            case R.id.nav_perfil: {
+
+                Intent i = new Intent(MainView.this, PerfilUsuarioView.class);
+
+                i.putExtra(getString(R.string.preferences_id_user), this.usuario.getId());
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(i);
 
                 break;
             }
 
-            case R.id.nav_slideshow: {
+            case R.id.nav_reservas: {
+
+                Intent i = new Intent(MainView.this, ReservasView.class);
+                i.putExtra(getString(R.string.preferences_id_user), this.usuario.getId());
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(i);
 
                 break;
             }
 
-            case R.id.nav_manage: {
 
-                break;
-            }
+            case R.id.nav_conversacion: {
 
-            case R.id.nav_share: {
-
-                break;
-            }
-
-            case R.id.nav_send: {
+                Intent i = new Intent(MainView.this, ChatsView.class);
+                startActivity(i);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
                 break;
             }
@@ -269,11 +274,14 @@ public class MainView extends BaseActivity
         //Visualizamos la informacion del usuario en nuestra interfaz
         if ( showUI ) {
 
-            Picasso.with(this)
+            BitmapHelper.loadBitmapAsynchronously(picasso, this.ivProfile, R.drawable.placeholder, profile);
+            /*Picasso.with(this)
                     .load(profile)
                     .placeholder(R.drawable.placeholder)
                     .error(R.drawable.placeholder)
-                    .into(ivProfile);
+                    .networkPolicy(NetworkPolicy.NO_CACHE)
+                    .memoryPolicy(MemoryPolicy.NO_CACHE)
+                    .into(ivProfile);*/
 
             tvUsername.setText(username);
             tvEmail.setText(email);

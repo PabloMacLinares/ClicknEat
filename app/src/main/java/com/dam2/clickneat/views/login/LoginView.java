@@ -47,13 +47,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 
 import org.json.JSONObject;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-
-import jp.wasabeef.blurry.Blurry;
-
 import static android.Manifest.permission.READ_CONTACTS;
 
 /**
@@ -106,7 +103,6 @@ public class LoginView extends BaseActivity implements LoginContract.View, Loade
         preferences = new Preferences(this);
 
         init();
-
     }
 
     private void populateAutoComplete() {
