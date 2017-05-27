@@ -5,12 +5,12 @@
             <solid android:color="@color/colorOverlay" />
         </shape>
     </item>
-    <item>
+    <item android:id="@+id/background_profile_image">
         <bitmap
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:shape="rectangle"
             android:src="@drawable/chimichangas"
-            android:alpha="0.3"></bitmap>
+            android:alpha="0.1"></bitmap>
     </item>
 </layer-list>

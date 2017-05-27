@@ -58,6 +58,12 @@ public class PerfilUsuarioHandler extends ClientHandler<PerfilUsuario> {
 
         Client.makeRequest("perfil-usuario/" + element.getId() + "/" + variable, JsonHelper.toJson(element), Client.RequestMethod.PUT, UPDATE_ID, this);
     }
+
+    public void getPerfilUsuarioByIdUsuario(int idUsuario) {
+
+        Client.makeRequest("perfil-usuario?usuario=" + idUsuario, null, Client.RequestMethod.GET, GET_ALL_ID, this);
+    }
+
     /*@Override
     public void onResponseReceived(Object data,String requestId) {
         System.out.println("RequestId: " + requestId);

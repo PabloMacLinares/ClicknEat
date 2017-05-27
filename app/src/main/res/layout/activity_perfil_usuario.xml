@@ -1,126 +1,210 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="10dp"
     android:orientation="vertical">
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="0.44">
+        android:descendantFocusability="blocksDescendants">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/fotoPerfil"
-                android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:layout_weight="0.44"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_margin="10dp"
+                android:layout_gravity="center_horizontal"
                 app:srcCompat="@drawable/ic_menu_camera" />
 
             <LinearLayout
                 android:id="@+id/nombreLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="6dp">
 
                 <TextView
                     android:id="@+id/labelNombreUsuario"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Nombre:" />
-
-                <TextView
-                    android:id="@+id/nombreUsuario"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="TextView" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/domiciliosLayout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.44"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/labelDomicilios"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Domicilios:" />
+                    android:layout_weight="0.3"
+                    android:gravity="center_vertical"
+                    android:text="Nombre"
+                    android:textAlignment="gravity"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp" />
 
                 <EditText
-                    android:id="@+id/domicilios"
+                    android:id="@+id/nombreUsuario"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.7"
+                    android:maxLines="1"
+                    android:imeOptions="actionDone"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:selectableItemBackground"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:editable="false"
-                    android:ems="10"
-                    android:enabled="false"
-                    android:inputType="textMultiLine" />
+                    android:padding="2dp">
+
+
+                    <TextView
+                        android:id="@+id/itemTitleDomicilio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
+                        android:layout_toLeftOf="@+id/btnMoreDomicilio"
+                        android:text="@string/perfil_domicilios"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+
+                    <Button
+                        android:id="@+id/btnMoreDomicilio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="42dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/login_button_style"
+                        android:text="Añadir"
+                        android:textColor="#FFF" />
+
+
+                </RelativeLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_domicilios_perfil"
+                    android:layout_width="match_parent"
+                    android:layout_height="185dp"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:focusableInTouchMode="true"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:selectableItemBackground"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="2dp">
+
+
+                    <TextView
+                        android:id="@+id/itemTitlePublicacion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
+                        android:layout_toLeftOf="@+id/btnMorePublicacion"
+                        android:text="@string/perfil_publicaciones"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+
+                    <Button
+                        android:id="@+id/btnMorePublicacion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="42dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/login_button_style"
+                        android:text="Añadir"
+                        android:textColor="#FFF" />
+
+
+                </RelativeLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_publicaciones_perfil"
+                    android:layout_width="match_parent"
+                    android:layout_height="185dp"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:focusableInTouchMode="true" />
+
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="0.44"
-                android:orientation="horizontal">
+                android:background="?android:selectableItemBackground"
+                android:orientation="vertical"
+                android:padding="5dp">
 
-                <LinearLayout
-                    android:id="@+id/publicacionesLayout"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.44"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+                    android:padding="2dp">
+
 
                     <TextView
-                        android:id="@+id/labelPublicaciones"
-                        android:layout_width="match_parent"
+                        android:id="@+id/itemTitleComentario"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.44"
-                        android:text="Publicaciones" />
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
+                        android:layout_toLeftOf="@+id/btnMoreComentario"
+                        android:text="@string/perfil_comentarios"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
 
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/recyclerPublicaciones"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.44" />
-                </LinearLayout>
+                    <Button
+                        android:id="@+id/btnMoreComentario"
+                        android:layout_width="wrap_content"
+                        android:layout_height="42dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/login_button_style"
+                        android:text="Añadir"
+                        android:textColor="#FFF" />
 
-                <LinearLayout
-                    android:id="@+id/comentariosLayout"
+
+                </RelativeLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_comentarios_perfil"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.44"
-                    android:orientation="vertical">
+                    android:layout_marginTop="5dp"/>
 
-                    <TextView
-                        android:id="@+id/labelComentarios"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Comentarios" />
 
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/recyclerComentarios"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.44" />
-                </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>
-    </ScrollView>
+
+    </android.support.v4.widget.NestedScrollView>
 
 </LinearLayout>

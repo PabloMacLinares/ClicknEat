@@ -1,4 +1,413 @@
 <?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:fitsSystemWindows="true">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapsing_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:contentScrim="?attr/colorPrimary"
+            app:expandedTitleMarginStart="48dp"
+            app:expandedTitleMarginEnd="64dp"
+            android:fitsSystemWindows="true">
+
+            <ImageView
+                android:id="@+id/imagenDestacada"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:scaleType="centerCrop"
+                android:layout_gravity="center"
+                app:layout_collapseMode="parallax"/>
+
+            <!--<com.antonioleiva.materializeyourapp.SquareImageView
+                android:id="@+id/image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
+                android:fitsSystemWindows="true"
+                app:layout_collapseMode="parallax"/>-->
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:layout_collapseMode="pin" />
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabPublicacion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        app:layout_anchor="@id/app_bar_layout"
+        app:layout_anchorGravity="bottom|right|end" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:descendantFocusability="blocksDescendants"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="15dp">
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/textInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="15dp"
+                android:layout_weight="1">
+
+                <EditText
+                    android:id="@+id/tituloPlato"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Titulo"
+                    android:textStyle="bold" />
+
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <EditText
+                    android:id="@+id/edDescripcion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:gravity="top"
+                    android:hint="Descripcion"
+                    android:inputType="textMultiLine|textCapSentences"
+                    android:maxLength="2000"
+                    android:maxLines="5"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp"
+                    android:textAlignment="gravity" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="center_horizontal"
+                android:paddingBottom="15dp"
+                android:paddingTop="15dp"
+                android:text="Datos de la publicacion"
+                android:textAlignment="gravity"
+                android:textAllCaps="true"
+                android:textStyle="bold" />
+
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="15dp"
+                android:layout_weight="1">
+
+
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusableInTouchMode="true"
+                    android:orientation="horizontal">
+
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="5dp"
+                        android:background="@drawable/ic_local_dining_black_24px"
+                        android:buttonTint="@color/colorSecundaryText" />
+
+                    <EditText
+                        android:id="@+id/numeroMaxGourmets"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.8"
+                        android:hint="N. Gourmets"
+                        android:imeOptions="actionNext"
+                        android:inputType="number" />
+
+
+                </LinearLayout>
+
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="15dp"
+                android:layout_weight="1">
+
+
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusableInTouchMode="true"
+                    android:orientation="horizontal">
+
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="5dp"
+                        android:background="@drawable/ic_euro_symbol_black_24px"
+                        android:buttonTint="@color/colorSecundaryText" />
+
+                    <EditText
+                        android:id="@+id/dineroPlato"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.8"
+                        android:hint="Precio Plato"
+                        android:imeOptions="actionNext"
+                        android:inputType="numberDecimal" />
+
+
+                </LinearLayout>
+
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="15dp"
+                android:layout_weight="1">
+
+
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusableInTouchMode="true"
+                    android:orientation="horizontal">
+
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="5dp"
+                        android:background="@drawable/ic_date_range_black_24px"
+                        android:buttonTint="@color/colorSecundaryText" />
+
+                    <EditText
+                        android:id="@+id/publicacion_fecha"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.8"
+                        android:hint="Fecha"
+                        android:imeOptions="actionNext" />
+
+
+                </LinearLayout>
+
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="15dp"
+                android:layout_weight="1">
+
+
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusableInTouchMode="true"
+                    android:orientation="horizontal">
+
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="5dp"
+                        android:background="@drawable/ic_event_available_black_24px"
+                        android:buttonTint="@color/colorSecundaryText" />
+
+                    <EditText
+                        android:id="@+id/publicacion_hora_ini"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.8"
+                        android:hint="Hora Inicial"
+                        android:imeOptions="actionNext" />
+
+
+                </LinearLayout>
+
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="15dp"
+                android:layout_weight="1">
+
+
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusableInTouchMode="true"
+                    android:orientation="horizontal">
+
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="5dp"
+                        android:background="@drawable/ic_event_busy_black_24px"
+                        android:buttonTint="@color/colorSecundaryText" />
+
+                    <EditText
+                        android:id="@+id/publicacion_hora_fin"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.8"
+                        android:hint="Hora Final"
+                        android:imeOptions="actionNext" />
+
+
+                </LinearLayout>
+
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_publicacion_domicilios"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/platosLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="15dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="0.8"
+                        android:gravity="center_vertical"
+                        android:text="Platos"
+                        android:textAlignment="center"
+                        android:textAllCaps="true"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/btAddPlato"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/ic_add_circle_outline_black_24px" />
+
+                </LinearLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rvPlatos"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/contacta_publicacion"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:gravity="center_horizontal"
+                    android:paddingBottom="15dp"
+                    android:paddingTop="15dp"
+                    android:text="Datos del chef"
+                    android:textAlignment="gravity"
+                    android:textAllCaps="true"
+                    android:textStyle="bold" />
+
+
+                <Button
+                    android:id="@+id/ver_perfil_publicacion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:text="Mi Perfil"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/colorAccent" />
+
+                <Button
+                    android:id="@+id/hablar_publicacion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:text="Contacta conmigo"
+                    android:textColor="@color/colorAccent" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </android.support.v4.widget.NestedScrollView>
+
+
+</android.support.design.widget.CoordinatorLayout>
+
+<!--
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -6,7 +415,9 @@
     android:layout_margin="10dp"
     android:orientation="vertical">
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nstScrollView"
+        android:descendantFocusability="blocksDescendants"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1">
@@ -16,17 +427,33 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
-            <ImageView
-                android:id="@+id/imagenDestacada"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:layout_weight="1"
-                app:srcCompat="@drawable/ic_menu_camera" />
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/imagenDestacada"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/ic_menu_camera" />
+
+                <android.support.design.widget.FloatingActionButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignRight="@id/imagenDestacada"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerInParent="false"
+                    android:layout_marginRight="15dp" />
+            </RelativeLayout>
+
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/textInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginBottom="10dp"
                 android:layout_weight="1">
 
                 <EditText
@@ -45,20 +472,60 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/descripcion"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:layout_weight="1"
-                    android:text="Platos:" />
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-                <EditText
-                    android:id="@+id/descripcionPlato"
+                    <TextView
+                        android:id="@+id/tvPlatos"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.8"
+                        android:gravity="center_vertical"
+                        android:text="Platos"
+                        android:textAlignment="gravity" />
+
+                    <Button
+                        android:id="@+id/btAddPlato"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:background="@drawable/ic_add_circle_outline_black_24px" />
+
+                </LinearLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rvPlatos"
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="2dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvDescripcion"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:text="Descripcion" />
+
+                <EditText
+                    android:id="@+id/edDescripcion"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:inputType="textMultiLine" />
+                    android:inputType="textMultiLine"
+                    android:textAlignment="viewStart" />
             </LinearLayout>
 
             <LinearLayout
@@ -76,10 +543,11 @@
                     android:layout_weight="1"
                     android:text="Nº gourmets:" />
 
-                <NumberPicker
+                <EditText
                     android:id="@+id/numeroMaxGourmets"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:inputType="number"
                     android:layout_weight="1" />
 
                 <TextView
@@ -89,10 +557,11 @@
                     android:layout_weight="1"
                     android:text="Coste:" />
 
-                <NumberPicker
+                <EditText
                     android:id="@+id/dineroPlato"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:inputType="number"
                     android:layout_weight="1" />
 
             </LinearLayout>
@@ -179,6 +648,6 @@
             </LinearLayout>
 
         </LinearLayout>
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 
-</LinearLayout>
+</LinearLayout> -->

@@ -73,15 +73,10 @@ public abstract class ClientHandler<T> implements ResponseReceiver {
             }
         }
 
-
-        System.out.println("RequestId: " + requestId);
-        System.out.println(data);
     }
 
     @Override
     public void onErrorReceived(Object data, String requestId) {
-        System.err.println("RequestId: " + requestId);
-        System.err.println(data);
 
         dataReceiver.onDataErrorReceived((String)data);
     }

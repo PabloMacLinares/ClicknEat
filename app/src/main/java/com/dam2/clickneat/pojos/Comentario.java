@@ -23,9 +23,11 @@ public class Comentario extends BaseClass {
     @Expose
     private String valoracion;
     @Expose
-    private int puntuacion;
+    private float puntuacion;
     @Expose
     private Date fechaComentario;
+    @Expose
+    private ComentarioMetadata metadata;
 
     public Comentario() {
 
@@ -36,6 +38,7 @@ public class Comentario extends BaseClass {
         this.valoracion         = "";
         this.puntuacion         = 0;
         this.fechaComentario    = new Date(System.currentTimeMillis());
+        this.metadata           = new ComentarioMetadata();
     }
 
     protected Comentario(Parcel in) {
@@ -45,8 +48,9 @@ public class Comentario extends BaseClass {
         this.usuarioDa          = in.readInt();
         this.usuarioRecibe      = in.readInt();
         this.valoracion         = in.readString();
-        this.puntuacion         = in.readInt();
+        this.puntuacion         = in.readFloat();
         this.fechaComentario    = (Date) in.readSerializable();
+        this.metadata           = in.readParcelable(ComentarioMetadata.class.getClassLoader());
     }
 
     public int getId() {
@@ -81,11 +85,11 @@ public class Comentario extends BaseClass {
         this.valoracion = valoracion;
     }
 
-    public int getPuntuacion() {
+    public float getPuntuacion() {
         return puntuacion;
     }
 
-    public void setPuntuacion(int puntuacion) {
+    public void setPuntuacion(float puntuacion) {
         this.puntuacion = puntuacion;
     }
 
@@ -97,6 +101,13 @@ public class Comentario extends BaseClass {
         this.fechaComentario = fechaComentario;
     }
 
+    public ComentarioMetadata getMetadata() {
+        return metadata;
+    }
+
+    public void setMetadata(ComentarioMetadata comentarioMetadata) {
+        this.metadata = comentarioMetadata;
+    }
 
     public static final Creator<Comentario> CREATOR = new Creator<Comentario>() {
         @Override
@@ -122,8 +133,8 @@ public class Comentario extends BaseClass {
         dest.writeInt(this.usuarioDa);
         dest.writeInt(this.usuarioRecibe);
         dest.writeString(this.valoracion);
-        dest.writeInt(this.puntuacion);
+        dest.writeFloat(this.puntuacion);
         dest.writeSerializable(this.fechaComentario);
-
+        dest.writeParcelable(this.metadata, flags);
     }
 }

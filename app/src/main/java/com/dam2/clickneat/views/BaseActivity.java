@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.WindowManager;
 
 import com.dam2.clickneat.R;
 import com.dam2.clickneat.listeners.AppStateListener;
@@ -54,10 +55,15 @@ public class BaseActivity extends AppCompatActivity {
         //Inicializamos nuestro broadcast
         this.firebaseReceiver = new FirebaseDataReceiver();
 
+        //Nuestras activities se redimensionarán cuando aparezca el teclado
+        //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
         //Comprobamos los permisos que necesita nuestra app
         permissions = new ArrayList();
         permissions.add(Manifest.permission.ACCESS_NETWORK_STATE);
         permissions.add(Manifest.permission.INTERNET);
+        /*permissions.add(Manifest.permission.CAMERA);
+        permissions.add(Manifest.permission.READ_EXTERNAL_STORAGE);*/
 
         if ( !hasPermissions() ) {
             ActivityCompat.requestPermissions(this, permissions.toArray(new String[permissions.size()]), PERMISSION_ALL);

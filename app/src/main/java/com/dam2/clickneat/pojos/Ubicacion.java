@@ -3,15 +3,21 @@ package com.dam2.clickneat.pojos;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.Expose;
+
 /**
  * Created by ferna on 29/04/2017.
  */
 
 public class Ubicacion implements Parcelable {
 
+    @Expose
     private int id;
+    @Expose
     private Double lat;
+    @Expose
     private Double lng;
+    @Expose
     private int domicilio;
 
     public Ubicacion() {

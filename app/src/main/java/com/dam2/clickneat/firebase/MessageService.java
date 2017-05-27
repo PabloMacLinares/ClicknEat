@@ -19,6 +19,7 @@ import com.dam2.clickneat.preferences.Preferences;
 import com.dam2.clickneat.utils.JsonHelper;
 import com.dam2.clickneat.utils.JwtHelper;
 import com.dam2.clickneat.views.chats.ChatsView;
+import com.dam2.clickneat.views.perfilUsuario.PerfilUsuarioView;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.google.gson.reflect.TypeToken;
@@ -108,12 +109,16 @@ public class MessageService extends FirebaseMessagingService {
 
                 case "Comentario": {
 
+                    i    = new Intent(this, PerfilUsuarioView.class);
+                    i.putExtra(getString(R.string.preferences_id_user), idUsuario);
+
                     icon = R.drawable.ic_comment_white_24px;
 
                     break;
                 }
             }
 
+            if ( i != null )i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             sendNotification(i, title, littleText, bigText, icon);
 
             //Comprobamos si la app esta activa y si es así llamamos a nuestro broadcast

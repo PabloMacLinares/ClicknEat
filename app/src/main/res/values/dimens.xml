@@ -16,4 +16,14 @@
 
     <dimen name="profile_picture_size">64dp</dimen>
     <dimen name="header_padding">16dp</dimen>
+
+
+    <dimen name="list_item_height">48dp</dimen>
+    <dimen name="horizontal_margin">16dp</dimen>
+    <dimen name="list_item_left_margin">72dp</dimen>
+
+
+    <dimen name="image_small_width">32dp</dimen>
+    <dimen name="image_width">100dp</dimen>
+
 </resources>

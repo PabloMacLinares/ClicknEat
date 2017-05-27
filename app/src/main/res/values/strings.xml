@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">ClicknEat</string>
     <string name="app_conversaciones">Conversaciones</string>
+    <string name="app_perfil_usuario">Perfil</string>
+    <string name="app_reservas">Reservas</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -57,9 +59,48 @@
     <string name="account_message">No tienes una cuenta? <u><strong>Registrate</strong></u></string>
     <string name="action_register_in_app">Registrando...</string>
     <string name="action_login_in_app">Iniciando sesion...</string>
+    <string name="action_update_app">Actualizando...</string>
+    <string name="action_loading_app">Cargando...</string>
+    <string name="action_insert_app">Insertando...</string>
+    <string name="action_reserva_app">Reservando...</string>
     <string name="connect_account">Reintentar</string>
     <string name="error_register_fcb">Error al registrar la cuenta</string>
 
     <!-- Tabs -->
     <string name="tab_conversaciones">Conversaciones</string>
+
+
+    <!-- Drawer -->
+    <string name="menu_perfil">Perfil</string>
+    <string name="menu_conversaciones">Conversaciones</string>
+    <string name="menu_cerrar_sesion">Cerrar Sesión</string>
+
+
+    <!-- Perfil Usuario -->
+    <string name="perfil_domicilios">Domicilios</string>
+    <string name="perfil_publicaciones">Publicaciones</string>
+    <string name="perfil_reservas">Reservas</string>
+    <string name="perfil_comentarios">Comentarios</string>
+
+    <!-- Dialog Domicilio -->
+    <string name="direccion_domicilio_add">Direccion</string>
+    <string name="dialog_OK">OK</string>
+    <string name="dialog_cancel">Cancelar</string>
+
+    <string name="comentario_dialogo_title">Añadir Comentario</string>
+
+    <string name="pick_image_intent_text">Selecciona una imagen</string>
+
+    <string name="title_dialog_permission_images">Permisos necesarios</string>
+    <string name="message_dialog_permission_images">Para poder tomar una foto necesitamos que nos de su autorizacion</string>
+    
+    <string name="title_comentario_dialog">¿Cómo fue tu experiencia?</string>
+    <string name="placeholder_comentario_dialog">Dile lo que piensas</string>
+
+    <string name="remove_reserva_title">Eliminar</string>
+    <string name="remove_reserva_message">Se eliminará su reserva, ¿está de acuerdo?</string>
+
+    <string name="remove_reserva_title_completa">Completo</string>
+    <string name="remove_reserva_message_completa">Publicacion completa, no existen plazas libres</string>
+
 </resources>

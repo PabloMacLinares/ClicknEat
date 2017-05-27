@@ -59,6 +59,11 @@ public class DomicilioHandler extends ClientHandler<Domicilio> {
 
         Client.makeRequest("domicilio/" + element.getId() + "/" + variable, JsonHelper.toJson(element), Client.RequestMethod.PUT, UPDATE_ID, this);
     }
+
+    public void getDomiciliosByIdPerfilUsuario(int idPerfilUsuario) {
+
+        Client.makeRequest("domicilio?perfil=" + idPerfilUsuario, null, Client.RequestMethod.GET, GET_ALL_ID, this);
+    }
     /*@Override
     public void onResponseReceived(Object data,String requestId) {
         System.out.println("RequestId: " + requestId);

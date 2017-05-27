@@ -76,7 +76,7 @@ public class Publicacion extends BaseClass {
         this.precio         = in.readDouble();
         this.domicilio      = in.readParcelable(Domicilio.class.getClassLoader());
         this.foto           = in.readString();
-        in.readList( this.platos == null ? new ArrayList<String>() : platos, String.class.getClassLoader());
+        this.platos         = in.createStringArrayList();
         this.usuario        = in.readInt();
         in.readTypedList( this.reservas == null ? new ArrayList<Reserva>() : this.reservas, Reserva.CREATOR);
         this.completo       = in.readByte() != 0;
@@ -235,7 +235,7 @@ public class Publicacion extends BaseClass {
         dest.writeDouble(this.precio);
         dest.writeParcelable(this.domicilio, flags);
         dest.writeString(this.foto);
-        dest.writeList(platos);
+        dest.writeStringList(platos);
         dest.writeInt(this.usuario);
         dest.writeTypedList(this.reservas);
         dest.writeByte((byte) (this.completo ? 1 : 0));
