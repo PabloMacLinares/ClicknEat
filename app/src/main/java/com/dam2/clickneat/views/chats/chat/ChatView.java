@@ -68,7 +68,7 @@ public class ChatView extends BaseActivity implements ChatContract.View {
                                                          : (ConversacionMetadata) savedInstanceState.getParcelable("metadata");
         this.perfilUsuario = savedInstanceState == null  ? (PerfilUsuario) getIntent().getParcelableExtra("perfilUsuario")
                                                          : (PerfilUsuario) savedInstanceState.getParcelable("perfilUsuario");
-        this.idUsuario      = savedInstanceState == null ? (getIntent().getIntExtra(getString(R.string.preferences_id_user), Preferences.DEFAULT_INTEGER) != Preferences.DEFAULT_INTEGER
+        this.idUsuario     = savedInstanceState == null ? (getIntent().getIntExtra(getString(R.string.preferences_id_user), Preferences.DEFAULT_INTEGER) != Preferences.DEFAULT_INTEGER
                                                          ?  getIntent().getIntExtra(getString(R.string.preferences_id_user), Preferences.DEFAULT_INTEGER)
                                                          :  token.equals(Preferences.DEFAULT_STRING) ? -1 : (Integer) JwtHelper.getElementFromToken(token, getString(R.string.preferences_id_user), Integer.class ))
                                                          :  savedInstanceState.getInt(getString(R.string.preferences_id_user));
@@ -216,8 +216,9 @@ public class ChatView extends BaseActivity implements ChatContract.View {
     public void viewConversacionMetadata(ConversacionMetadata conversacionMetadata) {
 
         //Comprobamos que cambios existen en los metadatos y actualizamos la interfaz
+        String imagen = conversacionMetadata.getFoto().isEmpty() ? "-" : conversacionMetadata.getFoto();
         Picasso.with(this)
-                .load(conversacionMetadata.getFoto())
+                .load(imagen)
                 .placeholder(R.drawable.placeholder)
                 .fit()
                 .centerInside()

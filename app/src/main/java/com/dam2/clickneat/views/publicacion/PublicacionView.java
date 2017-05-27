@@ -339,8 +339,8 @@ public class PublicacionView extends BaseActivity implements PublicacionContract
                 false
         );
 
-        java.util.Calendar timeNow = java.util.Calendar.getInstance();
-        dpd.setMinTime(timeNow.get(java.util.Calendar.HOUR_OF_DAY), timeNow.get(java.util.Calendar.MINUTE), 0);
+        //java.util.Calendar timeNow = java.util.Calendar.getInstance();
+        //dpd.setMinTime(timeNow.get(java.util.Calendar.HOUR_OF_DAY), timeNow.get(java.util.Calendar.MINUTE), 0);
         dpd.show(getFragmentManager(), "TimePickerDialog");
     }
 
@@ -449,21 +449,29 @@ public class PublicacionView extends BaseActivity implements PublicacionContract
     public void viewConversacion(Conversacion conversacion) {
 
         //Obtenemos los metadatas para la conversacion
-        ConversacionMetadata metadata = null;
-
-        for ( ConversacionMetadata cm : conversacion.getMetadatas() ) {
-
-            if ( cm.getUsuario() == this.idUsuarioDispositivo) {
-
-                metadata = cm;
-                break;
-            }
-        }
 
         Intent intent = new Intent(PublicacionView.this, ChatView.class);
         intent.putExtra("perfilUsuario", PublicacionView.this.perfilUsuario);
         intent.putExtra(getString(R.string.preferences_id_user), PublicacionView.this.idUsuarioDispositivo);
-        intent.putExtra("metadata", metadata);
+
+        //Los usuarios no tienen conversacion creada
+        if ( conversacion.getId() > 0 ) {
+
+            ConversacionMetadata metadata = null;
+
+            for ( ConversacionMetadata cm : conversacion.getMetadatas() ) {
+
+                if ( cm.getUsuario() == this.idUsuarioDispositivo) {
+
+                    metadata = cm;
+                    break;
+                }
+            }
+
+            intent.putExtra("metadata", metadata);
+
+        }
+
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
         startActivity(intent);
@@ -878,7 +886,7 @@ public class PublicacionView extends BaseActivity implements PublicacionContract
         this.publicacion.setHoraFin(DateHelper.dateFromString(this.edHoraFin.getText().toString(), DateHelper.HOUR_TYPE));
         this.publicacion.setPlatos(this.adapterPlatos.getPlatos());
         this.publicacion.setDomicilio(this.adapterDomicilios.getCheckedDomicilio());
-        this.publicacion.setUsuario(this.publicacion.getUsuario() >= 0 ? this.publicacion.getUsuario() : this.idUsuarioDispositivo);
+        this.publicacion.setUsuario(this.publicacion.getUsuario() > 0 ? this.publicacion.getUsuario() : this.idUsuarioDispositivo);
     }
 
     //Funcion utilizada para obtener el ID del usuario logueado en el dispositivo
