@@ -131,14 +131,7 @@ public class PerfilUsuarioView extends BaseActivity implements  PerfilUsuarioCon
         super.onResume();
 
         //Solo nos descargamos los datos del usuario cuando no los tenemos
-        if ( this.usuario == null ) {
-
-            this.presenter.onLoadPerfilUsuario(this.idUsuarioVista);
-        }
-        else {
-
-            loadInfoUser();
-        }
+        this.presenter.onLoadPerfilUsuario(this.idUsuarioVista);
     }
 
     @Override

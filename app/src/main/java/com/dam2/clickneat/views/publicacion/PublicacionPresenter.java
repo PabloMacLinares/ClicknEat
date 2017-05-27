@@ -72,6 +72,11 @@ public class PublicacionPresenter implements PublicacionContract.Presenter {
     }
 
     @Override
+    public void onLoadPublicacion(int idPublicacion) {
+        this.model.loadPublicacion(idPublicacion);
+    }
+
+    @Override
     public void onAddPublicacion(Publicacion publicacion) {
 
         this.model.addPublicacion(publicacion);
@@ -87,6 +92,11 @@ public class PublicacionPresenter implements PublicacionContract.Presenter {
     public void onUpdatePublicacion(Publicacion publicacion) {
 
         this.model.updatePublicacion(publicacion);
+    }
+
+    @Override
+    public void onRemovePublicacion(int idPublicacion) {
+        this.model.removePublicacion(idPublicacion);
     }
 
     @Override

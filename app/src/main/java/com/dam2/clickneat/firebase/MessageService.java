@@ -139,19 +139,26 @@ public class MessageService extends FirebaseMessagingService {
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
 
         //En la prioridad de activities colocamos la nuestra la primera
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent = null;
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent, PendingIntent.FLAG_ONE_SHOT);
+        if ( intent != null ) {
+
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+            pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent, PendingIntent.FLAG_ONE_SHOT);
+        }
+
         Uri defaultSoundUri         = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
         //Aspectos comunes
         notificationBuilder.setAutoCancel(true)
                 .setSound(defaultSoundUri)
                 .setSmallIcon(icon)
-                .setContentIntent(pendingIntent)
                 .setContentTitle(title)
                 .setContentText(littleBody)
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(bigBody));
+
+        if ( pendingIntent != null ) notificationBuilder.setContentIntent(pendingIntent);
 
         Notification notification = notificationBuilder.build();
 

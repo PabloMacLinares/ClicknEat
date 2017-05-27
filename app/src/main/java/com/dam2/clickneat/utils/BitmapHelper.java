@@ -13,12 +13,22 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by ferna on 26/05/2017.
  */
 
 public class BitmapHelper {
+
+    /*
+    * Picasso no maneja muy bien las referencias y en algunas ocasiones las pierde y las
+    * toma el recolector de basura. Para ello generamos una lista de targets la cual posee
+    * una referencia strong para evitar que el recolector de basura la elimine antes de que
+    * termine de cargar la imagen
+    * */
+    private static final List<Target> targets = new ArrayList<>();
 
     public static byte[] getByteArrayFromBitmap( Bitmap bmp ) {
 
@@ -80,12 +90,14 @@ public class BitmapHelper {
                    .fit()
                    .centerCrop()
                    .into(imageView);
+
         }
         else
         {
             try
             {
-                Target target = new Target() {
+
+                final Target target = new Target() {
                     @Override
                     public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
 
@@ -103,6 +115,7 @@ public class BitmapHelper {
                             protected void onPostExecute(Bitmap bitmap) {
 
                                 imageView.setImageBitmap(bitmap);
+                                targets.remove(this);
                             }
                         }.execute(bitmap);
                     }
@@ -120,7 +133,7 @@ public class BitmapHelper {
 
                     }
                 };
-
+                targets.add(target);
                 picasso.load(image)
                        .into(target);
             }
@@ -130,6 +143,7 @@ public class BitmapHelper {
                        .fit()
                        .centerCrop()
                        .into(imageView);
+
 
             }
         }
