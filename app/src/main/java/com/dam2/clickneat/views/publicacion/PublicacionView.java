@@ -676,7 +676,7 @@ public class PublicacionView extends BaseActivity implements PublicacionContract
     private ArrayList<SingleCheckDomicilio> getListCheckerDomicilios(ArrayList<Domicilio> domicilios) {
 
         SingleCheckDomicilio singleCheckDomicilio = new SingleCheckDomicilio("Domicilios", domicilios, R.drawable.ic_home_black_24px);
-        ArrayList<SingleCheckDomicilio> listCheckDomicilio = new ArrayList();
+        ArrayList<SingleCheckDomicilio> listCheckDomicilio = new ArrayList<>();
 
         listCheckDomicilio.add(singleCheckDomicilio);
 
