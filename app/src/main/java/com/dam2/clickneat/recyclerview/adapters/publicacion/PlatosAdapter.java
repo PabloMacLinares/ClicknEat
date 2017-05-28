@@ -118,6 +118,8 @@ public class PlatosAdapter extends RecyclerView.Adapter<PlatosAdapter.ViewHolder
             this.edPlato = (EditText) view.findViewById(R.id.edPlato);
             this.btPlato = (ImageView) view.findViewById(R.id.btPlato);
 
+            //Si estamos en modo de ver no se editan los campos
+            this.edPlato.setEnabled(isEditable);
 
             //Agregamos el evento para que se muestre nuestro boton de eliminar elemento
             this.edPlato.setOnFocusChangeListener(new View.OnFocusChangeListener() {

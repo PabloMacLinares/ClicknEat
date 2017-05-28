@@ -156,8 +156,7 @@ public class Client {
 
                 }catch( Exception e ) {
 
-                    System.out.println(BufferHelper.readInputStream(conn.getErrorStream()));
-                    System.err.println(e.getMessage());
+                    sendError(receiver, requestId, e.getMessage());
                 }
                 finally {
 

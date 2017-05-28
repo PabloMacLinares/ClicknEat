@@ -21,8 +21,10 @@ public interface PublicacionContract {
         void addReserva(Reserva reserva);
         void removeReserva(long idReserva);
 
+        void loadPublicacion(int idPublicacion);
         void addPublicacion(Publicacion publicacion);
         void updatePublicacion(Publicacion publicacion);
+        void removePublicacion(int idPublicacion);
 
         void loadIdConversacionFromUsers(int idUsuario1, int idUsuario2);
     }
@@ -44,9 +46,11 @@ public interface PublicacionContract {
         void onAddedReserva(long idReserva);
 
         //Publicacion
+        void onLoadPublicacion(int idPublicacion);
         void onAddPublicacion(Publicacion publicacion);
         void onAddedPublicacion(Publicacion publicacion);
         void onUpdatePublicacion(Publicacion publicacion);
+        void onRemovePublicacion(int idPublicacion);
 
         void onNoErrorReceived(String noerror);
         void onLoadConversacionUsers(int idUsuario1, int idUsuario2);

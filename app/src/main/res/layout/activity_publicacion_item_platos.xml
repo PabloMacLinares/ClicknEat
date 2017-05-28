@@ -14,7 +14,8 @@
         android:ems="10"
         android:id="@+id/edPlato"
         android:layout_weight="0.8"
-        android:imeOptions="actionNext" />
+        android:imeOptions="actionNext"
+        android:textColor="@drawable/selector_disabled_text"/>
 
     <ImageView
         android:id="@+id/btPlato"

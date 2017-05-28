@@ -63,6 +63,7 @@
     <string name="action_loading_app">Cargando...</string>
     <string name="action_insert_app">Insertando...</string>
     <string name="action_reserva_app">Reservando...</string>
+    <string name="action_remove_app">Eliminando...</string>
     <string name="connect_account">Reintentar</string>
     <string name="error_register_fcb">Error al registrar la cuenta</string>
 
@@ -99,8 +100,11 @@
 
     <string name="remove_reserva_title">Eliminar</string>
     <string name="remove_reserva_message">Se eliminará su reserva, ¿está de acuerdo?</string>
+    <string name="remove_publicacion_message">Se eliminará su publicación de forma permanente, ¿está de acuerdo?</string>
 
     <string name="remove_reserva_title_completa">Completo</string>
     <string name="remove_reserva_message_completa">Publicacion completa, no existen plazas libres</string>
+
+    <string name="remove_publicacion">Eliminar</string>
 
 </resources>

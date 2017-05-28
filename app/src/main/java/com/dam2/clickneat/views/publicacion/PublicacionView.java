@@ -90,18 +90,19 @@ public class PublicacionView extends BaseActivity implements PublicacionContract
     private RecyclerView rvPlatos;
     private PlatosAdapter adapterPlatos;
     private Button btAddPlato;
-
+    private LinearLayout linearLayoutPlatos;
     private RecyclerView rvDomicilios;
     private SingleCheckDomicilioAdapter adapterDomicilios;
 
     private LinearLayout llDatosPersonales;
-    private Button btPerfil, btConversacion;
+    private Button btPerfil, btConversacion, btEliminar;
 
     //Logic Components
 
-    public static final int INSERT_ACTION = 0;
-    public static final int EDIT_ACTION   = 1;
-    public static final int VIEW_ACTION   = 2;
+    public static final int INSERT_ACTION               = 0;
+    public static final int EDIT_ACTION                 = 1;
+    public static final int VIEW_ACTION                 = 2;
+    private static final int REMOVE_PUBLICACION_ACTION  = 3;
 
     private boolean isHourInitialSelected;
     private int idReserva;
@@ -123,8 +124,8 @@ public class PublicacionView extends BaseActivity implements PublicacionContract
     private int typeAction;
     private Publicacion publicacion;
     private PerfilUsuario perfilUsuario;
-    private int idUsuario;
     private int idUsuarioDispositivo;
+    private int userActionRemove;
 
     private ArrayList<Domicilio> domicilios;
     private ProgressDialog progressDialog;
@@ -167,7 +168,9 @@ public class PublicacionView extends BaseActivity implements PublicacionContract
         this.idUsuarioDispositivo   = savedInstanceState != null ? savedInstanceState.getInt("idUsuarioDispositivo")
                                                                  : getIdUserLogged();
 
-        this.presenter   = new PublicacionPresenter(this);
+        this.userActionRemove       = savedInstanceState != null ? savedInstanceState.getInt("userActionRemove") : -1;
+
+        this.presenter              = new PublicacionPresenter(this);
 
         init();
     }
@@ -270,6 +273,7 @@ public class PublicacionView extends BaseActivity implements PublicacionContract
         super.onSaveInstanceState(outState);
 
         //outState.putInt(getString(R.string.preferences_id_user), this.idUsuario);
+        outState.putInt("userActionInterface", this.userActionRemove);
         outState.putInt("idUsuarioDispositivo", this.idUsuarioDispositivo);
         outState.putParcelable("perfil", this.perfilUsuario);
         outState.putParcelable("publicacion", this.publicacion);
@@ -339,8 +343,8 @@ public class PublicacionView extends BaseActivity implements PublicacionContract
                 false
         );
 
-        java.util.Calendar timeNow = java.util.Calendar.getInstance();
-        dpd.setMinTime(timeNow.get(java.util.Calendar.HOUR_OF_DAY), timeNow.get(java.util.Calendar.MINUTE), 0);
+        //java.util.Calendar timeNow = java.util.Calendar.getInstance();
+        //dpd.setMinTime(timeNow.get(java.util.Calendar.HOUR_OF_DAY), timeNow.get(java.util.Calendar.MINUTE), 0);
         dpd.show(getFragmentManager(), "TimePickerDialog");
     }
 
@@ -411,17 +415,39 @@ public class PublicacionView extends BaseActivity implements PublicacionContract
 
     @Override
     public void viewNoError(String noerror) {
-        Snackbar.make(this.rvPlatos, noerror, Snackbar.LENGTH_LONG).show();
+
+        //Filtramos segun el tipo de accion realizada anteriormente
         if ( progressDialog.isShowing() ) progressDialog.dismiss();
+
+        switch ( userActionRemove ) {
+
+            case REMOVE_PUBLICACION_ACTION: {
+
+                this.finish();
+                break;
+            }
+
+            default: {
+
+                Snackbar.make(this.rvPlatos, noerror, Snackbar.LENGTH_LONG).show();
+                break;
+            }
+        }
+
+
     }
 
     @Override
     public void viewRemovedReserva() {
 
         this.idReserva = 0;
-        loadActionFAB();
 
-        this.progressDialog.dismiss();
+        this.presenter.onLoadPublicacion(this.publicacion.getId());
+        this.userActionRemove = -1;
+
+        /*loadActionFAB();
+
+        this.progressDialog.dismiss();*/
     }
 
     @Override
@@ -437,7 +463,10 @@ public class PublicacionView extends BaseActivity implements PublicacionContract
     public void viewAddPublicacion(Publicacion publicacion) {
 
         this.publicacion = publicacion;
-        this.typeAction  = EDIT_ACTION;
+        this.typeAction  = this.typeAction != VIEW_ACTION ? EDIT_ACTION : VIEW_ACTION;
+        this.collapsingToolbarLayout.setTitle(publicacion.getTitulo());
+        this.btEliminar.setVisibility(View.VISIBLE);
+
         loadPublicacionUI();
         loadActionFAB();
 
@@ -449,21 +478,29 @@ public class PublicacionView extends BaseActivity implements PublicacionContract
     public void viewConversacion(Conversacion conversacion) {
 
         //Obtenemos los metadatas para la conversacion
-        ConversacionMetadata metadata = null;
-
-        for ( ConversacionMetadata cm : conversacion.getMetadatas() ) {
-
-            if ( cm.getUsuario() == this.idUsuarioDispositivo) {
-
-                metadata = cm;
-                break;
-            }
-        }
 
         Intent intent = new Intent(PublicacionView.this, ChatView.class);
         intent.putExtra("perfilUsuario", PublicacionView.this.perfilUsuario);
         intent.putExtra(getString(R.string.preferences_id_user), PublicacionView.this.idUsuarioDispositivo);
-        intent.putExtra("metadata", metadata);
+
+        //Los usuarios no tienen conversacion creada
+        if ( conversacion.getId() > 0 ) {
+
+            ConversacionMetadata metadata = null;
+
+            for ( ConversacionMetadata cm : conversacion.getMetadatas() ) {
+
+                if ( cm.getUsuario() == this.idUsuarioDispositivo) {
+
+                    metadata = cm;
+                    break;
+                }
+            }
+
+            intent.putExtra("metadata", metadata);
+
+        }
+
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
         startActivity(intent);
@@ -504,10 +541,11 @@ public class PublicacionView extends BaseActivity implements PublicacionContract
         this.edHoraFin          = (EditText) findViewById(R.id.publicacion_hora_fin);
         this.fab                = (FloatingActionButton) findViewById(R.id.fabPublicacion);
         this.llDatosPersonales  = (LinearLayout) findViewById(R.id.contacta_publicacion);
+        this.linearLayoutPlatos = (LinearLayout) findViewById(R.id.platosLayout);
         this.btPerfil           = (Button) findViewById(R.id.ver_perfil_publicacion);
         this.btConversacion     = (Button) findViewById(R.id.hablar_publicacion);
         this.btAddPlato         = (Button) findViewById(R.id.btAddPlato);
-
+        this.btEliminar         = (Button) findViewById(R.id.eliminar_publicacion);
         this.rvDomicilios       = (RecyclerView) findViewById(R.id.rv_publicacion_domicilios);
 
         this.rvDomicilios.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -530,7 +568,8 @@ public class PublicacionView extends BaseActivity implements PublicacionContract
 
         this.rvPlatos.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         this.rvPlatos.setAdapter(this.adapterPlatos);
-        this.adapterPlatos.setEditable(this.typeAction != 2);
+        this.adapterPlatos.setEditable(this.typeAction != VIEW_ACTION);
+        this.btEliminar.setVisibility(this.typeAction == EDIT_ACTION ? View.VISIBLE : View.GONE);
 
         //Agregamos los eventos
         if ( this.typeAction != VIEW_ACTION ) {
@@ -578,7 +617,6 @@ public class PublicacionView extends BaseActivity implements PublicacionContract
             this.edFecha.setOnClickListener(clickListener);
             this.edHoraIni.setOnClickListener(clickListener);
             this.edHoraFin.setOnClickListener(clickListener);
-
         }
         else {
 
@@ -629,6 +667,14 @@ public class PublicacionView extends BaseActivity implements PublicacionContract
             public void onClick(View v) {
 
                 PublicacionView.this.adapterPlatos.addNewPlato();
+            }
+        });
+
+        this.btEliminar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                removePublicacion();
             }
         });
 
@@ -727,6 +773,36 @@ public class PublicacionView extends BaseActivity implements PublicacionContract
 
     }
 
+    //Funcion utilizada para poder eliminar la publicacion
+    private void removePublicacion() {
+
+        String title    = getString(R.string.remove_reserva_title);
+        String message  = getString(R.string.remove_publicacion_message);
+        DialogInterface.OnClickListener okListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                //Eliminamos la publicacion del usuario
+                PublicacionView.this.userActionRemove = REMOVE_PUBLICACION_ACTION;
+                PublicacionView.this.presenter.onRemovePublicacion(PublicacionView.this.publicacion.getId());
+
+                //Mostramos el dialogo
+                progressDialog.setMessage(getString(R.string.action_remove_app));
+                progressDialog.show();
+            }
+        };
+
+        DialogInterface.OnClickListener cancelListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                dialog.dismiss();
+            }
+        };
+
+        DialogHelper.getDialog(this, title, message, okListener, cancelListener, null).show();
+    }
+
     //Funcion utilizada para poder cargar la accion de nuestro FAB
     private void loadActionFAB() {
 
@@ -749,7 +825,8 @@ public class PublicacionView extends BaseActivity implements PublicacionContract
                     }
                 };
 
-                icon = R.drawable.ic_add_white_24px;
+                icon = R.drawable.ic_save_button;
+
                 break;
             }
 
@@ -778,30 +855,29 @@ public class PublicacionView extends BaseActivity implements PublicacionContract
                     @Override
                     public void onClick(View v) {
 
-                        if ( PublicacionView.this.publicacion.isCompleto() ) {
+                        if ( PublicacionView.this.idReserva > 0 ) {
 
-                            String title    = getString(R.string.remove_reserva_title_completa);
-                            String message  = getString(R.string.remove_reserva_message_completa);
-                            DialogInterface.OnClickListener okListener = new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
+                            //Mostraremos un AlertDialog para poder confirmar la cancelacion de la reserva
+                            PublicacionView.this.removeReserva();
 
-                                    //Eliminamos la reserva del usuario
-                                   dialog.dismiss();
-                                }
-                            };
-
-                            DialogHelper.getDialog(PublicacionView.this, title, message, okListener, null, null).show();
                         }
                         else {
 
-                            if ( PublicacionView.this.idReserva > 0 ) {
+                            if (PublicacionView.this.publicacion.isCompleto()) {
 
-                                //Mostraremos un AlertDialog para poder confirmar la cancelacion de la reserva
-                                PublicacionView.this.removeReserva();
+                                String title = getString(R.string.remove_reserva_title_completa);
+                                String message = getString(R.string.remove_reserva_message_completa);
+                                DialogInterface.OnClickListener okListener = new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
 
-                            }
-                            else {
+                                        //Eliminamos la reserva del usuario
+                                        dialog.dismiss();
+                                    }
+                                };
+
+                                DialogHelper.getDialog(PublicacionView.this, title, message, okListener, null, null).show();
+                            } else {
 
                                 //Se agrega la reserva
                                 Reserva reserva = new Reserva();
@@ -815,7 +891,6 @@ public class PublicacionView extends BaseActivity implements PublicacionContract
                                 PublicacionView.this.progressDialog.show();
                             }
                         }
-
                     }
                 };
 
@@ -864,6 +939,9 @@ public class PublicacionView extends BaseActivity implements PublicacionContract
             this.adapterPlatos.setPlatos(this.publicacion.getPlatos());
         }
 
+        this.linearLayoutPlatos.setVisibility( typeAction == VIEW_ACTION && (this.publicacion.getPlatos() == null || this.publicacion.getPlatos().isEmpty())
+                                               ? View.GONE : View.VISIBLE);
+
     }
 
     //Funcion para cargar la informacion en la publicacion
@@ -877,8 +955,18 @@ public class PublicacionView extends BaseActivity implements PublicacionContract
         this.publicacion.setHoraInicio(DateHelper.dateFromString(this.edHoraIni.getText().toString(), DateHelper.HOUR_TYPE));
         this.publicacion.setHoraFin(DateHelper.dateFromString(this.edHoraFin.getText().toString(), DateHelper.HOUR_TYPE));
         this.publicacion.setPlatos(this.adapterPlatos.getPlatos());
-        this.publicacion.setDomicilio(this.adapterDomicilios.getCheckedDomicilio());
-        this.publicacion.setUsuario(this.publicacion.getUsuario() >= 0 ? this.publicacion.getUsuario() : this.idUsuarioDispositivo);
+
+        if ( this.adapterDomicilios.getCheckedDomicilio() == null ) {
+
+            this.viewError("Debes de seleccionar un domicilio");
+        }
+        else {
+
+            this.publicacion.setDomicilio(this.adapterDomicilios.getCheckedDomicilio());
+        }
+
+
+        this.publicacion.setUsuario(this.publicacion.getUsuario() > 0 ? this.publicacion.getUsuario() : this.idUsuarioDispositivo);
     }
 
     //Funcion utilizada para obtener el ID del usuario logueado en el dispositivo

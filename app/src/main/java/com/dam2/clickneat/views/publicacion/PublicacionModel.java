@@ -56,6 +56,11 @@ public class PublicacionModel implements PublicacionContract.Model {
     }
 
     @Override
+    public void loadPublicacion(int idPublicacion) {
+        this.publicacionHandler.getElement(idPublicacion);
+    }
+
+    @Override
     public void addPublicacion(Publicacion publicacion) {
         this.publicacionHandler.insertElement(publicacion);
     }
@@ -63,6 +68,11 @@ public class PublicacionModel implements PublicacionContract.Model {
     @Override
     public void updatePublicacion(Publicacion publicacion) {
         this.publicacionHandler.updateElement(publicacion);
+    }
+
+    @Override
+    public void removePublicacion(int idPublicacion) {
+        this.publicacionHandler.deleteElement(idPublicacion);
     }
 
     @Override
