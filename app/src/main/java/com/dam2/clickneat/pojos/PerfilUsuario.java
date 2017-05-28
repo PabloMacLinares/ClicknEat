@@ -27,6 +27,10 @@ public class PerfilUsuario extends BaseClass {
     private ArrayList<Comentario> comentariosRecibidos;
     @Expose
     private ArrayList<Comentario> comentariosDados;
+    @Expose
+    private String descripcion;
+    @Expose
+    private String gustos;
 
     public PerfilUsuario() {
 
@@ -39,6 +43,8 @@ public class PerfilUsuario extends BaseClass {
         this.imagen                 = "";
         this.comentariosRecibidos   = new ArrayList();
         this.comentariosDados       = new ArrayList();
+        this.descripcion            = "";
+        this.gustos                 = "";
     }
 
     protected PerfilUsuario(Parcel in ) {
@@ -52,6 +58,8 @@ public class PerfilUsuario extends BaseClass {
         this.imagen     = in.readString();
         in.readTypedList( this.comentariosRecibidos == null ? new ArrayList<Comentario>() : this.comentariosRecibidos, Comentario.CREATOR);
         in.readTypedList( this.comentariosDados == null ? new ArrayList<Comentario>() : this.comentariosDados, Comentario.CREATOR);
+        this.descripcion    = in.readString();
+        this.gustos         = in.readString();
     }
 
     public int getId() {
@@ -122,6 +130,21 @@ public class PerfilUsuario extends BaseClass {
         this.comentariosDados.add(comentario);
     }
 
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public String getGustos() {
+        return gustos;
+    }
+
+    public void setGustos(String gustos) {
+        this.gustos = gustos;
+    }
 
     public static final Creator<PerfilUsuario> CREATOR = new Creator<PerfilUsuario>() {
         @Override
@@ -150,6 +173,7 @@ public class PerfilUsuario extends BaseClass {
         dest.writeString(this.imagen);
         dest.writeTypedList(this.comentariosRecibidos);
         dest.writeTypedList(this.comentariosDados);
-
+        dest.writeString(this.descripcion);
+        dest.writeString(this.gustos);
     }
 }

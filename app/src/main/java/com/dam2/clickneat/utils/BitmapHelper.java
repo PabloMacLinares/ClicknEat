@@ -84,7 +84,7 @@ public class BitmapHelper {
 
     public static void loadBitmapAsynchronously(Picasso picasso, final ImageView imageView, int placeholder, final String image ) {
 
-        if ( image == null || image.isEmpty() ) {
+        if ( image == null || image.equals("-") || image.trim().isEmpty() ) {
 
             picasso.load(placeholder)
                    .fit()
@@ -123,11 +123,13 @@ public class BitmapHelper {
                     @Override
                     public void onBitmapFailed(Drawable errorDrawable) {
 
+
                         imageView.setImageDrawable(errorDrawable);
                     }
 
                     @Override
                     public void onPrepareLoad(Drawable placeHolderDrawable) {
+
 
                         imageView.setImageDrawable(placeHolderDrawable);
 
