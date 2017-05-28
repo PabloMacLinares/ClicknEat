@@ -89,9 +89,9 @@ public class MarkerHelper {
     public static class ExtendedMarkerCreator {
 
         public static Bitmap create(Activity activity, Bitmap publicationIcon, Bitmap chefIcon, int iconsSize, int padding, String title, int price, String chefName, int rating) {
-            String priceText = activity.getString(R.string.label_price) + price;
-            String chefNameText = activity.getString(R.string.label_chef_name) + chefName;
-            String ratingText = activity.getString(R.string.label_rating) + rating + "/5";
+            String priceText = activity.getString(R.string.label_price) + ": " + price;
+            String chefNameText = activity.getString(R.string.label_chef_name) + ": " + chefName;
+            String ratingText = activity.getString(R.string.label_rating) + ": " + rating + "/5";
 
             Paint textPaint = new Paint();
             textPaint.setTypeface(Typeface.DEFAULT);

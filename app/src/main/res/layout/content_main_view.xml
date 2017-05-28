@@ -1,50 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <TabHost android:id="@android:id/tabhost"
+
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content" >
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-            <TabWidget android:layout_width="match_parent"
+            <Button
+                android:id="@+id/button4"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@android:id/tabs" />
+                android:layout_weight="1"
+                android:text="Button" />
 
-            <FrameLayout android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@android:id/tabcontent" >
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Button" />
 
-                <LinearLayout android:id="@+id/tab1"
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
-
-                    <!--<com.google.android.gms.maps.MapView
-                        android:id="@+id/mapView"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />-->
-                </LinearLayout>
-
-                <LinearLayout android:id="@+id/tab2"
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
-
-                    <!--<TextView android:id="@+id/textView2"
-                        android:text="Contenido Tab 2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />-->
-                    <include
-                        layout="@layout/activity_chats"
-                        android:layout_height="match_parent"
-                        android:layout_width="match_parent"></include>
-                </LinearLayout>
-            </FrameLayout>
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Button" />
         </LinearLayout>
-    </TabHost>
+    </android.support.v7.widget.CardView>
+
+    <fragment
+        android:name="com.dam2.clickneat.fragments.map.MapView"
+        android:id="@+id/fragment_map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout="@layout/fragment_map" />
+
 </LinearLayout>

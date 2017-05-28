@@ -1,4 +1,7 @@
 <resources>
+
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyAWMImGRrbc5vsf8G2NSwRLje6yGJhE8Lw</string>
+
     <string name="app_name">ClicknEat</string>
     <string name="app_conversaciones">Conversaciones</string>
     <string name="app_perfil_usuario">Perfil</string>
@@ -106,5 +109,10 @@
     <string name="remove_reserva_message_completa">Publicacion completa, no existen plazas libres</string>
 
     <string name="remove_publicacion">Eliminar</string>
+
+    <!--Strings related to MarkerHelper-->
+    <string name="label_price">Precio</string>
+    <string name="label_chef_name">Chef</string>
+    <string name="label_rating">Puntuación</string>
 
 </resources>
