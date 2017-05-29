@@ -9,6 +9,8 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.widget.ImageView;
 
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -137,6 +139,8 @@ public class BitmapHelper {
                 };
                 targets.add(target);
                 picasso.load(image)
+                       .networkPolicy(NetworkPolicy.NO_CACHE)
+                       .memoryPolicy(MemoryPolicy.NO_CACHE)
                        .into(target);
             }
             catch( Exception e){

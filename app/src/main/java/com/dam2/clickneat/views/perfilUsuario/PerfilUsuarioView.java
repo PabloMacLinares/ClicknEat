@@ -4,9 +4,11 @@ import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -33,6 +35,7 @@ import com.dam2.clickneat.recyclerview.adapters.perfil.DomicilioAdapter;
 import com.dam2.clickneat.recyclerview.adapters.perfil.PublicacionAdapter;
 import com.dam2.clickneat.utils.ImageHelper;
 import com.dam2.clickneat.utils.ImagePicker;
+import com.dam2.clickneat.utils.JsonHelper;
 import com.dam2.clickneat.utils.JwtHelper;
 import com.dam2.clickneat.views.BaseActivity;
 import com.dam2.clickneat.views.publicacion.PublicacionView;
@@ -74,6 +77,7 @@ public class PerfilUsuarioView extends BaseActivity implements  PerfilUsuarioCon
     private EditText etPerfilUsuario;
     private Button btDomicilio, btPublicacion, btComentario;
     private ProgressDialog progressDialog;
+    private FloatingActionButton fabUpdatePerfil;
 
     private RecyclerView rvDomicilios, rvPublicacion, rvComentarios;
     private DomicilioAdapter domicilioAdapter;
@@ -135,26 +139,6 @@ public class PerfilUsuarioView extends BaseActivity implements  PerfilUsuarioCon
     }
 
     @Override
-    public void onPause() {
-
-        if ( nameChange || imageChange ) progressDialog.show();
-
-        if ( nameChange ) {
-
-            //Obtenemos el texto de nuestro editext
-            //this.usuario.getPerfil().setNombre(this.etPerfilUsuario.getText().toString());
-            this.presenter.onUpdatePerfilUsuarioElement(this.usuario.getPerfil(), "nombre");
-        }
-
-        if ( imageChange ) {
-
-            this.presenter.onUpdatePerfilUsuarioElement(this.usuario.getPerfil(), "imagen");
-        }
-
-        super.onPause();
-    }
-
-    @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
@@ -178,6 +162,7 @@ public class PerfilUsuarioView extends BaseActivity implements  PerfilUsuarioCon
     public void viewError(String error) {
 
         Snackbar.make(rvComentarios, error, Snackbar.LENGTH_LONG).show();
+        if ( this.progressDialog.isShowing() ) this.progressDialog.dismiss();
     }
 
     @Override
@@ -192,17 +177,21 @@ public class PerfilUsuarioView extends BaseActivity implements  PerfilUsuarioCon
     }
 
     @Override
-    public void viewUpdatePerfilUsuario() {
+    public void viewUpdatePerfilUsuario(String noerror) {
 
-        nameChange  = !(nameChange == true);
-        imageChange = !(imageChange == true);
+        nameChange  = nameChange ? !nameChange : nameChange;
+        imageChange = imageChange ? !imageChange : imageChange;
 
+        this.preferences.setString(getString(R.string.preferences_api_token_user), noerror);
+
+        this.progressDialog.dismiss();
     }
 
     private void init() {
 
         this.ivPerfilUsuario    = (CircleImageView) findViewById(R.id.fotoPerfil);
         this.etPerfilUsuario    = (EditText) findViewById(R.id.nombreUsuario);
+        this.fabUpdatePerfil    = (FloatingActionButton) findViewById(R.id.fabUpdatePerfil);
 
         //Buttons
         this.btDomicilio     = (Button) findViewById(R.id.btnMoreDomicilio);
@@ -306,6 +295,7 @@ public class PerfilUsuarioView extends BaseActivity implements  PerfilUsuarioCon
         this.btDomicilio.setVisibility(isMe ? View.VISIBLE : View.GONE);
         this.btPublicacion.setVisibility(isMe ? View.VISIBLE : View.GONE);
         this.btComentario.setVisibility(!isMe ? View.VISIBLE : View.GONE);
+        this.fabUpdatePerfil.setVisibility(isMe ? View.VISIBLE : View.GONE);
 
         if ( isMe ) {
 
@@ -409,6 +399,28 @@ public class PerfilUsuarioView extends BaseActivity implements  PerfilUsuarioCon
                 startActivity(i);
             }
         });
+
+        this.fabUpdatePerfil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if ( nameChange || imageChange ) progressDialog.show();
+
+                if ( nameChange ) {
+
+                    //Obtenemos el texto de nuestro editext
+                    PerfilUsuarioView.this.usuario.getPerfil().setNombre(PerfilUsuarioView.this.etPerfilUsuario.getText().toString());
+                    PerfilUsuarioView.this.presenter.onUpdatePerfilUsuarioElement(PerfilUsuarioView.this.usuario.getPerfil(), "nombre");
+                }
+
+                if ( imageChange ) {
+
+                    Bitmap bitmap = ((BitmapDrawable)ivPerfilUsuario.getDrawable()).getBitmap();
+                    PerfilUsuarioView.this.usuario.getPerfil().setImagen(ImageHelper.bitmapTobase64String(bitmap));
+                    PerfilUsuarioView.this.presenter.onUpdatePerfilUsuarioElement(PerfilUsuarioView.this.usuario.getPerfil(), "imagen");
+                }
+            }
+        });
     }
 
     @Override
@@ -460,7 +472,6 @@ public class PerfilUsuarioView extends BaseActivity implements  PerfilUsuarioCon
                     //Actualizamos los datos
                     this.uriSelectedImage   = ImagePicker.getUriFromResult(this, resultCode, data);
                     imageChange             = true;
-                    this.usuario.getPerfil().setImagen(ImageHelper.bitmapTobase64String(bitmap));
                 }
 
                 break;
