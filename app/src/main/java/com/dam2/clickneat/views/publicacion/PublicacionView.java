@@ -465,7 +465,7 @@ public class PublicacionView extends BaseActivity implements PublicacionContract
         this.publicacion = publicacion;
         this.typeAction  = this.typeAction != VIEW_ACTION ? EDIT_ACTION : VIEW_ACTION;
         this.collapsingToolbarLayout.setTitle(publicacion.getTitulo());
-        this.btEliminar.setVisibility(View.VISIBLE);
+        this.btEliminar.setVisibility(this.typeAction != VIEW_ACTION ? View.VISIBLE : View.GONE);
 
         loadPublicacionUI();
         loadActionFAB();

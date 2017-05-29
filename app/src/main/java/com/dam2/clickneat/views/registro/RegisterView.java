@@ -97,6 +97,17 @@ public class RegisterView extends BaseActivity implements RegisterContract.View 
 
         showProgress(false);
         Snackbar.make(mRegisterView, error, Snackbar.LENGTH_LONG).show();
+
+        //Comprobamos que dicho usuario se habia logueado previamente a traves de las redes sociales de Faceboook o Google
+        if ( AccessToken.getCurrentAccessToken() != null ) {
+
+            LoginManager.getInstance().logOut();
+        }
+        else
+        {
+            Auth.GoogleSignInApi.signOut(mGoogleApiClient);
+        }
+
     }
 
     @Override

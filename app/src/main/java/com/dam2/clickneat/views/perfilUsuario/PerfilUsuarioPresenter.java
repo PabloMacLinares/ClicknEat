@@ -36,8 +36,8 @@ public class PerfilUsuarioPresenter implements PerfilUsuarioContract.Presenter {
     }
 
     @Override
-    public void onUpdatedPerfilUsuario() {
-        this.view.viewUpdatePerfilUsuario();
+    public void onUpdatedPerfilUsuario(String noerror) {
+        this.view.viewUpdatePerfilUsuario(noerror);
     }
 
     @Override

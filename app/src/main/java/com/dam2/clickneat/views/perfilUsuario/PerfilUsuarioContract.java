@@ -27,7 +27,7 @@ public interface PerfilUsuarioContract {
         void onErrorReceived(String error);
 
         void onUpdatePerfilUsuarioElement(PerfilUsuario perfil, String variable);
-        void onUpdatedPerfilUsuario();
+        void onUpdatedPerfilUsuario(String noerror);
 
         void onAddDomicilioUsuario(Domicilio domicilio);
         void onLoadDomicilioUsuario(Domicilio domicilio);
@@ -42,6 +42,6 @@ public interface PerfilUsuarioContract {
         void viewError(String error);
         void viewDomicilio(Domicilio domicilio);
         void viewComentario(Comentario comentario);
-        void viewUpdatePerfilUsuario();
+        void viewUpdatePerfilUsuario(String noerror);
     }
 }

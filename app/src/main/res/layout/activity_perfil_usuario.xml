@@ -16,13 +16,29 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/fotoPerfil"
-                android:layout_width="150dp"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="150dp"
-                android:layout_margin="10dp"
-                android:layout_gravity="center_horizontal"
-                app:srcCompat="@drawable/ic_menu_camera" />
+                android:layout_marginBottom="20dp">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/fotoPerfil"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="10dp"
+                    app:srcCompat="@drawable/ic_menu_camera" />
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/fabUpdatePerfil"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/fotoPerfil"
+                    android:layout_marginLeft="-60dp"
+                    android:src="@drawable/ic_done_white_24px"
+                    android:visibility="gone"
+                    android:layout_alignParentBottom="true"/>
+            </RelativeLayout>
 
             <LinearLayout
                 android:id="@+id/nombreLayout"

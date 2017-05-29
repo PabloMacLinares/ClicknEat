@@ -9,6 +9,8 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.widget.ImageView;
 
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -84,7 +86,7 @@ public class BitmapHelper {
 
     public static void loadBitmapAsynchronously(Picasso picasso, final ImageView imageView, int placeholder, final String image ) {
 
-        if ( image == null || image.isEmpty() ) {
+        if ( image == null || image.equals("-") || image.trim().isEmpty() ) {
 
             picasso.load(placeholder)
                    .fit()
@@ -123,11 +125,13 @@ public class BitmapHelper {
                     @Override
                     public void onBitmapFailed(Drawable errorDrawable) {
 
+
                         imageView.setImageDrawable(errorDrawable);
                     }
 
                     @Override
                     public void onPrepareLoad(Drawable placeHolderDrawable) {
+
 
                         imageView.setImageDrawable(placeHolderDrawable);
 
@@ -135,6 +139,8 @@ public class BitmapHelper {
                 };
                 targets.add(target);
                 picasso.load(image)
+                       .networkPolicy(NetworkPolicy.NO_CACHE)
+                       .memoryPolicy(MemoryPolicy.NO_CACHE)
                        .into(target);
             }
             catch( Exception e){

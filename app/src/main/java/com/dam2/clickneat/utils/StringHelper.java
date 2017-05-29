@@ -5,6 +5,7 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Random;
 
 /**
  * Created by ferna on 29/04/2017.
@@ -12,6 +13,7 @@ import java.util.Date;
 
 public class StringHelper {
 
+    private static final int MAX_LENGTH = 25;
     /**
      * @param value String para convertir al formato CamelCase
      * @return String
@@ -107,5 +109,17 @@ public class StringHelper {
 
             return false;
         }
+    }
+
+    public static String random() {
+        Random generator = new Random();
+        StringBuilder randomStringBuilder = new StringBuilder();
+        int randomLength = generator.nextInt(MAX_LENGTH);
+        char tempChar;
+        for (int i = 0; i < randomLength; i++){
+            tempChar = (char) (generator.nextInt(96) + 32);
+            randomStringBuilder.append(tempChar);
+        }
+        return randomStringBuilder.toString();
     }
 }

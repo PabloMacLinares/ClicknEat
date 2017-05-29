@@ -18,6 +18,10 @@ public class PerfilUsuario extends BaseClass {
     @Expose
     private String nombre;
     @Expose
+    private String descripcion;
+    @Expose
+    private String gustos;
+    @Expose
     private int usuario;
     @Expose
     private ArrayList<Domicilio> domicilios;
@@ -34,6 +38,8 @@ public class PerfilUsuario extends BaseClass {
 
         this.id                     = 0;
         this.nombre                 = "";
+        this.descripcion            = "";
+        this.gustos                 = "";
         this.usuario                = 0;
         this.domicilios             = new ArrayList();
         this.imagen                 = "";
@@ -45,11 +51,13 @@ public class PerfilUsuario extends BaseClass {
 
         super(in);
 
-        this.id         = in.readInt();
-        this.nombre     = in.readString();
-        this.usuario    = in.readInt();
+        this.id             = in.readInt();
+        this.nombre         = in.readString();
+        this.descripcion    = in.readString();
+        this.gustos         = in.readString();
+        this.usuario        = in.readInt();
         in.readTypedList( this.domicilios == null ? new ArrayList<Domicilio>() : this.domicilios, Domicilio.CREATOR);
-        this.imagen     = in.readString();
+        this.imagen         = in.readString();
         in.readTypedList( this.comentariosRecibidos == null ? new ArrayList<Comentario>() : this.comentariosRecibidos, Comentario.CREATOR);
         in.readTypedList( this.comentariosDados == null ? new ArrayList<Comentario>() : this.comentariosDados, Comentario.CREATOR);
     }
@@ -122,6 +130,21 @@ public class PerfilUsuario extends BaseClass {
         this.comentariosDados.add(comentario);
     }
 
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public String getGustos() {
+        return gustos;
+    }
+
+    public void setGustos(String gustos) {
+        this.gustos = gustos;
+    }
 
     public static final Creator<PerfilUsuario> CREATOR = new Creator<PerfilUsuario>() {
         @Override
@@ -145,11 +168,12 @@ public class PerfilUsuario extends BaseClass {
 
         dest.writeInt(this.id);
         dest.writeString(this.nombre);
+        dest.writeString(this.descripcion);
+        dest.writeString(this.gustos);
         dest.writeInt(this.usuario);
         dest.writeTypedList(this.domicilios);
         dest.writeString(this.imagen);
         dest.writeTypedList(this.comentariosRecibidos);
         dest.writeTypedList(this.comentariosDados);
-
     }
 }

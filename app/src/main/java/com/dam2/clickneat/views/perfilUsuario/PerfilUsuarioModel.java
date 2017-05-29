@@ -145,7 +145,7 @@ public class PerfilUsuarioModel implements PerfilUsuarioContract.Model {
 
         @Override
         public void onDataNoErrorReceived(String noerror) {
-            PerfilUsuarioModel.this.presenter.onUpdatedPerfilUsuario();
+            PerfilUsuarioModel.this.presenter.onUpdatedPerfilUsuario(noerror);
         }
 
         @Override
