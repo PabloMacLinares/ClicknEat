@@ -32,8 +32,6 @@ public class Client {
 
     //TODO data es el JSON, no se de que tipo es, por eso he puesto Object, ya lo cambiaré
     public static void makeRequest(String path, String data, RequestMethod method, String requestId, ResponseReceiver receiver){
-        System.out.println(API_URL + path);
-        if ( data != null ) System.out.println(data);
         sendRequest(path, data, method, requestId, receiver);
     }
 
