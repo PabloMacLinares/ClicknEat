@@ -25,7 +25,7 @@ public class AppStateListener implements Application.ActivityLifecycleCallbacks 
 
         void onBecameForeground();
 
-       void onBecameBackground();
+        void onBecameBackground();
 
     }
 
