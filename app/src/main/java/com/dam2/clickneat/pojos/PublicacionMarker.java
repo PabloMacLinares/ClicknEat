@@ -198,12 +198,22 @@ public class PublicacionMarker implements GoogleMap.OnMarkerClickListener {
             int typeAction = PublicacionView.VIEW_ACTION;
             Preferences preferences = new Preferences(context);
             String token     = preferences.getString(context.getString(R.string.preferences_api_token_user));
+
             int idUsuario    = token.equals(Preferences.DEFAULT_STRING) ? 0 : (Integer) JwtHelper.getElementFromToken(token, context.getString(R.string.preferences_id_user), Integer.class );
+            int idPerfil     = token.equals(Preferences.DEFAULT_STRING) ? 0 : (Integer)JwtHelper.getElementFromToken(token, context.getString(R.string.preferences_id_perfil_user), Integer.class );
+            String profile   = token.equals(Preferences.DEFAULT_STRING) ? "" : (String)JwtHelper.getElementFromToken(token, context.getString(R.string.preferences_profile), String.class);
+            String nombre_perfil   = token.equals(Preferences.DEFAULT_STRING) ? "" : (String)JwtHelper.getElementFromToken(token, context.getString(R.string.perfil_nombre), String.class);
+
+            PerfilUsuario perfil = new PerfilUsuario();
+            perfil.setId(idPerfil);
+            perfil.setUsuario(idUsuario);
+            perfil.setImagen(profile);
+            perfil.setNombre(nombre_perfil);
 
             Intent intent = new Intent(context, PublicacionView.class);
             intent.putExtra("typeAction", typeAction);
             intent.putExtra("publicacion", publicacion);
-            //intent.putExtra("perfil", perfil);
+            intent.putExtra("perfil", perfil);
             intent.putExtra("idUsuarioDispositivo", idUsuario);
             context.startActivity(intent);
         }
