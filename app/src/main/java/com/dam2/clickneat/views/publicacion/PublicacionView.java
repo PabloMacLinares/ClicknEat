@@ -651,7 +651,8 @@ public class PublicacionView extends BaseActivity implements PublicacionContract
                 public void onClick(View v) {
 
                     Intent intent = new Intent(PublicacionView.this, PerfilUsuarioView.class);
-                    intent.putExtra(getString(R.string.preferences_id_user), PublicacionView.this.perfilUsuario.getUsuario());
+                    //intent.putExtra(getString(R.string.preferences_id_user), PublicacionView.this.perfilUsuario.getUsuario());
+                    intent.putExtra(getString(R.string.preferences_id_user), PublicacionView.this.publicacion.getUsuario());
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
                     startActivity(intent);
