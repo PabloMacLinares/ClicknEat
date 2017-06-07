@@ -1,5 +1,6 @@
 package com.dam2.clickneat.utils;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -7,6 +8,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.squareup.picasso.MemoryPolicy;
@@ -153,6 +155,29 @@ public class BitmapHelper {
 
             }
         }
+    }
+
+    public static Bitmap createBitmap(Picasso picasso, final Bitmap placeHolder, final String image) {
+        final Bitmap[] outputBitmap = new Bitmap[1];
+        final Target target = new Target() {
+            @Override
+            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                outputBitmap[0] = bitmap;
+            }
+
+            @Override
+            public void onBitmapFailed(Drawable errorDrawable) {
+                outputBitmap[0] = placeHolder;
+            }
+
+            @Override
+            public void onPrepareLoad(Drawable placeHolderDrawable) {
+                outputBitmap[0] = placeHolder;
+            }
+        };
+
+        picasso.load(image).into(target);
+        return outputBitmap[0];
     }
 
 }
