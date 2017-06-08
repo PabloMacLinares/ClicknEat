@@ -24,8 +24,8 @@
 
                 <ImageView
                     android:id="@+id/ivMensajes"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:layout_centerHorizontal="true"
                     app:srcCompat="@mipmap/mensajes_icon" />
 
@@ -36,12 +36,13 @@
                     android:layout_alignBottom="@+id/ivMensajes"
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="43dp" >
+
                     <android.support.design.widget.FloatingActionButton
                         android:id="@+id/fabMensajes"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:src="@android:color/transparent"
-                        app:fabSize="mini"/>
+                        app:fabSize="mini" />
 
                     <TextView
                         android:id="@+id/tvNumeroMensajes"
@@ -51,7 +52,7 @@
                         android:elevation="16dp"
                         android:text="0"
                         android:textColor="@android:color/white"
-                        android:textSize="24sp"
+                        android:textSize="20sp"
                         android:textStyle="bold" />
                 </FrameLayout>
             </RelativeLayout>
@@ -63,8 +64,8 @@
 
                 <ImageView
                     android:id="@+id/ivPublicaciones"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:layout_centerHorizontal="true"
                     app:srcCompat="@mipmap/publicaciones_icon" />
 
@@ -75,12 +76,13 @@
                     android:layout_alignBottom="@+id/ivPublicaciones"
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="43dp" >
+
                     <android.support.design.widget.FloatingActionButton
                         android:id="@+id/fabPublicaciones"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:src="@android:color/transparent"
-                        app:fabSize="mini"/>
+                        app:fabSize="mini" />
 
                     <TextView
                         android:id="@+id/tvNumeroPublicaciones"
@@ -90,7 +92,7 @@
                         android:elevation="16dp"
                         android:text="0"
                         android:textColor="@android:color/white"
-                        android:textSize="24sp"
+                        android:textSize="20sp"
                         android:textStyle="bold" />
                 </FrameLayout>
             </RelativeLayout>
@@ -99,8 +101,8 @@
     </android.support.v7.widget.CardView>
 
     <fragment
-        android:name="com.dam2.clickneat.fragments.map.MapView"
         android:id="@+id/fragment_map"
+        android:name="com.dam2.clickneat.fragments.map.MapView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout="@layout/fragment_map" />
