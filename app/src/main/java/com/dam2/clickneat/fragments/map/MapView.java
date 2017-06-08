@@ -125,6 +125,7 @@ public class MapView extends Fragment implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+
         this.googleMap = googleMap;
         this.googleMap.getUiSettings().setZoomControlsEnabled(true);
         this.googleMap.getUiSettings().setZoomGesturesEnabled(true);
@@ -166,6 +167,7 @@ public class MapView extends Fragment implements OnMapReadyCallback {
     }
 
     private void getPublicaciones() {
+
         publicacionHandler.getAllElements();
     }
 
@@ -201,5 +203,4 @@ public class MapView extends Fragment implements OnMapReadyCallback {
 
         }
     }
-
 }

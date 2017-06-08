@@ -2,6 +2,7 @@ package com.dam2.clickneat.views.publicacion;
 
 import com.dam2.clickneat.pojos.Conversacion;
 import com.dam2.clickneat.pojos.Domicilio;
+import com.dam2.clickneat.pojos.PerfilUsuario;
 import com.dam2.clickneat.pojos.Publicacion;
 import com.dam2.clickneat.pojos.Reserva;
 
@@ -112,5 +113,15 @@ public class PublicacionPresenter implements PublicacionContract.Presenter {
     @Override
     public void onLoadedConversacionUsers(Conversacion conversacion) {
         this.view.viewConversacion(conversacion);
+    }
+
+    @Override
+    public void onLoadPerfilUsuarioPublicacion(int id) {
+        this.model.loadPerfilUsuarioPublicacion(id);
+    }
+
+    @Override
+    public void onLoadedPerfilUsuarioPublicacion(PerfilUsuario perfilUsuario) {
+        this.view.viewPerfilUsuarioPublicacion(perfilUsuario);
     }
 }

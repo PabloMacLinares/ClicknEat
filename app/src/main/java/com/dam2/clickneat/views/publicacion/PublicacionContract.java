@@ -2,6 +2,7 @@ package com.dam2.clickneat.views.publicacion;
 
 import com.dam2.clickneat.pojos.Conversacion;
 import com.dam2.clickneat.pojos.Domicilio;
+import com.dam2.clickneat.pojos.PerfilUsuario;
 import com.dam2.clickneat.pojos.Publicacion;
 import com.dam2.clickneat.pojos.Reserva;
 
@@ -27,6 +28,7 @@ public interface PublicacionContract {
         void removePublicacion(int idPublicacion);
 
         void loadIdConversacionFromUsers(int idUsuario1, int idUsuario2);
+        void loadPerfilUsuarioPublicacion(int id);
     }
 
     interface Presenter{
@@ -56,6 +58,10 @@ public interface PublicacionContract {
         void onLoadConversacionUsers(int idUsuario1, int idUsuario2);
         void onLoadedConversacionUsers(Conversacion conversacion);
 
+        //From Mapa
+        void onLoadPerfilUsuarioPublicacion(int id);
+        void onLoadedPerfilUsuarioPublicacion(PerfilUsuario perfilUsuario);
+
     }
 
     interface View{
@@ -68,5 +74,6 @@ public interface PublicacionContract {
         void viewAddReserva(long idReserva);
         void viewAddPublicacion(Publicacion publicacion);
         void viewConversacion(Conversacion conversacion);
+        void viewPerfilUsuarioPublicacion(PerfilUsuario perfilUsuario);
     }
 }

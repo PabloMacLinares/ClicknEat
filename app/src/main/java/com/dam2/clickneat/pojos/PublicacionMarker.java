@@ -42,12 +42,12 @@ public class PublicacionMarker implements GoogleMap.OnMarkerClickListener {
     private int markerColor;
 
     public PublicacionMarker(Context context, GoogleMap googleMap, Publicacion publicacion) {
-        this.context = context;
-        this.picasso = Picasso.with(context);
-        this.googleMap = googleMap;
-        this.publicacion = publicacion;
-        this.isFolded = true;
-        markerColor = ResourcesCompat.getColor(context.getResources(), R.color.colorAccent, null);
+        this.context        = context;
+        this.picasso        = Picasso.with(context);
+        this.googleMap      = googleMap;
+        this.publicacion    = publicacion;
+        this.isFolded       = true;
+        markerColor         = ResourcesCompat.getColor(context.getResources(), R.color.colorAccent, null);
         initMarker();
     }
 
@@ -195,6 +195,7 @@ public class PublicacionMarker implements GoogleMap.OnMarkerClickListener {
             isFolded = false;
             marker.setIcon(BitmapDescriptorFactory.fromBitmap(unfoldedMarker));
         } else {
+
             int typeAction = PublicacionView.VIEW_ACTION;
             Preferences preferences = new Preferences(context);
             String token     = preferences.getString(context.getString(R.string.preferences_api_token_user));
@@ -213,9 +214,10 @@ public class PublicacionMarker implements GoogleMap.OnMarkerClickListener {
             Intent intent = new Intent(context, PublicacionView.class);
             intent.putExtra("typeAction", typeAction);
             intent.putExtra("publicacion", publicacion);
-            intent.putExtra("perfil", perfil);
+            intent.putExtra("isFromMap", true);
             intent.putExtra("idUsuarioDispositivo", idUsuario);
             context.startActivity(intent);
+
         }
         return false;
     }
