@@ -126,6 +126,7 @@ public class PublicacionView extends BaseActivity implements PublicacionContract
     private PerfilUsuario perfilUsuario;
     private int idUsuarioDispositivo;
     private int userActionRemove;
+    private boolean isFromMap;
 
     private ArrayList<Domicilio> domicilios;
     private ProgressDialog progressDialog;
@@ -167,6 +168,9 @@ public class PublicacionView extends BaseActivity implements PublicacionContract
 
         this.idUsuarioDispositivo   = savedInstanceState != null ? savedInstanceState.getInt("idUsuarioDispositivo")
                                                                  : getIdUserLogged();
+
+        this.isFromMap              = savedInstanceState != null ? savedInstanceState.getBoolean("isFromMap")
+                                                                 : getIntent().getBooleanExtra("isFromMap", false);
 
         this.userActionRemove       = savedInstanceState != null ? savedInstanceState.getInt("userActionRemove") : -1;
 
@@ -282,6 +286,7 @@ public class PublicacionView extends BaseActivity implements PublicacionContract
         outState.putInt("idReserva", this.idReserva);
         outState.putBoolean("isPermissionGranted", this.isPermissionGranted);
         outState.putParcelable("uriSelectedImage", this.uriSelectedImage);
+        outState.putBoolean("isFromMap", this.isFromMap);
     }
 
     @Override
@@ -478,7 +483,6 @@ public class PublicacionView extends BaseActivity implements PublicacionContract
     public void viewConversacion(Conversacion conversacion) {
 
         //Obtenemos los metadatas para la conversacion
-
         Intent intent = new Intent(PublicacionView.this, ChatView.class);
         intent.putExtra("perfilUsuario", PublicacionView.this.perfilUsuario);
         intent.putExtra(getString(R.string.preferences_id_user), PublicacionView.this.idUsuarioDispositivo);
@@ -506,6 +510,13 @@ public class PublicacionView extends BaseActivity implements PublicacionContract
         startActivity(intent);
 
         this.progressDialog.dismiss();
+    }
+
+    @Override
+    public void viewPerfilUsuarioPublicacion(PerfilUsuario perfilUsuario) {
+
+        this.perfilUsuario = perfilUsuario;
+        this.loadChats();
     }
 
     private void init() {
@@ -640,9 +651,17 @@ public class PublicacionView extends BaseActivity implements PublicacionContract
                 @Override
                 public void onClick(View v) {
 
-                    PublicacionView.this.presenter.onLoadConversacionUsers(PublicacionView.this.idUsuarioDispositivo, PublicacionView.this.publicacion.getUsuario());
-                    PublicacionView.this.progressDialog.setMessage(getString(R.string.action_loading_app));
-                    PublicacionView.this.progressDialog.show();
+                    //Si venimos del mapa tenemos que cargar el perfil del usuario
+                    if ( isFromMap ) {
+
+                        PublicacionView.this.presenter.onLoadPerfilUsuarioPublicacion(PublicacionView.this.publicacion.getUsuario());
+                        PublicacionView.this.progressDialog.setMessage(getString(R.string.action_loading_app));
+                        PublicacionView.this.progressDialog.show();
+                    }
+                    else {
+
+                        PublicacionView.this.loadChats();
+                    }
                 }
             });
 
@@ -651,7 +670,8 @@ public class PublicacionView extends BaseActivity implements PublicacionContract
                 public void onClick(View v) {
 
                     Intent intent = new Intent(PublicacionView.this, PerfilUsuarioView.class);
-                    intent.putExtra(getString(R.string.preferences_id_user), PublicacionView.this.perfilUsuario.getUsuario());
+                    //intent.putExtra(getString(R.string.preferences_id_user), PublicacionView.this.perfilUsuario.getUsuario());
+                    intent.putExtra(getString(R.string.preferences_id_user), PublicacionView.this.publicacion.getUsuario());
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
                     startActivity(intent);
@@ -978,4 +998,16 @@ public class PublicacionView extends BaseActivity implements PublicacionContract
         return (Integer) JwtHelper.getElementFromToken(token, getString(R.string.preferences_id_user), Integer.class );
     }
 
+
+    //Funcion utilizada para cargar los chats
+    private void loadChats() {
+
+        this.presenter.onLoadConversacionUsers(PublicacionView.this.idUsuarioDispositivo, PublicacionView.this.publicacion.getUsuario());
+
+        if ( !this.progressDialog.isShowing() ) {
+
+            this.progressDialog.setMessage(getString(R.string.action_loading_app));
+            this.progressDialog.show();
+        }
+    }
 }

@@ -2,6 +2,7 @@ package com.dam2.clickneat.views.main;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -9,6 +10,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.view.View;
 
@@ -41,6 +43,12 @@ public class MainView extends BaseActivity
     private CircleImageView ivProfile;
     private TextView tvUsername;
     private TextView tvEmail;
+    private FloatingActionButton fabMensajes;
+    private FloatingActionButton fabPublicaciones;
+    private TextView tvNumeroMensajes;
+    private TextView tvNumeroPublicaciones;
+    private ImageView ivMensajes;
+    private ImageView ivPublicaciones;
 
     //Utils
     private MainContract.Presenter presenter;
@@ -123,11 +131,7 @@ public class MainView extends BaseActivity
 
             case R.id.nav_perfil: {
 
-                Intent i = new Intent(MainView.this, PerfilUsuarioView.class);
-
-                i.putExtra(getString(R.string.preferences_id_user), this.usuario.getId());
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(i);
+                loadPerfilView();
 
                 break;
             }
@@ -145,9 +149,7 @@ public class MainView extends BaseActivity
 
             case R.id.nav_conversacion: {
 
-                Intent i = new Intent(MainView.this, ChatsView.class);
-                startActivity(i);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                loadChatsView();
 
                 break;
             }
@@ -187,6 +189,41 @@ public class MainView extends BaseActivity
         ivProfile   = (CircleImageView) view.findViewById(R.id.header_profile);
         tvUsername  = (TextView) view.findViewById(R.id.header_username);
         tvEmail     = (TextView) view.findViewById(R.id.header_email);
+
+        tvNumeroMensajes = (TextView) findViewById(R.id.tvNumeroMensajes);
+        tvNumeroPublicaciones = (TextView) findViewById(R.id.tvNumeroPublicaciones);
+
+        fabMensajes = (FloatingActionButton) findViewById(R.id.fabMensajes);
+        fabMensajes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadChatsView();
+            }
+        });
+
+        fabPublicaciones = (FloatingActionButton) findViewById(R.id.fabPublicaciones);
+        fabPublicaciones.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadPerfilView();
+            }
+        });
+
+        ivMensajes = (ImageView) findViewById(R.id.ivMensajes);
+        ivMensajes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadChatsView();
+            }
+        });
+
+        ivPublicaciones = (ImageView) findViewById(R.id.ivPublicaciones);
+        ivPublicaciones.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadPerfilView();
+            }
+        });
 
     }
 
@@ -250,6 +287,8 @@ public class MainView extends BaseActivity
         String password  = token.equals(Preferences.DEFAULT_STRING) ? "" : (String)JwtHelper.getElementFromToken(token, getString(R.string.preferences_password), String.class);
         String profile   = token.equals(Preferences.DEFAULT_STRING) ? "" : (String)JwtHelper.getElementFromToken(token, getString(R.string.preferences_profile), String.class);
         String email     = token.equals(Preferences.DEFAULT_STRING) ? "" : (String)JwtHelper.getElementFromToken(token, getString(R.string.preferences_email), String.class);
+        String numConversaciones     = token.equals(Preferences.DEFAULT_STRING) ? "" : (String)JwtHelper.getElementFromToken(token, "num_conversaciones", String.class);
+        String numPublicaciones     = token.equals(Preferences.DEFAULT_STRING) ? "" : (String)JwtHelper.getElementFromToken(token, "num_publicaciones", String.class);
 
         this.usuario.setId(idUsuario);
         this.usuario.setUsername(username);
@@ -273,7 +312,24 @@ public class MainView extends BaseActivity
 
             tvUsername.setText(username);
             tvEmail.setText(email);
+
+            tvNumeroMensajes.setText(numConversaciones);
+            tvNumeroPublicaciones.setText(numPublicaciones);
         }
+    }
+
+    private void loadChatsView() {
+        Intent i = new Intent(MainView.this, ChatsView.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(i);
+    }
+
+    private void loadPerfilView() {
+        Intent i = new Intent(MainView.this, PerfilUsuarioView.class);
+
+        i.putExtra(getString(R.string.preferences_id_user), this.usuario.getId());
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(i);
     }
 
 }

@@ -1,114 +1,208 @@
 package com.dam2.clickneat.fragments.map;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioButton;
 
 import com.dam2.clickneat.R;
+import com.dam2.clickneat.client.DataReceiver;
+import com.dam2.clickneat.client.handlers.PublicacionHandler;
+import com.dam2.clickneat.pojos.Publicacion;
+import com.dam2.clickneat.pojos.PublicacionMarker;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link MapView.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link MapView#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class MapView extends Fragment implements MapContract.View {
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
-    private MapContract.Presenter presenter;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+public class MapView extends Fragment implements OnMapReadyCallback {
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private static final String TAG = "MapFragmet";
 
-    private OnFragmentInteractionListener mListener;
+    private static final int DEFAULT_ZOOM = 14;
+    private GoogleMap googleMap;
+    private com.google.android.gms.maps.MapView map;
+    private RadioButton rbRadius1km, rbRadius3km, rbRadius5km;
+
+    private Marker userPositionMarker;
+    private List<PublicacionMarker> publicacionesMarkers;
+    private PublicacionHandler publicacionHandler;
+    private int[] radiusOptions = new int[] {1000, 3000, 5000}; //Kilometros
+    private int selectedRadius = radiusOptions[0];
 
     public MapView() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MapView.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static MapView newInstance(String param1, String param2) {
-        MapView fragment = new MapView();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-
-        presenter = new MapPresenter(this);
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_map, container, false);
-    }
+        View view = inflater.inflate(R.layout.fragment_map, container, false);
+        initComponents(view, savedInstanceState);
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+        publicacionesMarkers = new ArrayList<>();
+        return view;
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+    public void onResume() {
+        super.onResume();
+        map.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        map.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        map.onDestroy();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        map.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        map.onLowMemory();
+    }
+
+    private void initComponents(View view, Bundle savedInstanceState) {
+        map = (com.google.android.gms.maps.MapView) view.findViewById(R.id.map);
+        map.onCreate(savedInstanceState);
+        map.getMapAsync(this);
+
+        rbRadius1km = (RadioButton) view.findViewById(R.id.rbRadius1km);
+        rbRadius3km = (RadioButton) view.findViewById(R.id.rbRadius3km);
+        rbRadius5km = (RadioButton) view.findViewById(R.id.rbRadius5km);
+
+        publicacionHandler = new PublicacionHandler(new DataReceiverPublicacion());
+
+        initEvents();
+    }
+
+    private void initEvents() {
+        rbRadius1km.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectedRadius = radiusOptions[0];
+                getPublicaciones();
+            }
+        });
+
+        rbRadius3km.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectedRadius = radiusOptions[1];
+                getPublicaciones();
+            }
+        });
+
+        rbRadius5km.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectedRadius = radiusOptions[2];
+                getPublicaciones();
+            }
+        });
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+
+        this.googleMap = googleMap;
+        this.googleMap.getUiSettings().setZoomControlsEnabled(true);
+        this.googleMap.getUiSettings().setZoomGesturesEnabled(true);
+        this.googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+
+        LatLng fakePosition = new LatLng(37.1863789, -3.6031181);
+
+        addMarker(fakePosition, true);
+        getPublicaciones();
+        updateCameraPosition(fakePosition);
+    }
+
+    private void addMarker(LatLng position, boolean isUserPosition) {
+        if (isUserPosition) {
+            userPositionMarker = googleMap.addMarker(
+                new MarkerOptions().position(position)
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.user_marker))
+            );
         } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+            googleMap.addMarker(
+                    new MarkerOptions().position(position)
+            );
         }
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
+    private void addPublicacionMarkers(List<Publicacion> publicaciones) {
+        for (PublicacionMarker publicacionMarker : publicacionesMarkers) {
+            publicacionMarker.getMarker().remove();
+        }
+
+        for (Publicacion publicacion : publicaciones) {
+            PublicacionMarker publicacionMarker = new PublicacionMarker(this.getContext(), googleMap, publicacion);
+            publicacionesMarkers.add(publicacionMarker);
+        }
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+    private void updateCameraPosition(LatLng position) {
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(position, DEFAULT_ZOOM));
     }
+
+    private void getPublicaciones() {
+
+        publicacionHandler.getAllElements();
+    }
+
+    private class DataReceiverPublicacion implements DataReceiver<Publicacion> {
+
+        @Override
+        public void onListReceived(List<Publicacion> list) {
+            addPublicacionMarkers(list);
+        }
+
+        @Override
+        public void onElementReceived(Publicacion list) {
+
+        }
+
+        @Override
+        public void onDataItemInsertedReceived(int id) {
+
+        }
+
+        @Override
+        public void onDataNoErrorReceived(String noerror) {
+
+        }
+
+        @Override
+        public void onDataErrorReceived(String error) {
+
+        }
+
+        @Override
+        public void onLoginReceived(String token) {
+
+        }
+    }
+
 }

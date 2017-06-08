@@ -5,10 +5,12 @@ import com.dam2.clickneat.client.handlers.ConversacionHandler;
 import com.dam2.clickneat.client.handlers.DomicilioHandler;
 import com.dam2.clickneat.client.handlers.PublicacionHandler;
 import com.dam2.clickneat.client.handlers.ReservaHandler;
+import com.dam2.clickneat.client.handlers.UsuarioHandler;
 import com.dam2.clickneat.pojos.Conversacion;
 import com.dam2.clickneat.pojos.Domicilio;
 import com.dam2.clickneat.pojos.Publicacion;
 import com.dam2.clickneat.pojos.Reserva;
+import com.dam2.clickneat.pojos.Usuario;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +26,7 @@ public class PublicacionModel implements PublicacionContract.Model {
     private ReservaHandler reservaHandler;
     private PublicacionHandler publicacionHandler;
     private ConversacionHandler conversacionHandler;
-
+    private UsuarioHandler usuarioHandler;
 
     public PublicacionModel(PublicacionContract.Presenter presenter) {
 
@@ -33,6 +35,7 @@ public class PublicacionModel implements PublicacionContract.Model {
         this.reservaHandler      = new ReservaHandler(new DataReceiverReserva());
         this.publicacionHandler  = new PublicacionHandler(new DataReceiverPublicacion());
         this.conversacionHandler = new ConversacionHandler(new DataReceiverConversacion());
+        this.usuarioHandler      = new UsuarioHandler(new DataReceiverUsuario());
     }
 
     @Override
@@ -78,6 +81,11 @@ public class PublicacionModel implements PublicacionContract.Model {
     @Override
     public void loadIdConversacionFromUsers(int idUsuario1, int idUsuario2) {
         this.conversacionHandler.getConversacionEntreDosUsuarios(idUsuario1, idUsuario2);
+    }
+
+    @Override
+    public void loadPerfilUsuarioPublicacion(int id) {
+        this.usuarioHandler.getElement(id);
     }
 
 
@@ -207,6 +215,39 @@ public class PublicacionModel implements PublicacionContract.Model {
         @Override
         public void onDataErrorReceived(String error) {
             PublicacionModel.this.presenter.onErrorLoad(error);
+        }
+
+        @Override
+        public void onLoginReceived(String token) {
+
+        }
+    }
+
+    private class DataReceiverUsuario implements DataReceiver<Usuario>{
+
+        @Override
+        public void onListReceived(List<Usuario> list) {
+
+        }
+
+        @Override
+        public void onElementReceived(Usuario list) {
+            PublicacionModel.this.presenter.onLoadedPerfilUsuarioPublicacion(list.getPerfil());
+        }
+
+        @Override
+        public void onDataItemInsertedReceived(int id) {
+
+        }
+
+        @Override
+        public void onDataNoErrorReceived(String noerror) {
+
+        }
+
+        @Override
+        public void onDataErrorReceived(String error) {
+
         }
 
         @Override
